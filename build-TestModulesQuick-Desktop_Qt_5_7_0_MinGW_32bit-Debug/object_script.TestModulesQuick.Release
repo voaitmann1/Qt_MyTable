@@ -1,0 +1,12 @@
+INPUT(
+./release\main.o
+./release\mylib.o
+./release\mymathlib.o
+./release\kynemparam.o
+./release\tests1.o
+./release\myarraylib.o
+./release\matrices3.o
+./release\matrica.o
+./release\fluttermodels.o
+./release\filereadinglib.o
+);
