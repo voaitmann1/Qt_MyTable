@@ -858,6 +858,9 @@ class Array2DSize_Prototype{
     //virtual bool IsEmpty() const;
     bool IsEmpty() const;
     //
+    int GetIneRowLength(int N=-1, bool countWhole=false) const;
+    bool isTransposable();
+    //
     //
     virtual void setExtRow_simplyAsDataGiven(int N=-1, int L=0, int ifNonRectForRect_NonRect0_MakeRactChangingBy_New1Old2Max3Min4=0)=0;
     virtual void addExtRow_simplyAsDataGiven(          int L=0, int ifNonRectForRect_NonRect0_MakeRactChangingBy_New1Old2Max3Min4=0)=0;
@@ -867,17 +870,40 @@ class Array2DSize_Prototype{
     virtual void addIneRow_simplyAsDataGiven(int L=0, int ifL_NE_QER_Ignore0_MakeRactChangingBy_New1Old2Max3Min4=0, int ifNonRect_Ignore0AddToLast1StretchToMax2=0 )=0;
     virtual void delIneRow_simplyAsDataGiven(int N=-1,     int ifNGTLminIgnore0ShortenNurLongRows1=0)=0;
     //
-    //
     int setExtRow_simplyAsDataGiven_RowLengthNew(int InquiredExtRowNN, int ExtRowNN_0IfAll=-1, int L=0, int ifNonRectForRect_NonRect0_MakeRactChangingBy_New1Old2Max3Min4=0, bool IfNotValsOfGivenRow_DefaultNotOwn=true);
     int setExtRow_simplyAsDataGiven_DataTypeN(const Coords2DInt&coords, int ExtRowNN_0IfAll=-1, int L=0, int ifNonRectForRect_NonRect0_MakeRactChangingBy_New1Old2Max3Min4=0, bool IfNotValsOfGivenRow_DefaultNotOwn=true);
     Coords2DInt setExtRow_simplyAsDataGiven_Arr2DCoordsNewToOld(const Coords2DInt&coords, int ExtRowNN_0IfAll=-1, int L=0, int ifNonRectForRect_NonRect0_MakeRactChangingBy_New1Old2Max3Min4=0, bool IfNotValsOfGivenRow_DefaultNotOwn=true);
     int setExtRow_simplyAsDataGiven_Arr2DNewCoordsToInGivenRowPosN(const Coords2DInt&coords, int ExtRowNN_0IfAll=-1, int L=0, int ifNonRectForRect_NonRect0_MakeRactChangingBy_New1Old2Max3Min4=0, bool IfNotValsOfGivenRow_DefaultNotOwn=true);
     //
-    //
     int insExtRow_simplyAsDataGiven_ExtRowNewNToLengthNew(int InquiredExtRowNewNN, int ExtRowNN_0IfAll=-1, int L=0, int ifNonRectForRect_NonRect0_MakeRactChangingBy_New1Old2Max3Min4=0, bool IfNotValsOfGivenRow_DefaultNotOwn=true);
     int insExtRow_simplyAsDataGiven_DataTypeN(const Coords2DInt&coords, int ExtRowNN_0IfAll=-1, int L=0, int ifNonRectForRect_NonRect0_MakeRactChangingBy_New1Old2Max3Min4=0, bool IfNotValsOfGivenRow_DefaultNotOwn=true);
     Coords2DInt insExtRow_simplyAsDataGiven_Arr2DCoordsNewToOld(const Coords2DInt&coords, int ExtRowNN_0IfAll=-1, int L=0, int ifNonRectForRect_NonRect0_MakeRactChangingBy_New1Old2Max3Min4=0, bool IfNotValsOfGivenRow_DefaultNotOwn=true);
     int insExtRow_simplyAsDataGiven_Arr2DNewCoordsToInGivenRowPosN(const Coords2DInt&coords, int ExtRowNN_0IfAll=-1, int L=0, int ifNonRectForRect_NonRect0_MakeRactChangingBy_New1Old2Max3Min4=0, bool IfNotValsOfGivenRow_DefaultNotOwn=true);
+    //
+    int addExtRow_simplyAsDataGiven_ExtRowNewNToLengthNew(int InquiredExtRowNewNN, int L=0, int ifNonRectForRect_NonRect0_MakeRactAddingAndMakingRest_L1Max2Minx3Last4MinOfLAndLmin5MaxOfLAndLmax6=0, bool IfNotValsOfGivenRow_DefaultNotOwn=true);
+    int addExtRow_simplyAsDataGiven_Arr2DNewCoordsToDataTypeN(const Coords2DInt&coordsNew, int L=0, int ifNonRectForRect_NonRect0_MakeRactAddingAndMakingRest_L1Max2Minx3Last4MinOfLAndLmin5MaxOfLAndLmax6=0, bool IfNotValsOfGivenRow_DefaultNotOwn=true);
+    int addExtRow_simplyAsDataGiven_Arr2DAddedRowToGivenRowPosNN(int InRowPosNN, int L=0, int ifNonRectForRect_NonRect0_MakeRactAddingAndMakingRest_L1Max2Minx3Last4MinOfLAndLmin5MaxOfLAndLmax6=0, bool IfNotValsOfGivenRow_DefaultNotOwn=true);
+    Coords2DInt addExtRow_simplyAsDataGiven_Arr2DCoordsNewToOld(const Coords2DInt&coordsNew, int L=0, int ifNonRectForRect_NonRect0_MakeRactAddingAndMakingRest_L1Max2Minx3Last4MinOfLAndLmin5MaxOfLAndLmax6=0, bool IfNotValsOfGivenRow_DefaultNotOwn=true);
+    //
+    int delExtRow_simplyAsDataGiven_ExtRowNewNToLengthNew(int InquiredExtRowNewNN, int ExtRowToDelNN);
+    Coords2DInt delExtRow_simplyAsDataGiven_ExtRowNewNToLengthNew(const Coords2DInt&CoordsNew, int ExtRowToDelNN);
+    //
+    //
+    int delIneRow_simplyAsDataGiven_ExtRowNewNToLengthNew(int InquiredExtRowNN, int IneRowToDelNN=-1, int ifN_GT_Lmin_CutLongOnly1_Ignore0=0);
+    Coords2DInt delIneRow_simplyAsDataGiven_Arr2DCoordsNewToOld(const Coords2DInt&CoordsNew, int IneRowToDelNN=-1, int ifN_GT_Lmin_CutLongOnly1_Ignore0=0);
+    //
+    void addIneRow_simplyAsDataGiven_HilfsFun(const Coords2DInt&CoordsNew, int L, int ifL_NE_QER_Ignore0_SetRectByStretchToMaxAndQER_New1Old2Max3Min4, int ifNonRect_AddToLast1StretchToMax2Ignore0, int&DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0, int&QExtRowsNew, int&InquiredExtRowNewL, int&InGivenRowPosN,Coords2DInt&CoordsOld);
+    int addIneRow_simplyAsDataGiven_NewExtRowLength(const Coords2DInt&CoordsNew, int L, int ifL_NE_QER_Ignore0_SetRectByStretchToMaxAndQER_New1Old2Max3Min4, int ifNonRect_AddToLast1StretchToMax2Ignore0);
+    int addIneRow_simplyAsDataGiven_QExtRowsNew(const Coords2DInt&CoordsNew, int L, int ifL_NE_QER_Ignore0_SetRectByStretchToMaxAndQER_New1Old2Max3Min4, int ifNonRect_AddToLast1StretchToMax2Ignore0);
+    int addIneRow_simplyAsDataGiven_DataTypeN(const Coords2DInt&CoordsNew, int L, int ifL_NE_QER_Ignore0_SetRectByStretchToMaxAndQER_New1Old2Max3Min4, int ifNonRect_AddToLast1StretchToMax2Ignore0);
+    Coords2DInt addIneRow_simplyAsDataGiven_Arr2DCoordsNewToOld(const Coords2DInt&CoordsNew, int L, int ifL_NE_QER_Ignore0_SetRectByStretchToMaxAndQER_New1Old2Max3Min4, int ifNonRect_AddToLast1StretchToMax2Ignore0);
+    //
+    void set_or_ins_IneRow_simplyAsDataGiven_HilfsFun(int Action_Set1_Ins3, const Coords2DInt&CoordsNew, int TheIneRowNN, int L, int ifNGTLMin_Ignore0_ModifyLongOnly1_StretchShortToN2_MakeRectStretchingAllToLmax3, int ifL_NE_QER_Ignore0_MakeRectMakingL_ET_LMax_andNew1Old2ByMax3ByMin4, bool IfNotValsOfGivenRow_DefaultNotOwn, int&QExtRowsNew, int&DataTypeN_Arr2DVals1_GivenRowVals2_Default3_Incorrect4, int&ERLNew, int&InGivenRowPosNN, Coords2DInt&CoordsOld);
+    int set_or_ins_IneRow_simplyAsDataGiven_QExtRowsNew(int Action_Set1_Ins3, const Coords2DInt&coordsNew, int TheIneRowNN, int L=0, int ifNonRectForRect_NonRect0_MakeRactChangingBy_New1Old2Max3Min4=0, bool IfNotValsOfGivenRow_DefaultNotOwn=false);
+    int set_or_ins_IneRow_simplyAsDataGiven_ExtRowLengthNew(int Action_Set1_Ins3, const Coords2DInt&coordsNew, int TheIneRowNN, int L=0, int ifNonRectForRect_NonRect0_MakeRactChangingBy_New1Old2Max3Min4=0, bool IfNotValsOfGivenRow_DefaultNotOwn=false);
+    int set_or_ins_IneRow_simplyAsDataGiven_DataTypeN(int Action_Set1_Ins3, const Coords2DInt&coordsNew, int TheIneRowNN, int L=0, int ifNonRectForRect_NonRect0_MakeRactChangingBy_New1Old2Max3Min4=0, bool IfNotValsOfGivenRow_DefaultNotOwn=false);
+    int set_or_ins_IneRow_simplyAsDataGiven_InGinenRowPosNN(int Action_Set1_Ins3, const Coords2DInt&coordsNew, int TheIneRowNN, int L=0, int ifNonRectForRect_NonRect0_MakeRactChangingBy_New1Old2Max3Min4=0, bool IfNotValsOfGivenRow_DefaultNotOwn=false);
+    Coords2DInt set_or_ins_IneRow_simplyAsDataGiven_Arr2DCoordsNewToOld(int Action_Set1_Ins3, const Coords2DInt&coords,  int TheIneRowNN, int L=0, int ifNonRectForRect_NonRect0_MakeRactChangingBy_New1Old2Max3Min4=0, bool IfNotValsOfGivenRow_DefaultNotOwn=false);
     //
     //
     TDataShiftResults  ExtRow_SetAddInsDel_dataNs(int Action_Set1_Add2_Ins3_Del4_Dflt0, int givenRowL=0, /*int inquiredRowNN=-1,*/ int ChangedRowNN_0ifAll=-1, TDataShiftParams*DataShiftParam=NULL, int ifWasRectAndNotEqual_NonRect0_SetRectBy_New1_Old2_Max3_Min4=0, bool suiValsInsteadOfDefaultValsWherePossible=true);
