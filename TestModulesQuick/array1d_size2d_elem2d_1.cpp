@@ -421,7 +421,7 @@ QString TDataShiftResults::ToString(){
             bool verdict=(QExtRows==0 || Lmin==0);
             return verdict;
         }
-        int Array2DSize_Prototype::GetIneRowLength(int IRNN, bool countWhole=false) const{
+        int Array2DSize_Prototype::GetIneRowLength(int IRNN, bool countWhole) const{
             int IRL=0, QExtRows=this->GetQExtRows(), Lmax=this->GetRowLengthMax(), curL, ERNN;
             bool contin;
             if(IRNN<0){
@@ -473,1452 +473,514 @@ QString TDataShiftResults::ToString(){
         ////virtual void SetQExtRows(int Q, int IfNotRect_ERL_ByMin1ByMax2ByLast3)=0;//mab n'nod
         //
         //virtual void SetExtRowLength(int L, int NN_0ifAll=0, int FirstN=1, int QDefaultsBefore=0, int Lreq=0, int ifWasRectAndNotEqual_IgnoreAndLeaveByOld0_SetRectBy_New1_Max2_Min3_TransformToNonRectLTZero=1);
-//        int Array2DSize_Prototype::CalcNewExtRowLength(int givenRowL, int extRowNN, int FirstN, int QDefaultsBefore, int Lreq, int ifWasRectAndNotEqual_IgnoreAndLeaveByOld0_SetRectBy_New1_Max2_Min3_TransformToNonRectLTZero){
-//            int finalL, calcdL, oldL, QExtRows=this->GetQExtRows();
-//            TDataShiftParams dataShift;
-//            TDataShiftResults Ns;
-//            dataShift.Set(FirstN, QDefaultsBefore, Lreq);
-//            Ns=dataShift.Calc(givenRowL);
-//            calcdL=Ns.Lcalc;
-//            if(extRowNN>=1 && extRowNN<=QExtRows){
-//                oldL=this->GetRowLength(extRowNN);
-//                if(calcdL!=oldL){
-//                    switch(ifWasRectAndNotEqual_IgnoreAndLeaveByOld0_SetRectBy_New1_Max2_Min3_TransformToNonRectLTZero){
-//                        case 0:
-//                            if(this->IsRectangularByType()){
-//                                finalL=oldL;
-//                            }else{
-//                                finall=calcdL;
-//                            }
-//                        break;
-//                        case 1:
-//                            finalL=calcdL;
-//                        break;
-//                        case 2:
-//                            if(oldL>=calcdL){
-//                                finalL=oldL;
-//                            }else{
-//                                finalL=calcdL;
-//                            }
-//                        break;
-//                        case 3:
-//                            if(oldL<=calcdL){
-//                                finalL=oldL;
-//                            }else{
-//                                finalL=calcdL;
-//                            }
-//                        break;
-//                    }
-//                }else{
-//                    finalL=oldL;
-//                }
-//            }
-//        }
 
+        // ---------------------------------------------------------------------------------------------
 
-
-//        int Array2DSize_Prototype::setExtRowLength_calcFinalL_simplyAsDataGiven(int L, int rowN, int ifNonRectForRect_NonRect0_MakeRactChangingBy_New1Old2Max3Min4){
-//            int finalL, QExtRows=this->GetQExtRows(), oldL;
-//            if(rowN<0){
-//                rowN+=(QExtRows+1);
-//            }
-//            if(rowN>=1 && rowN<=QExtRows){
-//                oldL=this->GetRowLength(rowN);
-//                if(L==0){
-//                    L=oldL;
-//                }
-//                if(L!=oldL){
-//                    switch(ifWasRectAndNotEqual_IgnoreAndLeaveByOld0_SetRectBy_New1_Max2_Min3_TransformToNonRectLTZero){
-//                        case 0:
-//                            if(this->IsRectangularByType()){
-//                                finalL=oldL;//ma ne in rectangular!
-//                            }else{
-//                                finalL=L;//ma ne in rectangular!
-//                            }
-//                        break;
-//                        case 1:
-//                            finalL=L;
-//                        break;
-//                        case 2:
-//                            finalL=oldL;
-//                        break;
-//                        case 3:
-//                            if(L>odL){
-//                                finalL=L;
-//                            }else{
-//                                finalL=oldL;
-//                            }
-//                        break;
-//                        case 4:
-//                            if(L<oldL){
-//                                finalL=L;
-//                            }else{
-//                                finalL=oldL;
-//                            }
-//                        break;
-//                    }
-//                }
-//            }
-//            return finalL;
-//        }
-
-//        Coords2DInt Array2DSize_Prototype::setExtRowLength_1DTo2D_rowValPos_simplyAsDataGiven(int ElementN, int L, int rowN, int ifNonRectForRect_NonRect0_MakeRactChangingBy_New1Old2Max3Min4){
-//            Coords2DInt coords;
-//            int QExtRows=this->GetQExtRows(), oldL, finalL, minL;//, maxL;
-//            if(rowN<0){
-//                rowN+=(QExtRows+1);
-//            }
-//            if(rowN>=0 && rowN<=QExtRows){
-//                if(rowN>0){
-//                    oldL=this->GetRowLength(rowN);
-//                    if(L==0){
-//                        L=oldL;
-//                    }
-//                    if(ElementN<0){
-//                        ElementN+=(L+1);
-//                    }
-//                    if(L!=oldL){
-//                        finalL=this->setExtRowLength_calcFinalL_simplyAsDataGiven(L, rowN, ifNonRectForRect_NonRect0_MakeRactChangingBy_New1Old2Max3Min4);
-//                        if(!(this->IsRectangularByType() && ifNonRectForRect_NonRect0_MakeRactChangingBy_New1Old2Max3Min4==0)){
-//                            //coords.SetX(rowN);
-//                            minL = L<=finalL ? L : finalL;
-//                            maxL = L>=finalL ? L : finalL;
-//                            if(ElementN>=1 && ElementN<=minL){
-//                                coords.SetY(ElementN);
-//                                coords.SetX(rowN);
-//                            }
-//                        }
-//                    }
-
-//                }
-//            }
-//            return coords;
-//        }
-
-//        Coords2DInt Array2DSize_Prototype::setExtRowLength_1DTo2D_defaultValPos_simplyAsDataGiven(int PosN, int L, int rowN, int ifNonRectForRect_NonRect0_MakeRactChangingBy_New1Old2Max3Min4){
-//            Coords2DInt coords;
-//            int QExtRows=this->GetQExtRows(), oldL, finalL, minL;//, maxL;
-//            if(rowN<0){
-//                rowN+=(QExtRows+1);
-//            }
-//            if(rowN>=0 && rowN<=QExtRows){
-//                if(rowN>0){
-//                    oldL=this->GetRowLength(rowN);
-//                    if(L==0){
-//                        L=oldL;
-//                    }
-//                    if(PosN<0){
-//                        PosN+=(L+1);
-//                    }
-//                    if(L!=oldL){
-//                        finalL=this->setExtRowLength_calcFinalL_simplyAsDataGiven(L, rowN, ifNonRectForRect_NonRect0_MakeRactChangingBy_New1Old2Max3Min4);
-//                        if(!(this->IsRectangularByType() && ifNonRectForRect_NonRect0_MakeRactChangingBy_New1Old2Max3Min4==0)){
-//                            minL = L<=finalL ? L : finalL;
-//                            //maxL = L>=finalL ? L : finalL;
-//                            if(PosN>L && PosN<=finalL){
-//                                coords.SetY(PosN);
-//                                coords.SetX(rowN);
-//                            }
-//                        }
-//                    }
-//                }//else can't define, give concrete rowN
-//            }
-//            return coords;
-//        }
-
-//        int Array2DSize_Prototype::setExtRowLength_2DTo1D_SeekPosInRowGiven_simplyAsDataGiven(const Coords2DInt&coords, int L, int rowNN, int ifNonRectForRect_NonRect0_MakeRactChangingBy_New1Old2Max3Min4){
-//            // vikt! n'fin'd!
-//            int inRowPosNN=0, QExtRows=this->GetQExtRows(), curL;// minL=this->GetRowLengthMin(), maxL=this->GetRowLengthMax();
-//            if(rowNN<0){
-//                rowNN+=(QExtRows+1);
-//            }
-//            if(coords.x<0){
-//                coords.x+=(QExtRows+1);
-//            }
-//            if(rowNN>=1 && rowNN<=QExtRows && coords.x>=1 && coords.x<=QExtRows && coords.x==rowNN){
-//                if(L==this->GetRowLength(rowNN)){
-//                    if(coords.y<0){
-//                        //coords.y
-//                    }
-//                }
-//            }
-//            return inRowPosNN;
-//        }
-
-
-
-//        void Array2DSize_Prototype::SetExtRowLength(int givenRowL, int NN_0ifAll, TDataShiftParams*ShiftData, int ifWasRectAndNotEqual_IgnoreAndLeaveByOld0_SetRectBy_New1_Max2_Min3_TransformToNonRectLTZero){
-//            TDataShiftParams dataShift;
-//            int FirstN=1, QDefaultsBefore=0, Lreq=0;
-//            if(ShiftData!=NULL)
-//            {
-//                dataShift=(*(ShiftData));
-//                FirstN=dataShift.FirstN;
-//                QDefaultsBefore=dataShift.QDefaultsBefore;
-//                Lreq=dataShift.Lreq;
-//            }
-//            else
-//            {
-//               FirstN=1;
-//               QDefaultsBefore=0;
-//               Lreq=0;
-//            }
-//            this->SetExtRowLength(givenRowL, NN_0ifAll, FirstN, QDefaultsBefore, Lreq, ifWasRectAndNotEqual_IgnoreAndLeaveByOld0_SetRectBy_New1_Max2_Min3_TransformToNonRectLTZero);
-//        }
-//        //
-//        Coords2DInt Array2DSize_Prototype::SetExtRowLength_RowNToArr2DCoords(int inRowNN, int givenRowL, int NN_0ifAll, TDataShiftParams*ShiftData, int ifWasRectAndNotEqual_IgnoreAndLeaveByOld0_SetRectBy_New1_Max2_Min3_TransformToNonRectLTZero){
-//            Coords2DInt coords;
-//            TDataShiftParams dataShift;
-//            TDataShiftResults Ns;
-//            int FirstN=1, QDefaultsBefore=0, Lreq=0, ExtRowN, IneRowN, newL, QExtRows=this->GetQExtRows();
-//            if(NN_0ifAll>=1 && NN_0ifAll<=QExtRows){
-//                if(ShiftData!=NULL)
-//                {
-//                    dataShift=(*(ShiftData));
-//                    FirstN=dataShift.FirstN;
-//                    QDefaultsBefore=dataShift.QDefaultsBefore;
-//                    Lreq=dataShift.Lreq;
-//                }
-//                else
-//                {
-//                    FirstN=1;
-//                    QDefaultsBefore=0;
-//                    Lreq=0;
-//                }
-//                newL=this->CalcNewExtRowLength(givenRowL, NN_0ifAll, FirstN, QDefaultsBefore, Lreq, ifWasRectAndNotEqual_IgnoreAndLeaveByOld0_SetRectBy_New1_Max2_Min3_TransformToNonRectLTZero);
-//                Ns=dataShift.Calc(givenRowL);
-//                if(Ns.ForOwnN1>0 && Ns.ForOwnN2>0 && Ns.ForOwnN1>=1 && Ns.ForOwnN2>=1 && Ns.ForOwnN1<=newL && NN_0ifAll>=1 && NN_0ifAll<=QExtRows){
-//                    if(inRowNN<0){
-//                        inRowNN+=(newL+1);
-//                    }
-//                    if(inRowNN>=1 && inRowNN<=newL && inRowNN>=Ns.ForOwnN1){
-//                        IneRowN=dataShift.QDefaultsBefore+inRowNN-1;
-//                        if(IneRowN>=1 && IneRowN<=newL){
-//                            ExtRowN=NN_0ifAll;
-//                            //IneRowN=self
-//                            coords.x=ExtRowN;
-//                            coords.y=IneRowN;
-//                        }
-//                    }//else IneRowN not fit
-//                }//else ExtRowN  not fit or no row val is used
-//            }//else ExtRowN  not fit
-//            //
-//            return coords;
-//        }
-
-//        int Array2DSize_Prototype::SetExtRowLength_RowNToArr2DCoords(Coords2DInt inRowCoords, int givenRowL, int NN_0ifAll, TDataShiftParams*ShiftData, int ifWasRectAndNotEqual_IgnoreAndLeaveByOld0_SetRectBy_New1_Max2_Min3_TransformToNonRectLTZero){
-//            int inRowNN=0;
-//            TDataShiftParams dataShift;
-//            TDataShiftResults Ns;
-//            int FirstN=1, QDefaultsBefore=0, Lreq=0, ExtRowN, IneRowN, newL, QExtRows=this->GetQExtRows();
-//            if(NN_0ifAll>=1 && NN_0ifAll<=QExtRows){
-
-//                if(ShiftData!=NULL)
-//                {
-//                    dataShift=(*(ShiftData));
-//                    FirstN=dataShift.FirstN;
-//                    QDefaultsBefore=dataShift.QDefaultsBefore;
-//                    Lreq=dataShift.Lreq;
-//                }
-//                else
-//                {
-//                    FirstN=1;
-//                    QDefaultsBefore=0;
-//                    Lreq=0;
-//                }
-//                newL=this->CalcNewExtRowLength(givenRowL,NN_0ifAll,FirstN,QDefaultsBefore,Lreq,ifWasRectAndNotEqual_IgnoreAndLeaveByOld0_SetRectBy_New1_Max2_Min3_TransformToNonRectLTZero);
-//                Ns=dataShift.Calc(givenRowL);
-//                //
-//                ExtRowN=NN_0ifAll;
-//                //
-//                if(Ns.ForOwnN1>0 && Ns.ForOwnN2>0 && Ns.ForOwnN1>=1 && Ns.ForOwnN2>=1 && Ns.ForOwnN1<=newL && NN_0ifAll>=1 && NN_0ifAll<=QExtRows){
-//                    inRowNN = inRowCoords.y - Ns.ForOwnN1+1;
-//                    if(inRowNN>=1 && inRowNN<=givenRowL){
-//                        //NOp, all s'gut
-//                    }else{
-//                        inRowNN=0;
-//                    }
-//                }
-//            }
-//            //
-//            return inRowNN;
-//        }
-
-
-
-
-        //void Array2DSize_Prototype::SetExtRowLength(int L, int NN_0ifAll, TDataShiftParams*ShiftData, int ifWasRectAndNotEqual_NonRect0_SetRectBy_New1_Old2_Max3_Min4){
-        //
-        //}
-
-        //
-//        int Array2DSize_Prototype::SetExtRowLength_calcL(int L, int NN, TDataShiftParams*DataShiftParam, int ifWasRectAndNotEqual_NonRect0_SetRectBy_New1_Old2_Max3_Min4){
-//            TDataShiftParams shiftData;
-//            int Lcalc1, Lcalc2=0, Lold, Lmax=this->GetRowLengthMax(), Lmin=this->GetRowLengthMin(), QExtRows=this->GetQExtRows();
-//            TDataShiftResults dataShiftRslts;
-//            if(NN<0){
-//                NN+=(QExtRows+1);
-//            }
-//            if(DataShiftParam!=NULL){
-//                shiftData=(*(DataShiftParam));
-//                //dataShiftRslts=shiftData.Calc(L);
-//                //Lcalc1=dataShiftRslts.Lcalc;
-//            }//else{
-//            //    Lcalc1=L;
-//            //}
-//            if(NN>=1 && NN<=QExtRows){
-//                dataShiftRslts=shiftData.Calc(L);//must be auto, if no - decomment ovda
-//                Lcalc1=dataShiftRslts.Lcalc;//must be auto, if no - decomment ovda
-//                Lold=this->GetRowLength(NN);
-//                if(this->IsRectangularInFact() && ifWasRectAndNotEqual_NonRect0_SetRectBy_New1_Old2_Max3_Min4==0){
-//                    //NOp;//ob Sdi ignore
-//                }else{
-//                    switch(ifWasRectAndNotEqual_NonRect0_SetRectBy_New1_Max2_Min3){
-//                        case 0:
-//                            Lcalc2=Lcalc1;
-//                        break;
-//                        case 1:
-//                            Lcalc2=Lcalc1;
-//                        break;
-//                        case 2:
-//                            Lcalc2=Lold;
-//                        break;
-//                        case 3:
-//                            if(Lcalc1>=Lold){
-//                                Lcalc2=Lcalc1;
-//                            }else{
-//                                Lcalc2=Lold;
-//                            }
-//                        break;
-//                        case 4:
-//                            if(Lcalc1<=Lold){
-//                                Lcalc2=Lcalc1;
-//                            }else{
-//                                Lcalc2=Lold;
-//                            }
-//                        break;
-//                    }
-//                    //if(Lcalc2==Lold){
-//                    //    shiftData.Lreq=Lold;
-//                    //    dataShiftRslts=shiftData.Calc(L);
-//                    //    //Lcalc2=dataShiftRslts.Lcalc;
-//                    //}
-//                }
-//            }
-//            return Lcalc2;
-//        }
-//        int Array2DSize_Prototype::SetExtRowLength_2DTo1D_SeekPosInRowGiven(int L, int NN, const Coords2DInt&coords, TDataShiftParams*ShiftData, int ifWasRectAndNotEqual_NonRect0_SetRectBy_New1_Old2_Max3_Min4){
-//            TDataShiftParams shiftData;
-//            TDataShiftResults dataShiftRslts;
-//            int Lcalc, PosN=0, QExtRows=this->GetQExtRows();
-//            if(NN<0){
-//                NN+=(QExtRows+1);
-//            }
-//            if(DataShiftParam!=NULL){
-//                shiftData=(*(DataShiftParam));
-//                //dataShiftRslts=shiftData.Calc(L);
-//                //Lcalc1=dataShiftRslts.Lcalc;
-//            }//else{
-//            //    Lcalc1=L;
-//            //}
-//            if(NN>=1 && NN<=QExtRows && coords.x==NN){
-//                Lcalc=this->SetExtRowLength_calcL(L, NN, TDataShiftParams*DataShiftParam, ifWasRectAndNotEqual_NonRect0_SetRectBy_New1_Old2_Max3_Min4);
-//                dataShiftRslts=shiftData.Calc(Lcalc);//must be auto, if no - decomment ovda
-//                if(coords.y>=dataShiftRslts.ForOwnN1 && coords.y<=dataShiftRslts.ForOwnN2){
-//                    PosN=coords.y-dataShiftRslts.ForOwnN1+1;
-//                }
-//            }
-//            return PosN;
-//        }
-//        int Array2DSize_Prototype::SetExtRowLength_2DTo1D_RowGiven1DfltVal2OwnVal3IncorrectCoord0(int L, int NN, const Coords2DInt&coords, TDataShiftParams*ShiftData, int ifWasRectAndNotEqual_NonRect0_SetRectBy_New1_Old2_Max3_Min4){
-//            int caseN=0, InRowGivenN, QExtRows=this->GetQExtRows(), Lold;
-//            TDataShiftParams shiftData;
-//            TDataShiftResults dataShiftRslts;
-//            if(NN<0){
-//                NN+=(QExtRows+1);
-//            }
-//            InRowGivenN=this->SetExtRowLength_2DTo1D_SeekPosInRowGiven(L, NN, coords, ShiftData, ifWasRectAndNotEqual_NonRect0_SetRectBy_New1_Old2_Max3_Min4);
-//            if(DataShiftParam!=NULL){
-//                shiftData=(*(DataShiftParam));
-//                //dataShiftRslts=shiftData.Calc(L);
-//                //Lcalc1=dataShiftRslts.Lcalc;
-//            }//else{
-//            //    Lcalc1=L;
-//            //}
-//            if(NN>=1 && NN<=QExtRows && coords.x==NN){
-//                Lcalc=this->SetExtRowLength_calcL(L, NN, TDataShiftParams*DataShiftParam, ifWasRectAndNotEqual_NonRect0_SetRectBy_New1_Old2_Max3_Min4);
-//                Lold=this->GetRowLength(NN);
-//                dataShiftRslts=shiftData.Calc(Lcalc);//must be auto, if no - decomment ovda
-//                if(coords.y>=dataShiftRslts.ForOwnN1 && coords.y<=dataShiftRslts.ForOwnN2){
-//                    PosN=coords.y-dataShiftRslts.ForOwnN1+1;
-//                }
-//                if(InRowGivenN>0){
-//                    caseN=1;
-//                }else{
-//                    if(coords.x==NN){
-//                        if((coords.y>=1 && coords.y<dataShiftRslts.ForOwnN1)||(coords.y>dataShiftRslts.ForOwnN2 && coords.y<=Lold)){
-//                            caseN=3;
-//                        }else{
-
-
-//                        }
-//                    }else{
-
-//                    }
-//                }
-//            }
-
-//            return PosN;
-//        }
-
-//        Coords2DInt Array2DSize_Prototype::SetExtRowLength_1DTo2D_SeekCoordsIn2DArrayByPosInRowGiven(int L, int NN, int PosN, TDataShiftParams*ShiftData, int ifWasRectAndNotEqual_NonRect0_SetRectBy_New1_Old2_Max3_Min4){
-//            Coords2DInt coords;
-//            TDataShiftParams shiftData;
-//            TDataShiftResults dataShiftRslts;
-//            int Lcalc;
-//            if(NN<0){
-//                NN+=(QExtRows+1);
-//            }
-//            if(DataShiftParam!=NULL){
-//                shiftData=(*(DataShiftParam));
-//                //dataShiftRslts=shiftData.Calc(L);
-//                //Lcalc1=dataShiftRslts.Lcalc;
-//            }//else{
-//            //    Lcalc1=L;
-//            //}
-//            if(NN>=1 && NN<=QExtRows){
-//                Lcalc=this->SetExtRowLength_calcL(L, NN, TDataShiftParams*DataShiftParam, ifWasRectAndNotEqual_NonRect0_SetRectBy_New1_Old2_Max3_Min4);
-//                dataShiftRslts=shiftData.Calc(Lcalc);//must be auto, if no - decomment ovda
-//                coords.x=NN;
-//                if(PosN>=dataShiftRslts.OwnN1 && PosN<=dataShiftRslts.OwnN2){
-//                    coords.y=dataShiftRslts.ForOwnN1+PosN-1;
-//                }
-//            }
-//            return coords;
-//        }
-
-
-
-
-//        int Array2DSize_Prototype::setIneRowLength_calcFinalL_simplyAsDataGiven(int L, int rowN, int ifNonRectForRect_NonRect0_MakeRactChangingBy_New1Old2Max3Min4){
-//            int finalL, QExtRows=this->GetQExtRows(), oldL, Lmax=this->GetRowLengthMax(), Lmin=this->GetRowLengthMin();
-//            if(rowN<0){
-//                rowN+=(Lmax+1);
-//            }
-//            if(rowN>=1 && rowN<=Lmax){
-//                if(L==0){
-//                    L=QExtRows;
-//                }
-//                if(L==QExtRows){
-//                    finalL=QExtRows;
-//                }else{
-//                    switch(ifWasRectAndNotEqual_IgnoreAndLeaveByOld0_SetRectBy_New1_Max2_Min3_TransformToNonRectLTZero){
-//                        case 0:
-//                            if(this->IsRectangularByType()){
-//                                finalL=QExtRows;//ma ne in rectangular!
-//                            }else{
-//                                finalL=L;//ma ne in rectangular!
-//                            }
-//                        break;
-//                        case 1:
-//                            finalL=L;
-//                        break;
-//                        case 2:
-//                            finalL=QExtRows;
-//                        break;
-//                        case 3:
-//                            if(L>QExtRows){
-//                                finalL=L;
-//                            }else{
-//                                finalL=QExtRows;
-//                            }
-//                        break;
-//                        case 4:
-//                            if(L<QExtRows){
-//                                finalL=L;
-//                            }else{
-//                                finalL=QExtRows;
-//                            }
-//                        break;
-//                    }
-//                }
-//            }
-//            return finalL;
-//        }
-
-        // -------------------------------------------------------------------------------------------------
-
-
-        int Array2DSize_Prototype::setExtRow_simplyAsDataGiven_RowLengthNew(int InquiredExtRowNN, int ExtRowNN_0IfAll, int L, int ifNonRectForRect_NonRect0_MakeRactChangingBy_New1Old2Max3Min4, bool IfNotValsOfGivenRow_DefaultNotOwn){
-            int  QExtRows=this->GetQExtRows(), Lmin=this->GetRowLengthMin(), Lmax=this->GetRowLengthMax(), InquiredExtRowNewL=0, InquiredExtRowOldL, InquiredExtRowMinL, ChangedExtRowOldL;//, InquiredExtRowNN=coords.x, InquiredIneRowNN=coords.y
-            if(ExtRowNN_0IfAll<0){
-                ExtRowNN_0IfAll+=(QExtRows+1);
-            }
-            if(InquiredExtRowNN<=0){
-                InquiredExtRowNN+=(QExtRows+1);
-            }
-            if(L==0 && ExtRowNN_0IfAll>=1 && ExtRowNN_0IfAll<=QExtRows){
-                L=this->GetRowLength(ExtRowNN_0IfAll);
-            }
-            if(L>0 && ExtRowNN_0IfAll>=0 && ExtRowNN_0IfAll<=QExtRows && InquiredExtRowNN>=1 && InquiredExtRowNN<=QExtRows){
-                if(ExtRowNN_0IfAll>=1){
-                    InquiredExtRowOldL=this->GetRowLength(InquiredExtRowNN);
-                    ChangedExtRowOldL==this->GetRowLength(ExtRowNN_0IfAll);
-                    if(L==this->GetRowLength(ExtRowNN_0IfAll)){
-                        //NOp: for size nil changes
-                    }else{
-                        //L
-                        switch(ifNonRectForRect_NonRect0_MakeRactChangingBy_New1Old2Max3Min4){
-                            case 0:
-                                if(this->IsRectangularByType()){
-                                    InquiredExtRowNewL=InquiredExtRowOldL;
-                                }else{//adbe n'rect arr2D
-                                    if(InquiredExtRowNN==ExtRowNN_0IfAll){
-                                        InquiredExtRowNewL=L;
-                                    }else{
-                                        InquiredExtRowNewL=InquiredExtRowOldL;
-                                    }
-                                }
-                            break;
-                            case 1:
-                                //this->rowsLs[ExtRowNN_0IfAll-1]=L;
-                                InquiredExtRowNewL=L;
-                            break;
-                            case 2:
-                                //NOp: ignored
-                                InquiredExtRowNewL=InquiredExtRowOldL;
-                            break;
-                            case 3:
-                                if(L>ChangedExtRowOldL){
-                                    //this->rowsLs[ExtRowNN_0IfAll-1]=L;
-                                    InquiredExtRowNewL=L;
-                                }else{
-                                    InquiredExtRowNewL=InquiredExtRowOldL;
-                                }
-                            break;
-                            case 4:
-                                if(L<ChangedExtRowOldL){
-                                    //this->rowsLs[ExtRowNN_0IfAll-1]=L;
-                                    InquiredExtRowNewL=L;
-                                }else{
-                                    InquiredExtRowNewL=InquiredExtRowOldL;
-                                }
-                            break;
-                        }
-                    }
-                }else if(ExtRowNN_0IfAll==0){
-                    InquiredExtRowNewL=InquiredExtRowOldL=L;
-                }
-            }
-            return InquiredExtRowNewL;
-        }
-
-//        int Array2DSize_Prototype::setExtRow_simplyAsDataGiven_DataTypeN(const Coords2DInt&coords, int ExtRowNN_0IfAll, int L, int ifNonRectForRect_NonRect0_MakeRactChangingBy_New1Old2Max3Min4, bool IfNotValsOfGivenRow_DefaultNotOwn){
-//            int DataTypeN_Arr2DOwnVal1_GivenRowVal2_DefaultVal3_IncorrectN0=0, QExtRows=this->GetQExtRows(), Lmin=this->GetRowLengthMin(), Lmax=this->GetRowLengthMax(), InquiredExtRowNN=coords.x, InquiredIneRowNN=coords.y, InquiredExtRowNewL, InquiredExtRowOldL, InquiredExtRowMinL;
-//            if(ExtRowNN_0IfAll<0){
-//                ExtRowNN_0IfAll+=(QExtRows+1);
-//            }
-//            if(InquiredExtRowNN<=0){
-//                InquiredExtRowNN+=(QExtRows+1);
-//            }
-//            if(L==0){
-//                L=this->GetRowLength(ExtRowNN_0IfAll);
-//            }
-//            if(L>0 && ExtRowNN_0IfAll>=0 && ExtRowNN_0IfAll<=QExtRows && InquiredExtRowNN>=1 && InquiredExtRowNN<=QExtRows){
-//                if(ExtRowNN_0IfAll>=1){
-//                    InquiredExtRowOldL=this->GetRowLength(InquiredExtRowNN);
-//                    if(L==this->GetRowLength(InquiredExtRowNN)){
-//                        //NOp: for size nil changes
-//                    }else{
-//                        InquiredExtRowNewL=this->setExtRow_simplyAsDataGiven_RowLengthNew(InquiredExtRowNN, ExtRowNN_0IfAll, L, ifNonRectForRect_NonRect0_MakeRactChangingBy_New1Old2Max3Min4, IfNotValsOfGivenRow_DefaultNotOwn);
-//                        InquiredExtRowMinL = InquiredExtRowOldL<=InquiredExtRowNewL ? InquiredExtRowOldL : InquiredExtRowNewL;
-//                        //fin by inner
-//                        if(InquiredExtRowNN==ExtRowNN_0IfAll){
-//                            switch(ifNonRectForRect_NonRect0_MakeRactChangingBy_New1Old2Max3Min4){
-//                                case 0:
-//                                    if(this->IsRectangularByType()){
-//                                        // sdi ignore => row remains n'deid'd, vals idsta
-//                                        if(InquiredIneRowNN>=1 && InquiredIneRowNN<=InquiredExtRowOldL){
-//                                            DataTypeN_Arr2DOwnVal1_GivenRowVal2_DefaultVal3_IncorrectN0=1;
-//                                        }//else 0
-//                                    }else{
-//                                        // sdi tic row deid'd, ha new L (rest rows idsta)
-//                                        if(InquiredIneRowNN>=1 && InquiredIneRowNN<=L){
-//                                            DataTypeN_Arr2DOwnVal1_GivenRowVal2_DefaultVal3_IncorrectN0=2;
-//                                        }//else 0
-//                                    }
-//                                break;
-//                                case 1:
-//                                    // deid'd row s'new row, L o'rest deid
-//                                    if(InquiredIneRowNN>=1 && InquiredIneRowNN<=L){
-//                                        DataTypeN_Arr2DOwnVal1_GivenRowVal2_DefaultVal3_IncorrectN0=2;
-//                                    }//else 0
-//                                break;
-//                                case 2:
-//                                    // deid'd row adha new L, ma ablb L zq old L
-//                                    if(InquiredIneRowNN>=1 && InquiredIneRowNN<=InquiredExtRowOldL){
-//                                        if(InquiredIneRowNN<=InquiredExtRowMinL){
-//                                            DataTypeN_Arr2DOwnVal1_GivenRowVal2_DefaultVal3_IncorrectN0=2;
-//                                        }else if(InquiredExtRowOldL>L){
-//                                            if(IfNotValsOfGivenRow_DefaultNotOwn){
-//                                                DataTypeN_Arr2DOwnVal1_GivenRowVal2_DefaultVal3_IncorrectN0=1;
-//                                            }else{
-//                                                DataTypeN_Arr2DOwnVal1_GivenRowVal2_DefaultVal3_IncorrectN0=3;
-//                                            }
-//                                        }//else 0
-//                                    }
-//                                break;
-//                                case 3:
-//                                    if(L>InquiredExtRowOldL){
-//                                        //deid'd row adha L
-//                                        if(InquiredIneRowNN>=1 && InquiredIneRowNN<=L){
-//                                            DataTypeN_Arr2DOwnVal1_GivenRowVal2_DefaultVal3_IncorrectN0=2;
-//                                        }
-//                                    }else{//InquiredExtRowOldL>L
-//                                        //deid'd row idha old L
-//                                        if(InquiredIneRowNN>=1 && InquiredIneRowNN<=InquiredExtRowOldL){
-//                                            if(InquiredIneRowNN<=L){
-//                                                DataTypeN_Arr2DOwnVal1_GivenRowVal2_DefaultVal3_IncorrectN0=2;
-//                                            }else{
-//                                                if(IfNotValsOfGivenRow_DefaultNotOwn){
-//                                                    DataTypeN_Arr2DOwnVal1_GivenRowVal2_DefaultVal3_IncorrectN0=1;
-//                                                }else{
-//                                                    DataTypeN_Arr2DOwnVal1_GivenRowVal2_DefaultVal3_IncorrectN0=3;
-//                                                }
-//                                            }
-//                                        }//else 0
-//                                    }
-//                                break;
-//                                case 4:
-//                                    // row adha min (L, old L) => tam n'wi vals exy gi'd
-//                                    if(InquiredIneRowNN>=1 && InquiredIneRowNN<=InquiredExtRowMinL){
-//                                        DataTypeN_Arr2DOwnVal1_GivenRowVal2_DefaultVal3_IncorrectN0=2;
-//                                    }
-//                                break;
-//                            }
-//                        }else{//any other row exy deid'd
-//                            switch(ifNonRectForRect_NonRect0_MakeRactChangingBy_New1Old2Max3Min4){
-//                                case 0:
-//                                    // either ignore changes or change nur one row - other rows remains not changed
-//                                    if(InquiredIneRowNN>=1 && InquiredIneRowNN<=InquiredExtRowOldL){
-//                                        DataTypeN_Arr2DOwnVal1_GivenRowVal2_DefaultVal3_IncorrectN0=1;
-//                                    }//else 0
-//                                break;
-//                                case 1:
-//                                    //all rows adha L
-//                                    if(InquiredIneRowNN>=1){
-//                                        if(InquiredIneRowNN<=InquiredExtRowMinL){
-//                                            DataTypeN_Arr2DOwnVal1_GivenRowVal2_DefaultVal3_IncorrectN0=1;
-//                                        }else if(InquiredIneRowNN<=L && L>InquiredExtRowOldL){
-//                                            DataTypeN_Arr2DOwnVal1_GivenRowVal2_DefaultVal3_IncorrectN0=3;
-//                                        }//else 0 - too big
-//                                    }//else 0 - too mic
-//                                break;
-//                                case 2:
-//                                    //all rows idha old L
-//                                    if(InquiredIneRowNN<=InquiredExtRowOldL){
-//                                        DataTypeN_Arr2DOwnVal1_GivenRowVal2_DefaultVal3_IncorrectN0=1;
-//                                    }//else 0
-//                                break;
-//                                case 3:
-//                                    if(InquiredIneRowNN>=1 && InquiredIneRowNN<=InquiredExtRowMinL){
-//                                        DataTypeN_Arr2DOwnVal1_GivenRowVal2_DefaultVal3_IncorrectN0=1;
-//                                    }else if(InquiredExtRowNewL>InquiredExtRowOldL && InquiredIneRowNN<=InquiredExtRowNewL){
-//                                        DataTypeN_Arr2DOwnVal1_GivenRowVal2_DefaultVal3_IncorrectN0=3;
-//                                    }
-//                                break;
-//                                case 4:
-//                                    // all rows adha min L
-//                                    if(InquiredIneRowNN>=1 && InquiredIneRowNN<=InquiredExtRowMinL){
-//                                        DataTypeN_Arr2DOwnVal1_GivenRowVal2_DefaultVal3_IncorrectN0=1;
-//                                    }//else 0
-//                                break;
-//                            }//switch
-//                        }//if rowN or not
-//                    }
-//                }else if(ExtRowNN_0IfAll==0){
-//                    //all rows adha L
-//                    //InquiredExtRowNewL=L;
-//                    if(InquiredIneRowNN>=1){
-//                        if(InquiredIneRowNN<=InquiredExtRowOldL){
-//                            DataTypeN_Arr2DOwnVal1_GivenRowVal2_DefaultVal3_IncorrectN0=1;
-//                        }else if(InquiredIneRowNN<=L){
-//                            DataTypeN_Arr2DOwnVal1_GivenRowVal2_DefaultVal3_IncorrectN0=3;
-//                        }//else 0
-//                    }//else 0
-//                }
-//            }
-//            return DataTypeN_Arr2DOwnVal1_GivenRowVal2_DefaultVal3_IncorrectN0;
-//        }
-
-        int Array2DSize_Prototype::setExtRow_simplyAsDataGiven_DataTypeN(const Coords2DInt&coords, int ExtRowNN_0IfAll, int L, int ifNonRectForRect_NonRect0_MakeRactChangingBy_New1Old2Max3Min4, bool IfNotValsOfGivenRow_DefaultNotOwn){
-            int DataTypeN_Arr2DOwnVals1_GivenRowVals2_DefaultVals3_IncorrectVals0=0;
-            int QExtRows=this->GetQExtRows(), Lmin=this->GetRowLengthMin(), Lmax=this->GetRowLengthMax(), InquiredExtRowNewNN=coords.x, InquiredIneRowNN=coords.y, InquiredExtRowOldL, InquiredExtRowNewL, InquiredExtRowMinL;
-            InquiredExtRowNewL=this->setExtRow_simplyAsDataGiven_RowLengthNew(InquiredExtRowNN, ExtRowNN_0IfAll, L, ifNonRectForRect_NonRect0_MakeRactChangingBy_New1Old2Max3Min4, IfNotValsOfGivenRow_DefaultNotOwn);
-            if(InquiredExtRowNewNN<0){
-                InquiredExtRowNewNN+=(QExtRows+1);
-            }
-            if(ExtRowNN_0IfAll<0){
-                ExtRowNN_0IfAll+=(QExtRows+1);
-            }
-            if(L==0){
-                L=this->GetRowLength(InquiredExtRowNewNN);
-            }
-            if(InquiredIneRowNN<0){
-                InquiredIneRowNN+=(InquiredExtRowNewL+1);
-            }
-            if(L>0 && InquiredExtRowNewNN>=1 && InquiredExtRowNewNN<=QExtRows&& InquiredIneRowNN>=1 && InquiredIneRowNN<=InquiredExtRowNewL){
-                if(ExtRowNN_0IfAll>=1 && ExtRowNN_0IfAll<=QExtRows){
-                    if(InquiredExtRowNewNN==ExtRowNN_0IfAll){
-                        if(InquiredIneRowNN>=1 && InquiredIneRowNN<=InquiredExtRowNewL){
-                            if(InquiredIneRowNN<=L){
-                                DataTypeN_Arr2DOwnVals1_GivenRowVals2_DefaultVals3_IncorrectVals0=2;
-                            }else{
-                                if(L<InquiredExtRowNewL){
-                                    if( IfNotValsOfGivenRow_DefaultNotOwn){
-                                        DataTypeN_Arr2DOwnVals1_GivenRowVals2_DefaultVals3_IncorrectVals0=1;
-                                    }else{
-                                        DataTypeN_Arr2DOwnVals1_GivenRowVals2_DefaultVals3_IncorrectVals0=3;
-                                    }
-                                }
-                            }
-                        }
-                    }else{
-                        if(InquiredIneRowNN>=1 && InquiredIneRowNN<=InquiredExtRowNewL){
-                            if(InquiredIneRowNN<=L){
-                                DataTypeN_Arr2DOwnVals1_GivenRowVals2_DefaultVals3_IncorrectVals0=1;
-                            }else{
-                                if(L<InquiredExtRowNewL){
-                                    DataTypeN_Arr2DOwnVals1_GivenRowVals2_DefaultVals3_IncorrectVals0=3;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            return DataTypeN_Arr2DOwnVals1_GivenRowVals2_DefaultVals3_IncorrectVals0;
-        }//fn
-
-//        Coords2DInt Array2DSize_Prototype::setExtRow_simplyAsDataGiven_Arr2DCoordsNewToOld(const Coords2DInt&coords, int N, int L, int ifNonRectForRect_NonRect0_MakeRactChangingBy_New1Old2Max3Min4, bool IfNotValsOfGivenRow_DefaultNotOwn){
-//            Coords2DInt coordsR;
-//            int DataTypeN_Arr2DOwnVal1_GivenRowVal2_DefaultVal3_IncorrectN0=0, QExtRows=this->GetQExtRows(), Lmin=this->GetRowLengthMin(), Lmax=this->GetRowLengthMax(), InquiredExtRowNN=coords.x, InquiredIneRowNN=coords.y, InquiredExtRowNewL, InquiredExtRowOldL, InquiredExtRowMinL;
-//            if(ExtRowNN_0IfAll<0){
-//                ExtRowNN_0IfAll+=(QExtRows+1);
-//            }
-//            if(InquiredExtRowNN<=0){
-//                InquiredExtRowNN+=(QExtRows+1);
-//            }
-//            if(L==0){
-//                L=rowsLs[ExtRowNN_0IfAll-1];
-//            }
-//            if(L>0 && ExtRowNN_0IfAll>=0 && ExtRowNN_0IfAll<=QExtRows && InquiredExtRowNN>=1 && InquiredExtRowNN<=QExtRows){
-//                if(ExtRowNN_0IfAll>=1){
-//                    InquiredExtRowOldL=this->GetRowLength(InquiredExtRowNN);
-//                    if(L==this->rowsLs[ExtRowNN_0IfAll-1]){
-//                        //NOp: for size nil changes
-//                    }else{
-//                        //L
-//                        switch(ifNonRectForRect_NonRect0_MakeRactChangingBy_New1Old2Max3Min4){
-//                            case 0:
-//                                //if(InquiredExtRowNN!=ExtRowNN_0IfAll || this->IsRectangularByType()){
-//                                //    InquiredExtRowNewL=this->GetRowLength(InquiredExtRowNN);
-//                                //}else{
-//                                //    InquiredExtRowNewL=L;
-//                                //}
-//                                if(this->IsRectangularByType()){
-//                                    InquiredExtRowNewL=InquiredExtRowOldL;
-//                                }else{
-//                                    InquiredExtRowNewL=L;
-//                                }
-//                            break;
-//                            case 1:
-//                                //this->rowsLs[ExtRowNN_0IfAll-1]=L;
-//                                InquiredExtRowNewL=L;
-//                            break;
-//                            case 2:
-//                                //NOp: ignored
-//                                InquiredExtRowNewL=InquiredExtRowOldL;
-//                            break;
-//                            case 3:
-//                                if(L>this->rowsLs[ExtRowNN_0IfAll-1]){
-//                                    //this->rowsLs[ExtRowNN_0IfAll-1]=L;
-//                                    InquiredExtRowNewL=L;
-//                                }else{
-//                                    InquiredExtRowNewL=InquiredExtRowOldL;
-//                                }
-//                            break;
-//                            case 4:
-//                                if(L<this->rowsLs[ExtRowNN_0IfAll-1]){
-//                                    //this->rowsLs[ExtRowNN_0IfAll-1]=L;
-//                                    InquiredExtRowNewL=L;
-//                                }else{
-//                                    InquiredExtRowNewL=InquiredExtRowOldL;
-//                                }
-//                            break;
-//                        }
-//                        InquiredExtRowMinL = InquiredExtRowOldL<=InquiredExtRowNewL ? InquiredExtRowOldL : InquiredExtRowNewL;
-//                        //fin by inner
-//                        if(InquiredExtRowNN==ExtRowNN_0IfAll){
-//                            switch(ifNonRectForRect_NonRect0_MakeRactChangingBy_New1Old2Max3Min4){
-//                                case 0:
-//                                    if(this->IsRectangularByType()){
-//                                        // sdi ignore => row remains n'deid'd, vals idsta
-//                                        if(InquiredIneRowNN>=1 && InquiredIneRowNN<=InquiredExtRowOldL){
-//                                            DataTypeN_Arr2DOwnVal1_GivenRowVal2_DefaultVal3_IncorrectN0=1;
-//                                            CoordsR=coords;
-//                                        }//else 0
-//                                    }else{
-//                                        // sdi tic row deid'd, ha new L (rest rows idsta)
-//                                        if(InquiredIneRowNN>=1 && InquiredIneRowNN<=L){
-//                                            DataTypeN_Arr2DOwnVal1_GivenRowVal2_DefaultVal3_IncorrectN0=2;
-//                                        }//else 0
-//                                    }
-//                                break;
-//                                case 1:
-//                                    // deid'd row s'new row, L o'rest deid
-//                                    if(InquiredIneRowNN>=1 && InquiredIneRowNN<=L){
-//                                        DataTypeN_Arr2DOwnVal1_GivenRowVal2_DefaultVal3_IncorrectN0=2;
-//                                    }//else 0
-//                                break;
-//                                case 2:
-//                                    // deid'd row adha new L, ma ablb L zq old L
-//                                    if(InquiredIneRowNN>=1 && InquiredIneRowNN<=InquiredExtRowOldL){
-//                                        if(InquiredIneRowNN<=InquiredExtRowMinL){
-//                                            DataTypeN_Arr2DOwnVal1_GivenRowVal2_DefaultVal3_IncorrectN0=2;
-//                                        }else if(InquiredExtRowOldL>L){
-//                                            if(IfNotValsOfGivenRow_DefaultNotOwn){
-//                                                DataTypeN_Arr2DOwnVal1_GivenRowVal2_DefaultVal3_IncorrectN0=1;
-//                                                CoordsR=coords;
-//                                            }else{
-//                                                DataTypeN_Arr2DOwnVal1_GivenRowVal2_DefaultVal3_IncorrectN0=3;
-//                                            }
-//                                        }//else 0
-//                                    }
-//                                break;
-//                                case 3:
-//                                    if(L>InquiredExtRowOldL){
-//                                        //deid'd row adha L
-//                                        if(InquiredIneRowNN>=1 && InquiredIneRowNN<=L){
-//                                            DataTypeN_Arr2DOwnVal1_GivenRowVal2_DefaultVal3_IncorrectN0=2;
-//                                        }
-//                                    }else{//InquiredExtRowOldL>L
-//                                        //deid'd row idha old L
-//                                        if(InquiredIneRowNN>=1 && InquiredIneRowNN<=InquiredExtRowOldL){
-//                                            if(InquiredIneRowNN<=L){
-//                                                DataTypeN_Arr2DOwnVal1_GivenRowVal2_DefaultVal3_IncorrectN0=2;
-//                                            }else{
-//                                                if(IfNotValsOfGivenRow_DefaultNotOwn){
-//                                                    DataTypeN_Arr2DOwnVal1_GivenRowVal2_DefaultVal3_IncorrectN0=1;
-//                                                    CoordsR=coords;
-//                                                }else{
-//                                                    DataTypeN_Arr2DOwnVal1_GivenRowVal2_DefaultVal3_IncorrectN0=3;
-//                                                }
-//                                            }
-//                                        }//else 0
-//                                    }
-//                                break;
-//                                case 4:
-//                                    // row adha min (L, old L) => tam n'wi vals exy gi'd
-//                                    if(InquiredIneRowNN>=1 && InquiredIneRowNN<=InquiredExtRowMinL){
-//                                        DataTypeN_Arr2DOwnVal1_GivenRowVal2_DefaultVal3_IncorrectN0=2;
-//                                    }
-//                                break;
-//                            }
-//                        }else{//any other row exy deid'd
-//                            switch(ifNonRectForRect_NonRect0_MakeRactChangingBy_New1Old2Max3Min4){
-//                                case 0:
-//                                    // either ignore changes or change nur one row - other rows remains not changed
-//                                    if(InquiredIneRowNN>=1 && InquiredIneRowNN<=InquiredExtRowOldL){
-//                                        DataTypeN_Arr2DOwnVal1_GivenRowVal2_DefaultVal3_IncorrectN0=1;
-//                                        CoordsR=coords;
-//                                    }//else 0
-//                                break;
-//                                case 1:
-//                                    //all rows adha L
-//                                    if(InquiredIneRowNN>=1){
-//                                        if(InquiredIneRowNN<=InquiredExtRowMinL){
-//                                            DataTypeN_Arr2DOwnVal1_GivenRowVal2_DefaultVal3_IncorrectN0=1;
-//                                            CoordsR=coords;
-//                                        }else if(InquiredIneRowNN<=L && L>InquiredExtRowOldL){
-//                                            DataTypeN_Arr2DOwnVal1_GivenRowVal2_DefaultVal3_IncorrectN0=3;
-//                                        }//else 0 - too big
-//                                    }//else 0 - too mic
-//                                break;
-//                                case 2:
-//                                    //all rows idha old L
-//                                    if(InquiredIneRowNN<=InquiredExtRowOldL){
-//                                        DataTypeN_Arr2DOwnVal1_GivenRowVal2_DefaultVal3_IncorrectN0=1;
-//                                        CoordsR=coords;
-//                                    }//else 0
-//                                break;
-//                                case 3:
-//                                    if(InquiredIneRowNN>=1 && InquiredIneRowNN<=InquiredExtRowMinL){
-//                                        DataTypeN_Arr2DOwnVal1_GivenRowVal2_DefaultVal3_IncorrectN0=1;
-//                                        CoordsR=coords;
-//                                    }else if(InquiredExtRowNewL>InquiredExtRowOldL && InquiredIneRowNN<=InquiredExtRowNewL){
-//                                        DataTypeN_Arr2DOwnVal1_GivenRowVal2_DefaultVal3_IncorrectN0=3;
-//                                    }
-//                                break;
-//                                case 4:
-//                                    // all rows adha min L
-//                                    if(InquiredIneRowNN>=1 && InquiredIneRowNN<=InquiredExtRowMinL){
-//                                        DataTypeN_Arr2DOwnVal1_GivenRowVal2_DefaultVal3_IncorrectN0=1;
-//                                        CoordsR=coords;
-//                                    }//else 0
-//                                break;
-//                            }
-//                        }
-//                    }
-//                }else if(ExtRowNN_0IfAll==0){
-//                    //all rows adha L
-//                    //InquiredExtRowNewL=L;
-//                    if(InquiredIneRowNN>=1){
-//                        if(InquiredIneRowNN<=InquiredExtRowOldL){
-//                            DataTypeN_Arr2DOwnVal1_GivenRowVal2_DefaultVal3_IncorrectN0=1;
-//                            CoordsR=coords;
-//                        }else if(InquiredIneRowNN<=L){
-//                            DataTypeN_Arr2DOwnVal1_GivenRowVal2_DefaultVal3_IncorrectN0=3;
-//                        }//else 0
-//                    }//else 0
-//                }
-//            }
-//            return CoordsR;
-//        }
-
-        Coords2DInt Array2DSize_Prototype::setExtRow_simplyAsDataGiven_Arr2DCoordsNewToOld(const Coords2DInt&coords, int N, int L, int ifNonRectForRect_NonRect0_MakeRactChangingBy_New1Old2Max3Min4, bool IfNotValsOfGivenRow_DefaultNotOwn){
-            Coords2DInt coordsR;
-            int DataTypeN_Arr2DOwnVal1_GivenRowVal2_DefaultVal3_IncorrectN0=this->setExtRow_simplyAsDataGiven_DataTypeN(coords, N, L, ifNonRectForRect_NonRect0_MakeRactChangingBy_New1Old2Max3Min4, IfNotValsOfGivenRow_DefaultNotOwn);
-            if(DataTypeN_Arr2DOwnVal1_GivenRowVal2_DefaultVal3_IncorrectN0==1){
-                coordsR=coords;
-            }
-            return coordsR;
-        }
-        int Array2DSize_Prototype::setExtRow_simplyAsDataGiven_Arr2DNewCoordsToInGivenRowPosN(const Coords2DInt&coords, int N, int L, int ifNonRectForRect_NonRect0_MakeRactChangingBy_New1Old2Max3Min4, bool IfNotValsOfGivenRow_DefaultNotOwn){
-            int inGivenRowPosN=0, InquiredIneRowNN, InquiredExtRowNN;
-            int QExtRows=this->GetQExtRows(), newL;
-            int DataTypeN_Arr2DOwnVal1_GivenRowVal2_DefaultVal3_IncorrectN0=this->setExtRow_simplyAsDataGiven_DataTypeN(coords, N, L, ifNonRectForRect_NonRect0_MakeRactChangingBy_New1Old2Max3Min4, IfNotValsOfGivenRow_DefaultNotOwn);
-            newL=this->setExtRow_simplyAsDataGiven_RowLengthNew(InquiredExtRowNN, N, L, ifNonRectForRect_NonRect0_MakeRactChangingBy_New1Old2Max3Min4, IfNotValsOfGivenRow_DefaultNotOwn);
-            InquiredExtRowNN=coords.x;
-            if(InquiredExtRowNN<0){
-                InquiredExtRowNN+=(QExtRows+1);
-            }
-            InquiredIneRowNN=coords.y;
-            if(InquiredIneRowNN<0){
-                InquiredIneRowNN+=(newL+1);
-            }
-            if(DataTypeN_Arr2DOwnVal1_GivenRowVal2_DefaultVal3_IncorrectN0==2){
-                inGivenRowPosN=InquiredIneRowNN;
-            }
-            return inGivenRowPosN;
-        }
-
-        //--------------------------------------------------------------------------------------------------
-
-        void Array2DSize_Prototype::set_or_ins_IneRow_simplyAsDataGiven_HilfsFun(int Action_Set1_Ins3, const Coords2DInt&CoordsNew, int ToInsIneRowNN, int L, int ifNGTLMin_Ignore0_ModifyLongOnly1_StretchShortToN2_MakeRectStretchingAllToLmax3, int ifL_NE_QER_Ignore0_MakeRectMakingL_ET_LMax_andNew1Old2ByMax3ByMin4, bool IfNotValsOfGivenRow_DefaultNotOwn, int&QExtRowsNew, int&DataTypeN_Arr2DVals1_GivenRowVals2_Default3_Incorrect4, int&ERLNew, int&InGivenRowPosNN, Coords2DInt&CoordsOld){
-            DataTypeN_Arr2DVals1_GivenRowVals2_Default3_Incorrect4=0;
+        void Array2DSize_Prototype::set_or_ins_ExtRow_simplyAsDataGiven_HilfsFun(int Action_Set1_Ins3, int ERNNGiven_0IfAll, const Coords2DInt&CoordsNew, int givenL, int ifNonRectForRect_NonRect0_MakeRactAddingAndMakingRest_L1Max2Minx3Last4MinOfLAndLmin5MaxOfLAndLmax6, bool IfNotValsOfGivenRow_DefaultNotOwn, int&ERLNew, int&QExtRowsNew, int&DataType_Arr2DVals1_GivenRowVals2_Default3_Incorrect0, int&InGivenRowPosN, Coords2DInt&CoordsOld){
+            int QExtRowsOld=this->GetQExtRows();
+            int Lmin=this->GetRowLengthMin(), Lmax=this->GetRowLengthMax(), LLast=this->GetRowLength(QExtRowsOld), ERNN=CoordsNew.x, IRNN=CoordsNew.y, ERLOld, theL;
+            ERLNew=0;
+            InGivenRowPosN=0;
             QExtRowsNew=QExtRowsOld;
-            int QExtRowsOld=this->GetQExtRows(), Lmin=this->GetRowLengthMin(), Lmax=this->GetRowLengthMax(), ERNN, IRNN, ERLOld;
-            if(ToInsExtRowNN<0){
-                ToInsExtRowNN+=(QExtRowsOld+1);
+            DataType_Arr2DVals1_GivenRowVals2_Default3_Incorrect0=0;
+            //Coords2DInt&CoordsOld)
+            //givenL - f'rect s'dflt
+            if(givenL==0 && Lmin==Lmax){
+                givenL=Lmin;
             }
-            if(ERNN<=0){
-                ERNN+=(QExtRowsOld+1);
+            //QExtRowsNew
+            if(!(Lmin==Lmax && givenL!=Lmin && ifNonRectForRect_NonRect0_MakeRactAddingAndMakingRest_L1Max2Minx3Last4MinOfLAndLmin5MaxOfLAndLmax6==0)){
+                if(Action_Set1_Ins3==3){
+                    QExtRowsNew=QExtRowsOld+1;
+                }//else remains = old
+            }//else remains = old
+            if(ERNN<0){
+                ERNN+=(QExtRowsNew+1);
             }
-            if(L==0){
-                L=QExtRowsOld;
+            if(ERNNGiven_0IfAll<0){
+                ERNNGiven_0IfAll+=(QExtRowsNew+1);
             }
-            if(L>0 && ToInsIneRowNN>=1 && ToInsIneRowNN<=Lmax+1 && ERNN>=1 && ERNN<=QExtRows && IRNN>=1 && IRNN<=Lmax){
-                ERLOld=this->GetRowLength(ERNN);
-                if(IRNN<0){
-                    if(Action_Set1_Ins3==3){
-                        IRNN+=(Lmax+1+1);
-                    }else{
-                        IRNN+=(Lmax+1);
-                    }
-                }
-                if(ToInsIneRowNN==0 && Action_Set1_Ins3==1){
-                    QExtRowNew=L;
-                }else if(L==QExtRowsOld){
-                    QExtRowsNew=QExtRowsOld;
-
-                }else{//L==QExtRowsOld
-                    //QExtRowsNew
-                    switch(ifL_NE_QER_Ignore0_MakeRectMakingL_ET_LMax_andNew1Old2ByMax3ByMin4){
-                        case 0:
+            //addedL && ERLNew
+            if(ERNNGiven_0IfAll==0 && Action_Set1_Ins3==1){
+                theL=givenL;
+                ERLNew=givenL;
+            }else if(Lmin==Lmax && givenL==Lmin){
+                theL=Lmin;
+                ERLNew=Lmin;
+            }else{
+                switch(ifNonRectForRect_NonRect0_MakeRactAddingAndMakingRest_L1Max2Minx3Last4MinOfLAndLmin5MaxOfLAndLmax6){
+                    case 0:
+                        if(this->IsRectangularByType()){
                             //ignore
-                            QExtRowsNew=QExtRowsOld;
-                        break;
-                        case 1:
-                            QExtRowsNew=L;
-                        break;
-                        case 2:
-                            QExtRowsNew=QExtRowsOld;
-                        break;
-                        case 3:
-                            if(L>QExtRowsOld){
-                                QExtRowsNew==L;
-                            }else{
-                                QExtRowsNew=QExtRowsOld;
+                            theL=0;
+                            if(ERNN>=1 && ERNN<=QExtRowsOld){
+                                ERLNew=this->GetRowLength(ERNN);
                             }
-                        break;
-                        case 4:
-                            if(L<QExtRowsOld){
-                                QExtRowsNew==L;
-                            }else{
-                                QExtRowsNew=QExtRowsOld;
-                            }
-                        break;
-                    }
-                }//if for QExtRows
-                //ERLNew
-                if(ToInsIneRowNN==0 && Action_Set1_Ins3==1){
-                    ERLNew=Lmax;
-                }else if(ToInsIneRowNN<=Lmin){
-                    if(Action_Set1_Ins3==3){
-                        ERLNew=ERLOld+1;
-                    }else{
-                        ERLNew=ERLOld;
-                    }
-                }else{
-                    switch(ifNGTLMin_Ignore0_ModifyLongOnly1_StretchShortToN2_MakeRectStretchingAllToLmax3){
-                        case 0:
-                            //ignore
-                            ERLNew=ERLOld;
-                        break;
-                        case 1:
-                            if(ToInsIneRowNN>=ERLOld){
-                                if(Action_Set1_Ins3==3){
-                                    ERLNew=ERLOld+1;
-                                }else{
-                                    ERLNew=ERLOld;
+                        }else{
+                            //
+                            theL=givenL;
+                            if(Action_Set1_Ins3==1){
+                                ERLNew=this->GetRowLength(ERNN);//0 s'prg'd ovda
+                            }else{//==3
+                                if(ERNNGiven_0IfAll>=1 && ERNNGiven_0IfAll<=QExtRowsOld){
+                                    if(ERNN>=1 && ERNN<=ERNNGiven_0IfAll){
+                                        ERLNew=this->GetRowLength(ERNN);
+                                    }else if(ERNN>ERNNGiven_0IfAll && ERNN<=QExtRowsNew){
+                                        ERLNew=this->GetRowLength(ERNN-1);
+                                    }else{// ==
+                                        ERLNew=theL;
+                                    }
                                 }
-                            }else{
-                                ERLNew=ERLOLd;
                             }
-                        break;
-                        case 2:
-                            if(ToInsIneRowNN>=ERLOld){
-                                if(Action_Set1_Ins3==3){
-                                    ERLNew=ERLOld+1;
-                                }else{
-                                    ERLNew=ERLOld;
-                                }
-                            }else{
-                                ERLNew=ToInsIneRowNN;//tu
-                            }
-                        break;
-                        case 3:
-                            if(Action_Set1_Ins3==3){
-                                ERLNew=Lmax+1;
-                            }else{
-                                ERLNew=Lmax;
-                            }
-                        break;
-                    }//switch
-                }//if for L
-                //fin
-                if(ERNN>=1 && ERNN<=QExtRowsOld){
-                    if(IRNN>=1 && IRNN<=ERLNew){
-                        if(IRNN<=ERLOLd+1 && Action_Set1_Ins3==3){
-                            if(IRNN<ToInsIneRowNN){
-                                DataTypeN_Arr2DVals1_GivenRowVals2_Default3_Incorrect4=1;
-                                CoordsOld.y=IRNN;
-                            }else if(IRNN>ToInsIneRowNN){
-                                DataTypeN_Arr2DVals1_GivenRowVals2_Default3_Incorrect4=1;
-                                CoordsOld.y=IRNN-1;
-                            }else{//(IRNN==ToInsIneRowNN){
-                                DataTypeN_Arr2DVals1_GivenRowVals2_Default3_Incorrect4=2;
-                                InGivenRowPosNN=ERNN;
-                            }
-                        }else if(IRNN<=ERLOLd && Action_Set1_Ins3==1){
-                            if(IRNN==ToInsIneRowNN){
-                                DataTypeN_Arr2DVals1_GivenRowVals2_Default3_Incorrect4=2;
-                                InGivenRowPosNN=ERNN;
-                            }else {
-                                DataTypeN_Arr2DVals1_GivenRowVals2_Default3_Incorrect4=1;
-                                CoordsOld.y=IRNN;
-                            }
-                        }else{//IRNN = ERLOld ... ERLNew
-                            DataTypeN_Arr2DVals1_GivenRowVals2_Default3_Incorrect4=3;
-                            //case guaratteed by ERLNew
                         }
-                    }//else DataTypeN_Arr2DVals1_GivenRowVals2_Default3_Incorrect4=0;
-                }else if(ERNN>=QExtRowsOld && ERNN<=QExtRowsNew){
-                    if(IRNN>=1 && IRNN<=ERLNew){
-                        if(IRNN==ToInsIneRowNN){
-                            // vikt! a'cond ov, to row ha ERLNew, IRNN zq ERLNew
-                            if(ERNN<=L){
-                                DataTypeN_Arr2DVals1_GivenRowVals2_Default3_Incorrect4=2;
-                                InGivenRowPosNN=ERNN;
-                            }else{//ERNN = L+1..QExtRowsNew, tei at case 2
-                                if(Action_Set1_Ins3==1 && ERNN<=QExtRowsOld && IfNotValsOfGivenRow_DefaultNotOwn){
-                                    DataTypeN_Arr2DVals1_GivenRowVals2_Default3_Incorrect4=1;
+                    break;
+                    case 1:
+                        theL=givenL;
+                        ERLNew=givenL;
+                    break;
+                    case 2:
+                        theL=Lmax;
+                        ERLNew=Lmax;
+                    break;
+                    case 3:
+                        theL=Lmin;
+                        ERLNew=Lmin;
+                    break;
+                    case 4:
+                        theL=LLast;
+                        ERLNew=LLast;
+                    break;
+                    case 5:
+                        if(givenL<Lmin){
+                            theL=givenL;
+                            ERLNew=givenL;
+                        }else{
+                            theL=Lmin;
+                            ERLNew=Lmin;
+                        }
+                    break;
+                    case 6:
+                        if(givenL>Lmax){
+                            theL=givenL;
+                            ERLNew=givenL;
+                        }else{
+                            theL=Lmax;
+                            ERLNew=Lmax;
+                        }
+                    break;
+                }//switch
+            }
+            //fin
+            if(ERNN>=1 && ERNN<=QExtRowsNew){
+                if(IRNN<0){
+                    IRNN+=(ERLNew+1);
+                }
+                if(ERNNGiven_0IfAll>=1 && ERNNGiven_0IfAll<=QExtRowsOld){
+                    if(ERNN<ERNNGiven_0IfAll || Action_Set1_Ins3==1){
+                        ERLOld=this->GetRowLength(ERNN);
+                        if(IRNN>=1 && IRNN<=ERLNew){
+                            if(IRNN<=ERLOld){
+                                DataType_Arr2DVals1_GivenRowVals2_Default3_Incorrect0=1;
+                                CoordsOld.x=ERNN;
+                                CoordsOld.y=IRNN;
+                            }else if(IRNN>ERLOld){
+                                DataType_Arr2DVals1_GivenRowVals2_Default3_Incorrect0=3;
+                            }
+                        }
+                    }else if(ERNN>ERNNGiven_0IfAll && Action_Set1_Ins3==3){
+                        ERLOld=this->GetRowLength(ERNN-1);
+                        if(IRNN>=1 && IRNN<=ERLNew){
+                            if(IRNN<=ERLOld){
+                                DataType_Arr2DVals1_GivenRowVals2_Default3_Incorrect0=1;
+                                CoordsOld.x=ERNN-1;
+                                CoordsOld.y=IRNN;
+                            }else if(IRNN>ERLOld){
+                                if(Action_Set1_Ins3==1 && IRNN<=ERLOld)
+                                DataType_Arr2DVals1_GivenRowVals2_Default3_Incorrect0=3;
+                            }
+                        }
+                    }else{//==
+                        ERLOld=0;
+                        if(IRNN>=1 && IRNN<=theL){
+                            if(IRNN<=givenL){
+                                DataType_Arr2DVals1_GivenRowVals2_Default3_Incorrect0=2;
+                                InGivenRowPosN=IRNN;
+                            }else{// if(IRNN>L){
+                                if(Action_Set1_Ins3==1 && IfNotValsOfGivenRow_DefaultNotOwn==false){
+                                    DataType_Arr2DVals1_GivenRowVals2_Default3_Incorrect0=1;
                                     CoordsOld.x=ERNN;
                                     CoordsOld.y=IRNN;
                                 }else{
-                                    DataTypeN_Arr2DVals1_GivenRowVals2_Default3_Incorrect4=3;
+                                    DataType_Arr2DVals1_GivenRowVals2_Default3_Incorrect0=3;
                                 }
                             }
-                        }else{
-                            DataTypeN_Arr2DVals1_GivenRowVals2_Default3_Incorrect4=3;
                         }
-                    }//else DataTypeN_Arr2DVals1_GivenRowVals2_Default3_Incorrect4=0;
-                }//else DataTypeN_Arr2DVals1_GivenRowVals2_Default3_Incorrect4=0;
-            }//if to work?
-        }//fn
+                    }//if ine
+                }//if ext
+            }//if for fin
+        }//fun set / ins ext simple HilfsFun best
 
-        int Array2DSize_Prototype::set_or_ins_IneRow_simplyAsDataGiven_QExtRowsNew(int Action_Set1_Ins3, const Coords2DInt&coordsNew, int ExtRowNN_0IfAll, int L, int ifNonRectForRect_NonRect0_MakeRactChangingBy_New1Old2Max3Min4, bool IfNotValsOfGivenRow_DefaultNotOwn){
-            int QExtRowsNew=0, DataTypeN_Arr2DVals1_GivenRowVals2_Default3_Incorrect4=0, ERLNew=0, InGivenRowPosNN=0;
+
+        int Array2DSize_Prototype::set_or_ins_ExtRow_simplyAsDataGiven_QExtRowsNew(int Action_Set1_Ins3, int ERNNGiven_0IfAll, const Coords2DInt&CoordsNew, int givenL, int ifNonRectForRect_NonRect0_MakeRactAddingAndMakingRest_L1Max2Minx3Last4MinOfLAndLmin5MaxOfLAndLmax6, bool IfNotValsOfGivenRow_DefaultNotOwn){
+            int ERLNew=0, QExtRowsNew=0, DataType_Arr2DVals1_GivenRowVals2_Default3_Incorrect0=0, InGivenRowPosN=0;
             Coords2DInt CoordsOld;
-            this->set_or_ins_IneRow_simplyAsDataGiven_HilfsFun(Action_Set1_Ins3, CoordsNew, ToInsIneRowNN, L, ifNGTLMin_Ignore0_ModifyLongOnly1_StretchShortToN2_MakeRectStretchingAllToLmax3, ifL_NE_QER_Ignore0_MakeRectMakingL_ET_LMax_andNew1Old2ByMax3ByMin4, IfNotValsOfGivenRow_DefaultNotOwn, QExtRowsNew, DataTypeN_Arr2DVals1_GivenRowVals2_Default3_Incorrect4, ERLNew, InGivenRowPosNN, CoordsOld);
+            this->set_or_ins_ExtRow_simplyAsDataGiven_HilfsFun(Action_Set1_Ins3, ERNNGiven_0IfAll, CoordsNew, givenL, ifNonRectForRect_NonRect0_MakeRactAddingAndMakingRest_L1Max2Minx3Last4MinOfLAndLmin5MaxOfLAndLmax6, IfNotValsOfGivenRow_DefaultNotOwn, ERLNew, QExtRowsNew, DataType_Arr2DVals1_GivenRowVals2_Default3_Incorrect0, InGivenRowPosN, CoordsOld);
             return QExtRowsNew;
         }
-        int Array2DSize_Prototype::set_or_ins_IneRow_simplyAsDataGiven_ExtRowLengthNew(int Action_Set1_Ins3, const Coords2DInt&coordsNew, int ExtRowNN_0IfAll, int L, int ifNonRectForRect_NonRect0_MakeRactChangingBy_New1Old2Max3Min4, bool IfNotValsOfGivenRow_DefaultNotOwn){
-            int QExtRowsNew=0, DataTypeN_Arr2DVals1_GivenRowVals2_Default3_Incorrect4=0, ERLNew=0, InGivenRowPosNN=0;
+        int Array2DSize_Prototype::set_or_ins_ExtRow_simplyAsDataGiven_ExtRowLengthNew(int Action_Set1_Ins3, int ERNNGiven_0IfAll, const Coords2DInt&CoordsNew, int givenL, int ifNonRectForRect_NonRect0_MakeRactAddingAndMakingRest_L1Max2Minx3Last4MinOfLAndLmin5MaxOfLAndLmax6, bool IfNotValsOfGivenRow_DefaultNotOwn){
+            int ERLNew=0, QExtRowsNew=0, DataType_Arr2DVals1_GivenRowVals2_Default3_Incorrect0=0, InGivenRowPosN=0;
             Coords2DInt CoordsOld;
-            this->set_or_ins_IneRow_simplyAsDataGiven_HilfsFun(Action_Set1_Ins3, CoordsNew, ToInsIneRowNN, L, ifNGTLMin_Ignore0_ModifyLongOnly1_StretchShortToN2_MakeRectStretchingAllToLmax3, ifL_NE_QER_Ignore0_MakeRectMakingL_ET_LMax_andNew1Old2ByMax3ByMin4, IfNotValsOfGivenRow_DefaultNotOwn, QExtRowsNew, DataTypeN_Arr2DVals1_GivenRowVals2_Default3_Incorrect4, ERLNew, InGivenRowPosNN, CoordsOld);
+            this->set_or_ins_ExtRow_simplyAsDataGiven_HilfsFun(Action_Set1_Ins3, ERNNGiven_0IfAll, CoordsNew, givenL, ifNonRectForRect_NonRect0_MakeRactAddingAndMakingRest_L1Max2Minx3Last4MinOfLAndLmin5MaxOfLAndLmax6, IfNotValsOfGivenRow_DefaultNotOwn, ERLNew, QExtRowsNew, DataType_Arr2DVals1_GivenRowVals2_Default3_Incorrect0, InGivenRowPosN, CoordsOld);
             return ERLNew;
         }
-        int Array2DSize_Prototype::set_or_ins_IneRow_simplyAsDataGiven_DataTypeN(int Action_Set1_Ins3, const Coords2DInt&coordsNew, int ExtRowNN_0IfAll, int L, int ifNonRectForRect_NonRect0_MakeRactChangingBy_New1Old2Max3Min4, bool IfNotValsOfGivenRow_DefaultNotOwn){
-            int QExtRowsNwe=0, DataTypeN_Arr2DVals1_GivenRowVals2_Default3_Incorrect4=0, ERLNew=0, InGivenRowPosNN=0;
+        int Array2DSize_Prototype::set_or_ins_ExtRow_simplyAsDataGiven_DataTypeN(int Action_Set1_Ins3, int ERNNGiven_0IfAll, const Coords2DInt&CoordsNew, int givenL, int ifNonRectForRect_NonRect0_MakeRactAddingAndMakingRest_L1Max2Minx3Last4MinOfLAndLmin5MaxOfLAndLmax6, bool IfNotValsOfGivenRow_DefaultNotOwn){
+            int ERLNew=0, QExtRowsNew=0, DataType_Arr2DVals1_GivenRowVals2_Default3_Incorrect0=0, InGivenRowPosN=0;
             Coords2DInt CoordsOld;
-            this->set_or_ins_IneRow_simplyAsDataGiven_HilfsFun(Action_Set1_Ins3, CoordsNew, ToInsIneRowNN, L, ifNGTLMin_Ignore0_ModifyLongOnly1_StretchShortToN2_MakeRectStretchingAllToLmax3, ifL_NE_QER_Ignore0_MakeRectMakingL_ET_LMax_andNew1Old2ByMax3ByMin4, IfNotValsOfGivenRow_DefaultNotOwn, QExtRowsNew, DataTypeN_Arr2DVals1_GivenRowVals2_Default3_Incorrect4, ERLNew, InGivenRowPosNN, CoordsOld);
-            return DataTypeN_Arr2DOwnVal1_GivenRowVal2_DefaultVal3_IncorrectN0;
+            this->set_or_ins_ExtRow_simplyAsDataGiven_HilfsFun(Action_Set1_Ins3, ERNNGiven_0IfAll, CoordsNew, givenL, ifNonRectForRect_NonRect0_MakeRactAddingAndMakingRest_L1Max2Minx3Last4MinOfLAndLmin5MaxOfLAndLmax6, IfNotValsOfGivenRow_DefaultNotOwn, ERLNew, QExtRowsNew, DataType_Arr2DVals1_GivenRowVals2_Default3_Incorrect0, InGivenRowPosN, CoordsOld);
+            return DataType_Arr2DVals1_GivenRowVals2_Default3_Incorrect0;
         }
-        int Array2DSize_Prototype::set_or_ins_IneRow_simplyAsDataGiven_InGinenRowPosNN(int Action_Set1_Ins3, const Coords2DInt&coordsNew, int ExtRowNN_0IfAll, int L, int ifNonRectForRect_NonRect0_MakeRactChangingBy_New1Old2Max3Min4, bool IfNotValsOfGivenRow_DefaultNotOwn){
-            int QExtRowsNew=0, DataTypeN_Arr2DVals1_GivenRowVals2_Default3_Incorrect4=0, ERLNew=0, InGivenRowPosNN=0;
+        int Array2DSize_Prototype::set_or_ins_ExtRow_simplyAsDataGiven_InGivenRowPosN(int Action_Set1_Ins3, int ERNNGiven_0IfAll, const Coords2DInt&CoordsNew, int givenL, int ifNonRectForRect_NonRect0_MakeRactAddingAndMakingRest_L1Max2Minx3Last4MinOfLAndLmin5MaxOfLAndLmax6, bool IfNotValsOfGivenRow_DefaultNotOwn){
+            int ERLNew=0, QExtRowsNew=0, DataType_Arr2DVals1_GivenRowVals2_Default3_Incorrect0=0, InGivenRowPosN=0;
             Coords2DInt CoordsOld;
-            this->set_or_ins_IneRow_simplyAsDataGiven_HilfsFun(Action_Set1_Ins3, CoordsNew, ToInsIneRowNN, L, ifNGTLMin_Ignore0_ModifyLongOnly1_StretchShortToN2_MakeRectStretchingAllToLmax3, ifL_NE_QER_Ignore0_MakeRectMakingL_ET_LMax_andNew1Old2ByMax3ByMin4, IfNotValsOfGivenRow_DefaultNotOwn, QExtRowsNew, DataTypeN_Arr2DVals1_GivenRowVals2_Default3_Incorrect4, ERLNew, InGivenRowPosNN, CoordsOld);
-            return InGivenRowPosNN;
+            this->set_or_ins_ExtRow_simplyAsDataGiven_HilfsFun(Action_Set1_Ins3, ERNNGiven_0IfAll, CoordsNew, givenL, ifNonRectForRect_NonRect0_MakeRactAddingAndMakingRest_L1Max2Minx3Last4MinOfLAndLmin5MaxOfLAndLmax6, IfNotValsOfGivenRow_DefaultNotOwn, ERLNew, QExtRowsNew, DataType_Arr2DVals1_GivenRowVals2_Default3_Incorrect0, InGivenRowPosN, CoordsOld);
+            return InGivenRowPosN;
         }
-        Coords2DInt Array2DSize_Prototype::set_or_ins_IneRow_simplyAsDataGiven_Arr2DCoordsNewToOld(int Action_Set1_Ins3, const Coords2DInt&coords, , int ExtRowNN_0IfAll, int L, int ifNonRectForRect_NonRect0_MakeRactChangingBy_New1Old2Max3Min4, bool IfNotValsOfGivenRow_DefaultNotOwn){
-            int QExtRowsNew=0, DataTypeN_Arr2DVals1_GivenRowVals2_Default3_Incorrect4=0, ERLNew=0, InGivenRowPosNN=0;
+        Coords2DInt Array2DSize_Prototype::set_or_ins_ExtRow_simplyAsDataGiven_Arr2DNewToOldPosN(int Action_Set1_Ins3, int ERNNGiven_0IfAll, const Coords2DInt&CoordsNew, int givenL, int ifNonRectForRect_NonRect0_MakeRactAddingAndMakingRest_L1Max2Minx3Last4MinOfLAndLmin5MaxOfLAndLmax6, bool IfNotValsOfGivenRow_DefaultNotOwn){
+            int ERLNew=0, QExtRowsNew=0, DataType_Arr2DVals1_GivenRowVals2_Default3_Incorrect0=0, InGivenRowPosN=0;
             Coords2DInt CoordsOld;
-            this->set_or_ins_IneRow_simplyAsDataGiven_HilfsFun(Action_Set1_Ins3, CoordsNew, ToInsIneRowNN, L, ifNGTLMin_Ignore0_ModifyLongOnly1_StretchShortToN2_MakeRectStretchingAllToLmax3, ifL_NE_QER_Ignore0_MakeRectMakingL_ET_LMax_andNew1Old2ByMax3ByMin4, IfNotValsOfGivenRow_DefaultNotOwn, QExtRowsNew, DataTypeN_Arr2DVals1_GivenRowVals2_Default3_Incorrect4, ERLNew, InGivenRowPosNN, CoordsOld);
+            this->set_or_ins_ExtRow_simplyAsDataGiven_HilfsFun(Action_Set1_Ins3, ERNNGiven_0IfAll, CoordsNew, givenL, ifNonRectForRect_NonRect0_MakeRactAddingAndMakingRest_L1Max2Minx3Last4MinOfLAndLmin5MaxOfLAndLmax6, IfNotValsOfGivenRow_DefaultNotOwn, ERLNew, QExtRowsNew, DataType_Arr2DVals1_GivenRowVals2_Default3_Incorrect0, InGivenRowPosN, CoordsOld);
             return CoordsOld;
         }
 
+    //--------------------------------------------------------------------------------------------------
 
-
-        //--------------------------------------------------------------------------------------------------
-
-        int Array2DSize_Prototype::addExtRow_simplyAsDataGiven_ExtRowNewNToLengthNew(int InquiredExtRowNewNN, int L, int ifNonRectForRect_NonRect0_MakeRactAddingAndMakingRest_L1Max2Minx3Last4MinOfLAndLmin5MaxOfLAndLmax6, bool IfNotValsOfGivenRow_DefaultNotOwn){
-            int InquiredExtRowNewL=0;
-            int QExtRowsOld=this->GetQExtRows(), QExtRowsNew=QExtRowsOld+1, Lmin=this->GetRowLengthMin(), Lmax=this->GetRowLengthMax(),  InquiredExtRowOldL, InquiredExtRowMinL, ChangedExtRowOldL;//, InquiredExtRowNN=coords.x, InquiredIneRowNN=coords.y
-            //if(ExtRowNN_0IfAll<0){
-            //    ExtRowNN_0IfAll+=(QExtRowsNew+1);
-            //}
-            if(InquiredExtRowNewNN<=0){
-                InquiredExtRowNewNN+=(QExtRowsNew+1);
+        void Array2DSize_Prototype::addExtRow_simplyAsDataGiven_HilfsFun(const Coords2DInt&CoordsNew, int givenL, int ifNonRectForRect_NonRect0_MakeRactAddingAndMakingRest_L1Max2Minx3Last4MinOfLAndLmin5MaxOfLAndLmax6, bool IfNotValsOfGivenRow_DefaultNotOwn, int&ERLNew, int&QExtRowsNew, int&DataType_Arr2DVals1_GivenRowVals2_Default3_Incorrect0, int&InGivenRowPosN, Coords2DInt&CoordsOld){
+            int QExtRowsOld=this->GetQExtRows(), Lmin=this->GetRowLengthMin(), Lmax=this->GetRowLengthMax(), LLast=this->GetRowLength(QExtRowsOld), ERNN=CoordsNew.x, IRNN=CoordsNew.y, ERLOld, addedL;
+            ERLNew=0;
+            InGivenRowPosN=0;
+            QExtRowsNew=QExtRowsOld;
+            DataType_Arr2DVals1_GivenRowVals2_Default3_Incorrect0=0;
+            //Coords2DInt&CoordsOld)
+            //givenL
+            if(givenL==0 && Lmin==Lmax){
+                givenL=Lmin;
             }
-            if(L==0 && this->IsRectangularInFact()){
-                L=this->GetRowLength(QExtRowsOld);//adding as long as last
+            //QExtRowsNew
+            if(!(Lmin==Lmax && givenL!=Lmin && ifNonRectForRect_NonRect0_MakeRactAddingAndMakingRest_L1Max2Minx3Last4MinOfLAndLmin5MaxOfLAndLmax6==0)){
+                QExtRowsNew=QExtRowsOld+1;
+            }//else remains 0
+            if(ERNN<0){
+                ERNN+=(QExtRowsNew+1);
             }
-            if(L>0 && InquiredExtRowNewNN>=1 && InquiredExtRowNewNN<=QExtRowsNew){
-                //ChangedExtRowOldL=L;
+            //addedL && ERLNew
+            //if(ERNNGiven_0IfAll==0){// && Action_Set1_Ins3==1){
+            //    addedL=givenL;
+            //    ERLNew=givenL;
+            //}else
+            if(Lmin==Lmax && givenL==Lmin){
+                addedL=Lmin;
+                ERLNew=Lmin;
+            }else{
                 switch(ifNonRectForRect_NonRect0_MakeRactAddingAndMakingRest_L1Max2Minx3Last4MinOfLAndLmin5MaxOfLAndLmax6){
                     case 0:
-                        //
                         if(this->IsRectangularByType()){
-                            if(InquiredExtRowNewNN<=QExtRowsOld){
-                                InquiredExtRowNewL=InquiredExtRowOldL;
-                            }else{//add'd row
-                                if(L==Lmax){
-                                    InquiredExtRowNewL=L;
-                                }//else NOp
+                            //ignore
+                            addedL=0;
+                            if(ERNN>=1 && ERNN<=QExtRowsOld){
+                                ERLNew=this->GetRowLength(ERNN);
                             }
                         }else{
-                            if(InquiredExtRowNewNN<=QExtRowsOld){
-                                InquiredExtRowNewL=L;
-                            }else{//case ignore
-                                InquiredExtRowNewL=0;
+                            //
+                            addedL=givenL;
+                            if(ERNN==QExtRowsNew){
+                                ERLNew=addedL;
+                            }else if(ERNN>=1 && ERNN<=QExtRowsOld){
+                                ERLNew=this->GetRowLength(ERNN);
                             }
                         }
-                        //
                     break;
                     case 1:
-                        InquiredExtRowNewL=L;
+                        addedL=givenL;
+                        ERLNew=givenL;
                     break;
                     case 2:
-                        InquiredExtRowNewL=this->GetRowLength(QExtRowsOld);
+                        addedL=Lmax;
+                        ERLNew=Lmax;
                     break;
                     case 3:
-                        InquiredExtRowNewL=Lmax;
+                        addedL=Lmin;
+                        ERLNew=Lmin;
                     break;
                     case 4:
-                        InquiredExtRowNewL=Lmin;
+                        addedL=LLast;
+                        ERLNew=LLast;
                     break;
                     case 5:
-                        if(L<Lmin){
-                            InquiredExtRowNewL=L;
+                        if(givenL<Lmin){
+                            addedL=givenL;
+                            ERLNew=givenL;
                         }else{
-                            InquiredExtRowNewL=Lmin;
+                            addedL=Lmin;
+                            ERLNew=Lmin;
                         }
                     break;
-                    case 5:
-                        if(L<Lmin){
-                            InquiredExtRowNewL=L;
+                    case 6:
+                        if(givenL>Lmax){
+                            addedL=givenL;
+                            ERLNew=givenL;
                         }else{
-                            InquiredExtRowNewL=Lmin;
+                            addedL=Lmax;
+                            ERLNew=Lmax;
                         }
                     break;
                 }
             }
-            return InquiredExtRowNewL;
+            //fin
+            if(ERNN>=1 && ERNN<=QExtRowsOld){
+                ERLOld=this->GetRowLength(ERNN);
+                if(IRNN<0){
+                    IRNN+=(ERLNew+1);
+                }
+                if(IRNN>=1 && IRNN<=ERLNew){
+                    if(IRNN<=ERLOld){
+                        DataType_Arr2DVals1_GivenRowVals2_Default3_Incorrect0=2;
+                        CoordsOld.x=ERNN;
+                        CoordsOld.y=IRNN;
+                    }else{// if(IRNN>ERLOld){
+                        DataType_Arr2DVals1_GivenRowVals2_Default3_Incorrect0=3;
+                    }
+                }//else DataType_Arr2DVals1_GivenRowVals2_Default3_Incorrect0=0;
+            }else if(ERNN==QExtRowsNew){
+                if(IRNN<0){
+                    IRNN+=(addedL+1);
+                }
+                if(IRNN>=1 && IRNN<=addedL){
+                    if(IRNN<=givenL){
+                        DataType_Arr2DVals1_GivenRowVals2_Default3_Incorrect0=2;
+                        InGivenRowPosN=IRNN;
+                    }else{// if(IRNN>L){
+                        DataType_Arr2DVals1_GivenRowVals2_Default3_Incorrect0=3;
+                    }
+                }//else DataType_Arr2DVals1_GivenRowVals2_Default3_Incorrect0=0;
+            }
+        }//fn - addExt simple HilfsFun best
+
+
+        int Array2DSize_Prototype::addExtRow_simplyAsDataGiven_QExtRowsNew(const Coords2DInt&CoordsNew, int givenL, int ifNonRectForRect_NonRect0_MakeRactAddingAndMakingRest_L1Max2Minx3Last4MinOfLAndLmin5MaxOfLAndLmax6, bool IfNotValsOfGivenRow_DefaultNotOwn){
+            int ERLNew=0, QExtRowsNew=0, DataType_Arr2DVals1_GivenRowVals2_Default3_Incorrect0=0, InGivenRowPosN=0;
+            Coords2DInt CoordsOld;
+            this->addExtRow_simplyAsDataGiven_HilfsFun(CoordsNew, givenL, ifNonRectForRect_NonRect0_MakeRactAddingAndMakingRest_L1Max2Minx3Last4MinOfLAndLmin5MaxOfLAndLmax6, IfNotValsOfGivenRow_DefaultNotOwn, ERLNew, QExtRowsNew, DataType_Arr2DVals1_GivenRowVals2_Default3_Incorrect0, InGivenRowPosN, CoordsOld);
+            return QExtRowsNew;
+        }
+        int Array2DSize_Prototype::addExtRow_simplyAsDataGiven_ExtRowLengthNew(const Coords2DInt&CoordsNew, int givenL, int ifNonRectForRect_NonRect0_MakeRactAddingAndMakingRest_L1Max2Minx3Last4MinOfLAndLmin5MaxOfLAndLmax6, bool IfNotValsOfGivenRow_DefaultNotOwn){
+            int ERLNew=0, QExtRowsNew=0, DataType_Arr2DVals1_GivenRowVals2_Default3_Incorrect0=0, InGivenRowPosN=0;
+            Coords2DInt CoordsOld;
+            this->addExtRow_simplyAsDataGiven_HilfsFun(CoordsNew, givenL, ifNonRectForRect_NonRect0_MakeRactAddingAndMakingRest_L1Max2Minx3Last4MinOfLAndLmin5MaxOfLAndLmax6, IfNotValsOfGivenRow_DefaultNotOwn, ERLNew, QExtRowsNew, DataType_Arr2DVals1_GivenRowVals2_Default3_Incorrect0, InGivenRowPosN, CoordsOld);
+            return ERLNew;
+        }
+        int Array2DSize_Prototype::addExtRow_simplyAsDataGiven_DataType(const Coords2DInt&CoordsNew, int givenL, int ifNonRectForRect_NonRect0_MakeRactAddingAndMakingRest_L1Max2Minx3Last4MinOfLAndLmin5MaxOfLAndLmax6, bool IfNotValsOfGivenRow_DefaultNotOwn){
+            int ERLNew=0, QExtRowsNew=0, DataType_Arr2DVals1_GivenRowVals2_Default3_Incorrect0=0, InGivenRowPosN=0;
+            Coords2DInt CoordsOld;
+            this->addExtRow_simplyAsDataGiven_HilfsFun(CoordsNew, givenL, ifNonRectForRect_NonRect0_MakeRactAddingAndMakingRest_L1Max2Minx3Last4MinOfLAndLmin5MaxOfLAndLmax6, IfNotValsOfGivenRow_DefaultNotOwn, ERLNew, QExtRowsNew, DataType_Arr2DVals1_GivenRowVals2_Default3_Incorrect0, InGivenRowPosN, CoordsOld);
+            return DataType_Arr2DVals1_GivenRowVals2_Default3_Incorrect0;
+        }
+        int Array2DSize_Prototype::addExtRow_simplyAsDataGiven_InGivenRowPosNN(const Coords2DInt&CoordsNew, int givenL, int ifNonRectForRect_NonRect0_MakeRactAddingAndMakingRest_L1Max2Minx3Last4MinOfLAndLmin5MaxOfLAndLmax6, bool IfNotValsOfGivenRow_DefaultNotOwn){
+            int ERLNew=0, QExtRowsNew=0, DataType_Arr2DVals1_GivenRowVals2_Default3_Incorrect0=0, InGivenRowPosN=0;
+            Coords2DInt CoordsOld;
+            this->addExtRow_simplyAsDataGiven_HilfsFun(CoordsNew, givenL, ifNonRectForRect_NonRect0_MakeRactAddingAndMakingRest_L1Max2Minx3Last4MinOfLAndLmin5MaxOfLAndLmax6, IfNotValsOfGivenRow_DefaultNotOwn, ERLNew, QExtRowsNew, DataType_Arr2DVals1_GivenRowVals2_Default3_Incorrect0, InGivenRowPosN, CoordsOld);
+            return InGivenRowPosN;
+        }
+        Coords2DInt Array2DSize_Prototype::addExtRow_simplyAsDataGiven_Arr2DCoordsNewToOld(const Coords2DInt&CoordsNew, int givenL, int ifNonRectForRect_NonRect0_MakeRactAddingAndMakingRest_L1Max2Minx3Last4MinOfLAndLmin5MaxOfLAndLmax6, bool IfNotValsOfGivenRow_DefaultNotOwn){
+            int ERLNew=0, QExtRowsNew=0, DataType_Arr2DVals1_GivenRowVals2_Default3_Incorrect0=0, InGivenRowPosN=0;
+            Coords2DInt CoordsOld;
+            this->addExtRow_simplyAsDataGiven_HilfsFun(CoordsNew, givenL, ifNonRectForRect_NonRect0_MakeRactAddingAndMakingRest_L1Max2Minx3Last4MinOfLAndLmin5MaxOfLAndLmax6, IfNotValsOfGivenRow_DefaultNotOwn, ERLNew, QExtRowsNew, DataType_Arr2DVals1_GivenRowVals2_Default3_Incorrect0, InGivenRowPosN, CoordsOld);
+            return CoordsOld;
         }
 
-        int Array2DSize_Prototype::addExtRow_simplyAsDataGiven_Arr2DNewCoordsToDataTypeN(const Coords2DInt&coordsNew, int L, int ifNonRectForRect_NonRect0_MakeRactAddingAndMakingRest_L1Max2Minx3Last4MinOfLAndLmin5MaxOfLAndLmax6, bool IfNotValsOfGivenRow_DefaultNotOwn){
-            int DataTypeN_Arr2DVal1_GivenRowVal2_Default3_Incorrect4=addExtRow_simplyAsDataGiven_Arr2DNewCoordsToDataTypeN(coordsNew, L, ifNonRectForRect_NonRect0_MakeRactAddingAndMakingRest_L1Max2Minx3Last4MinOfLAndLmin5MaxOfLAndLmax6, IfNotValsOfGivenRow_DefaultNotOwn);
-            int InquiredExtRowNewL=addExtRow_simplyAsDataGiven_ExtRowNewNToLengthNew(InquiredExtRowNewNN, L, ifNonRectForRect_NonRect0_MakeRactAddingAndMakingRest_L1Max2Minx3Last4MinOfLAndLmin5MaxOfLAndLmax6, IfNotValsOfGivenRow_DefaultNotOwn);
-            int QExtRowsOld=this->GetQExtRows(), QExtRowsNew=QExtRowsOld+1, Lmin=this->GetRowLengthMin(), Lmax=this->GetRowLengthMax(),  InquiredExtRowOldL, InquiredExtRowMinL, ChangedExtRowOldL;//, InquiredExtRowNN=coords.x, InquiredIneRowNN=coords.y
-            int InquiredExtRowNewNN=coordsNew.x, InquiredIneRowwNN=coordsNew.y;
-            if(InquiredExtRowNewNN<0){
-                InquiredExtRowNewNN+=(QExtRowsNew+1);
+        //--------------------------------------------------------------------------------------------------
+
+        void Array2DSize_Prototype::delExtRow_HilfsFun(const Coords2DInt&CoordsNew, int ExtRowToDelNN, int&ERLNew, int&QExtRowsNew,  Coords2DInt&CoordsOld){
+            int QExtRowsOld=this->GetQExtRows(), ERNN=CoordsNew.x, IRNN=CoordsNew.y, ERLOld, QMinAllowed=DEFAULT_SIZE, LmaxNew=0, curL, LmaxOld=this->GetRowLengthMax();
+            if(ExtRowToDelNN<0){
+                ExtRowToDelNN+=(QExtRowsOld+1);
             }
-            if(InquiredIneRowwNN<0){
-                InquiredIneRowwNN+=(InquiredExtRowNewL+1);
-            }
-            if(InquiredExtRowNewNN<=QExtRowsOld){
-                InquiredExtRowOldL=this->GetRowLength(InquiredExtRowNewNN);
-                if(InquiredIneRowwNN>=1 && InquiredIneRowwNN<=InquiredExtRowNewL){
-                    if(InquiredExtRowNewL<=InquiredExtRowOldL){
-                        DataTypeN_Arr2DVal1_GivenRowVal2_Default3_Incorrect4=1;
-                    }else{
-                        DataTypeN_Arr2DVal1_GivenRowVal2_Default3_Incorrect4=3;
-                    }
-                }//else 0
+            if(QExtRowsOld>QMinAllowed && ExtRowToDelNN>=1 && ExtRowToDelNN<=QExtRowsOld){
+                QExtRowsNew=QExtRowsOld-1;
             }else{
-                if(InquiredIneRowwNN>=1 && InquiredIneRowwNN<=InquiredExtRowNewL){
-                    if(InquiredExtRowNewL<=L){
-                        DataTypeN_Arr2DVal1_GivenRowVal2_Default3_Incorrect4=2;
-                    }else{
-                        DataTypeN_Arr2DVal1_GivenRowVal2_Default3_Incorrect4=3;
-                    }
-                }
+                QExtRowsNew=QExtRowsOld;
             }
-            return DataTypeN_Arr2DVal1_GivenRowVal2_Default3_Incorrect4;
-        }//fn
-
-        int Array2DSize_Prototype::addExtRow_simplyAsDataGiven_Arr2DAddedRowToGivenRowPosNN(int InRowPosNN, int L, int ifNonRectForRect_NonRect0_MakeRactAddingAndMakingRest_L1Max2Minx3Last4MinOfLAndLmin5MaxOfLAndLmax6, bool IfNotValsOfGivenRow_DefaultNotOwn){
-            int GivenRowPosN=0;
-            int DataTypeN_Arr2DVal1_GivenRowVal2_Default3_Incorrect4=addExtRow_simplyAsDataGiven_Arr2DNewCoordsToDataTypeN(coordsNew, L, ifNonRectForRect_NonRect0_MakeRactAddingAndMakingRest_L1Max2Minx3Last4MinOfLAndLmin5MaxOfLAndLmax6, IfNotValsOfGivenRow_DefaultNotOwn);
-            int InquiredExtRowNewL=addExtRow_simplyAsDataGiven_ExtRowNewNToLengthNew(InquiredExtRowNewNN, L, ifNonRectForRect_NonRect0_MakeRactAddingAndMakingRest_L1Max2Minx3Last4MinOfLAndLmin5MaxOfLAndLmax6, IfNotValsOfGivenRow_DefaultNotOwn);
-            int QExtRowsOld=this->GetQExtRows(), QExtRowsNew=QExtRowsOld+1, Lmin=this->GetRowLengthMin(), Lmax=this->GetRowLengthMax(),  InquiredExtRowOldL, InquiredExtRowMinL, ChangedExtRowOldL;//, InquiredExtRowNN=coords.x, InquiredIneRowNN=coords.y
-            int InquiredExtRowNewNN=QExtRowsNew, InquiredIneRowwNN=InRowPosNN;
-            if(InquiredExtRowNewNN<0){
-                InquiredExtRowNewNN+=(QExtRowsNew+1);
+            if(ERNN<0){
+                ERNN+=(QExtRowsNew+1);
             }
-            if(InquiredIneRowwNN<0){
-                InquiredIneRowwNN+=(InquiredExtRowNewL+1);
-            }
-            //if(InquiredExtRowNewNN<=QExtRowsOld){
-            //    InquiredExtRowOldL=this->GetRowLength(InquiredExtRowNewNN);
-            //    if(InquiredIneRowwNN>=1 && InquiredIneRowwNN<=InquiredExtRowNewL){
-            //        if(InquiredExtRowNewL<=InquiredExtRowOldL){
-            //            DataTypeN_Arr2DVal1_GivenRowVal2_Default3_Incorrect4=1;
-            //        }else{
-            //            DataTypeN_Arr2DVal1_GivenRowVal2_Default3_Incorrect4=3;
-            //        }
-            //    }//else 0
-            //}else{
-            //    if(InquiredIneRowwNN>=1 && InquiredIneRowwNN<=InquiredExtRowNewL){
-            //        if(InquiredExtRowNewL<=L){
-            //            DataTypeN_Arr2DVal1_GivenRowVal2_Default3_Incorrect4=2;
-            //            GivenRowPosN=InquiredIneRowwNN;
-            //        }else{
-            //            DataTypeN_Arr2DVal1_GivenRowVal2_Default3_Incorrect4=3;
-            //        }
-            //    }
-            //}
-            if(DataTypeN_Arr2DVal1_GivenRowVal2_Default3_Incorrect4==2){
-                GivenRowPosN=InquiredIneRowwNN;
-            }//else type = 1 or 0 or 3, => GivenRowPosN=0
-            return GivenRowPosN;
-        }//fn
-
-        Coords2DInt Array2DSize_Prototype::addExtRow_simplyAsDataGiven_Arr2DCoordsNewToOld(const Coords2DInt&coordsNew, int L, int ifNonRectForRect_NonRect0_MakeRactAddingAndMakingRest_L1Max2Minx3Last4MinOfLAndLmin5MaxOfLAndLmax6, bool IfNotValsOfGivenRow_DefaultNotOwn){
-            Coords2DInt coordsOld;
-            int DataTypeN_Arr2DVal1_GivenRowVal2_Default3_Incorrect4=0;
-            int InquiredExtRowNewL=addExtRow_simplyAsDataGiven_ExtRowNewNToLengthNew(InquiredExtRowNewNN, L, ifNonRectForRect_NonRect0_MakeRactAddingAndMakingRest_L1Max2Minx3Last4MinOfLAndLmin5MaxOfLAndLmax6, IfNotValsOfGivenRow_DefaultNotOwn);
-            int QExtRowsOld=this->GetQExtRows(), QExtRowsNew=QExtRowsOld+1, Lmin=this->GetRowLengthMin(), Lmax=this->GetRowLengthMax(),  InquiredExtRowOldL, InquiredExtRowMinL, ChangedExtRowOldL;//, InquiredExtRowNN=coords.x, InquiredIneRowNN=coords.y
-            int InquiredExtRowNewNN=coordsNew.x, InquiredIneRowwNN=coordsNew.y;
-            if(InquiredExtRowNewNN<0){
-                InquiredExtRowNewNN+=(QExtRowsNew+1);
-            }
-            if(InquiredIneRowwNN<0){
-                InquiredIneRowwNN+=(InquiredExtRowNewL+1);
-            }
-            //if(InquiredExtRowNewNN<=QExtRowsOld){
-            //    InquiredExtRowOldL=this->GetRowLength(InquiredExtRowNewNN);
-            //    if(InquiredIneRowwNN>=1 && InquiredIneRowwNN<=InquiredExtRowNewL){
-            //        if(InquiredExtRowNewL<=InquiredExtRowOldL){
-            //            DataTypeN_Arr2DVal1_GivenRowVal2_Default3_Incorrect4=1;
-            //        }else{
-            //            DataTypeN_Arr2DVal1_GivenRowVal2_Default3_Incorrect4=3;
-            //        }
-            //    }//else 0
-            //}else{
-            //    if(InquiredIneRowwNN>=1 && InquiredIneRowwNN<=InquiredExtRowNewL){
-            //        if(InquiredExtRowNewL<=L){
-            //            DataTypeN_Arr2DVal1_GivenRowVal2_Default3_Incorrect4=2;
-            //            GivenRowPosN=InquiredIneRowwNN;
-            //        }else{
-            //            DataTypeN_Arr2DVal1_GivenRowVal2_Default3_Incorrect4=3;
-            //        }
-            //    }
-            //}
-            if(DataTypeN_Arr2DVal1_GivenRowVal2_Default3_Incorrect4==1){
-                coordsOld.y=InquiredIneRowwNN;
-                coordsOld.x=QExtRowsNew;
-            }//else type = 1 or 0 or 3, => GivenRowPosN=0
-
-            return CoordsOld;
-        }//fn
-
-
-        //--------------------------------------------------------------------------------------------------
-
-        int Array2DSize_Prototype::delExtRow_simplyAsDataGiven_ExtRowNewNToLengthNew(int InquiredExtRowNewNN, int ExtRowToDelNN){
-            int QExtRowsOld=this->GetQExtRows(), QExtRowsNew=QExtRowsOld-1, ExtRowOldNN;
-            if(InquiredExtRowNewNN<0){
-                InquiredExtRowNewNN+=(QExtRowsNew+1);
-            }
-            if(InquiredExtRowNewNN>=1 && InquiredExtRowNewNN<=QExtRowsNew){
-                if(InquiredExtRowNewNN<ExtRowToDelNN){
-                    ExtRowOldNN=InquiredExtRowNewNN;
-                }else if(InquiredExtRowNewNN>=ExtRowToDelNN){
-                    ExtRowOldNN=InquiredExtRowNewNN-1;
-                }
-            }
-            InquiredExtRowNewL=this->GetRowLength(ExtRowOldNN);
-            return InquiredExtRowNewL;
-        }
-
-        Coords2DInt Array2DSize_Prototype::delExtRow_simplyAsDataGiven_ExtRowNewNToLengthNew(const Coords2DInt&CoordsNew, int ExtRowToDelNN){
-            Coords2DInt CoordsOld;
-            int QExtRowsOld=this->GetQExtRows(), QExtRowsNew=QExtRowsOld-1, ExtRowOldNN, IneRowNN=CoordsNew.y;
-            int InquiredExtRowNewL=delExtRow_simplyAsDataGiven_ExtRowNewNToLengthNew(InquiredExtRowNewNN, ExtRowToDelNN);
-            if(InquiredExtRowNewNN<0){
-                InquiredExtRowNewNN+=(QExtRowsNew+1);
-            }
-            if(InquiredExtRowNewNN>=1 && InquiredExtRowNewNN<=QExtRowsNew ){
-                if(InquiredExtRowNewNN<ExtRowToDelNN){
-                    ExtRowOldNN=InquiredExtRowNewNN;
-                }else if(InquiredExtRowNewNN>=ExtRowToDelNN){
-                    ExtRowOldNN=InquiredExtRowNewNN-1;
-                }
-            }
-            InquiredExtRowNewL=this->GetRowLength(ExtRowOldNN);
-            if(IneRowNN<0){
-                IneRowNN+=(InquiredExtRowNewL+1);
-            }
-            if(InquiredExtRowNewNN>=1 && InquiredExtRowNewNN<=QExtRowsNN && IneRowNN>=1 && IneRowNN<=InquiredExtRowNewL){
-                CoordsOld.y=IneRowNN;
-                CoordsOld.x=ExtRowOldNN;
-            }
-            return CoordsOld;
-        }
-
-        //--------------------------------------------------------------------------------------------------
-
-        int Array2DSize_Prototype::delIneRow_simplyAsDataGiven_ExtRowNewNToLengthNew(int InquiredExtRowNN, int IneRowToDelNN, int ifN_GT_Lmin_CutLongOnly1_Ignore0){
-            int QExtRows=this->GetQExtRows(), oldL, newL;
-            if(InquiredExtRowNN<0){
-                InquiredExtRowNN+=(QExtRows+1);
-            }
-            if(InquiredExtRowNN>=1 && InquiredExtRowNN<=QExtRowsNew){
-                oldL=this->GetRowLength(InquiredExtRowNN);
-                newL=oldL;
-                if(IneRowToDelNN<0){
-                    IneRowToDelNN+=(oldL+1);
-                }
-                if(IneRowToDelNN>=1 && IneRowToDelNN<=Lmax){
-                    if(IneRowToDelNN<=Lmin){
-                        newL=oldL-1;
-                    }else{
-                        if(ifN_GT_Lmin_CutLongOnly1_Ignore0!=0){
-                            if(oldL>=IneRowToDelNN){
-                                newL=oldL-1;
+            //fin
+            if(QExtRowsNew==QExtRowsOld-1){
+                //LmaxNew
+                if(ExtRowToDelNN<=QExtRowsOld){
+                    if(ExtRowToDelNN>1 && ExtRowToDelNN<=QExtRowsOld){
+                        for(int NN=1; NN<=QExtRowsOld; NN++){
+                            curL=this->GetRowLength(NN);
+                            if(NN==1 || (NN>1 && curL>LmaxNew && ExtRowToDelNN!=-NN)){
+                                LmaxNew=curL;
+                            }
+                        }
+                    }else if(ExtRowToDelNN==1){
+                        for(int NN=2; NN<=QExtRowsOld; NN++){
+                            curL=this->GetRowLength(NN);
+                            if(NN==2 || (NN>1 && curL>LmaxNew && ExtRowToDelNN!=-NN)){
+                                LmaxNew=curL;
                             }
                         }
                     }
                 }
-            }
-            return newL;
-        }
-
-        Coords2DInt Array2DSize_Prototype::delIneRow_simplyAsDataGiven_Arr2DCoordsNewToOld(const Coords2DInt&CoordsNew, int IneRowToDelNN, int ifN_GT_Lmin_CutLongOnly1_Ignore0){
-            Coords2DInt CoordsOld;
-            int QExtRows=this->GetQExtRows(), oldL, newL, InquiredExtRowNN=CoordsNew.x, InquiredIneRowNN=CoordsNew.y;
-            if(InquiredExtRowNewNN<0){
-                InquiredExtRowNewNN+=(QExtRows+1);
-            }
-            if(InquiredExtRowNewNN>=1 && InquiredExtRowNewNN<=QExtRowsNew){
-                oldL=this->GetRowLength(InquiredExtRowNN);
-                newL=oldL;
-                if(InquiredIneRowNN<0){
-                    InquiredIneRowNN+=(oldL+1);
+                //
+                if(IRNN<0){
+                    IRNN+=(LmaxNew+1);
                 }
-                if(IneRowToDelNN<0){
-                    IneRowToDelNN+=(oldL+1);
-                }
-                if(IneRowToDelNN>=1 && IneRowToDelNN<=Lmax && InquiredIneRowNN>=1 && InquiredIneRowNN<=oldL){
-                    CoordsOld.x=InquiredExtRowNewNN;
-                    if(IneRowToDelNN<=Lmin){
-                        newL=oldL-1;
-                        if(InquiredIneRowNN<IneRowToDelNN){
-                            CoordsOld.y=InquiredIneRowNN;
-                        }else{
-                            CoordsOld.y=InquiredIneRowNN+1;
+                //
+                if(ERNN>=1 && ERNN<=QExtRowsNew){
+                    if(ERNN<ExtRowToDelNN){
+                        curL=this->GetRowLength(ERNN);
+                        if(IRNN>=1 && IRNN<=curL){
+                            CoordsOld.x=ERNN;
+                            CoordsOld.y=IRNN;
                         }
-                    }else{
-                        if(ifN_GT_Lmin_CutLongOnly1_Ignore0!=0){
-                            if(oldL>=IneRowToDelNN){
-                                newL=oldL-1;
-                                if(InquiredIneRowNN<IneRowToDelNN){
-                                    CoordsOld.y=InquiredIneRowNN;
-                                }else{
-                                    CoordsOld.y=InquiredIneRowNN+1;
-                                }
-                            }
+                    }else{//(ERNN = ExtRowToDelNN+1 ... QExtRowsNew)
+                        curL=this->GetRowLength(ERNN+1);
+                        if(IRNN>=1 && IRNN<=curL){
+                            CoordsOld.x=ERNN+1;
+                            CoordsOld.y=IRNN;
                         }
                     }
                 }
+            }else{//QExtRowsNew==QExtRowsOld, opeg n'abl be fa, ignor'd - n'nod: opeg n'gedo'tc
+                if(IRNN<0){
+                    IRNN+=(LmaxOld+1);
+                }
+                if(ERNN>=1 & ERNN<=QExtRowsOld){
+                    curL=this->GetRowLength(ERNN);
+                    if(IRNN>=1 && IRNN<=curL){
+                        CoordsOld.x=ERNN;
+                        CoordsOld.y=IRNN;
+                    }
+                }
             }
+        }//fn del ext simple HilfsFun best
+
+        int Array2DSize_Prototype::delExtRow_ExtRowNewLengthNew(const Coords2DInt&CoordsNew, int ExtRowToDelNN){
+            int ERLNew=0, QExtRowsNew=0;
+            Coords2DInt CoordsOld;
+            this->delExtRow_HilfsFun(CoordsNew, ExtRowToDelNN, ERLNew, QExtRowsNew,  CoordsOld);
+            return ERLNew;
+        }
+        int Array2DSize_Prototype::delExtRow_QExtRowsNew(const Coords2DInt&CoordsNew, int ExtRowToDelNN){
+            int ERLNew=0, QExtRowsNew=0;
+            Coords2DInt CoordsOld;
+            this->delExtRow_HilfsFun(CoordsNew, ExtRowToDelNN, ERLNew, QExtRowsNew,  CoordsOld);
+            return ERLNew;
+        }
+        Coords2DInt Array2DSize_Prototype::delExtRow_Arr2DCoordsNewToOld(const Coords2DInt&CoordsNew, int ExtRowToDelNN){
+            int ERLNew=0, QExtRowsNew=0;
+            Coords2DInt CoordsOld;
+            this->delExtRow_HilfsFun(CoordsNew, ExtRowToDelNN, ERLNew, QExtRowsNew,  CoordsOld);
             return CoordsOld;
         }
+
+
+        //--------------------------------------------------------------------------------------------------
+
+        void Array2DSize_Prototype::delIneRow_HilfsFun(const Coords2DInt&CoordsNew, int IneRowToDelNN, int ifN_GT_Lmin_CutLongOnly1_Ignore0, int&QExtRowsNew, int&ERLNew, Coords2DInt&CoordsOld){
+            int QExtRows=this->GetQExtRows(), Lmax=this->GetRowLengthMax(), Lmin=this->GetRowLengthMin(), ERLOld, ERNN, IRNN, MinQAllowed=DEFAULT_SIZE;
+            if(IneRowToDelNN<0){
+                IneRowToDelNN+=(Lmax+1);
+            }
+            QExtRowsNew=QExtRows;
+            if(ERNN<0){
+                ERNN+=(QExtRowsNew+1);
+            }
+            if(IneRowToDelNN>=1 && IneRowToDelNN<=Lmax && !(IneRowToDelNN>Lmin && ifN_GT_Lmin_CutLongOnly1_Ignore0==0)){
+                if(ERNN>=1 && ERNN<=QExtRows){
+                    ERLOld=this->GetRowLength(ERNN);
+                    if(ERLOld>=IneRowToDelNN){
+                        ERLNew=ERLOld-1;
+                    }else{
+                        ERLNew=ERLOld;
+                    }
+                    if(IRNN<0){
+                        IRNN+=(ERLNew+1);
+                    }
+                    if(IRNN>=1 && IRNN<=ERLNew){
+                        CoordsOld.x=ERNN;
+                        if(IRNN<IneRowToDelNN){
+                            CoordsOld.y=IRNN;
+                        }else{// if(IRNN>=IneRowToDelNN){
+                            CoordsOld.y=IRNN+1;
+                        }
+                    }
+                }
+            }else{//operation forbiden
+                if(ERNN>=1 && ERNN<=QExtRows){
+                    ERLOld=this->GetRowLength(ERNN);
+                    ERLNew=ERLOld;
+                    if(IRNN>=1 && IRNN<=ERLNew){
+                        CoordsOld.x=ERNN;
+                        CoordsOld.y=IRNN;
+                    }
+                }
+            }
+        }//fn
+
+        int Array2DSize_Prototype::delIneRow_ExtRowNewLength(const Coords2DInt&CoordsNew, int IneRowToDelNN, int ifN_GT_Lmin_CutLongOnly1_Ignore0){
+            int QExtRowsNew=0, ERLNew=0;
+            Coords2DInt CoordsOld;
+            this->delIneRow_HilfsFun(CoordsNew, IneRowToDelNN, ifN_GT_Lmin_CutLongOnly1_Ignore0, QExtRowsNew, ERLNew, CoordsOld);
+            return ERLNew;
+        }
+        int Array2DSize_Prototype::delIneRow_QExtRowsNew(const Coords2DInt&CoordsNew, int IneRowToDelNN, int ifN_GT_Lmin_CutLongOnly1_Ignore0){
+            int QExtRowsNew=0, ERLNew=0;
+            Coords2DInt CoordsOld;
+            this->delIneRow_HilfsFun(CoordsNew, IneRowToDelNN, ifN_GT_Lmin_CutLongOnly1_Ignore0, QExtRowsNew, ERLNew, CoordsOld);
+            return QExtRowsNew;
+        }
+        Coords2DInt Array2DSize_Prototype::delIneRow_Arr2DCoordsNewToOld(const Coords2DInt&CoordsNew, int IneRowToDelNN, int ifN_GT_Lmin_CutLongOnly1_Ignore0){
+            int QExtRowsNew=0, ERLNew=0;
+            Coords2DInt CoordsOld;
+            this->delIneRow_HilfsFun(CoordsNew, IneRowToDelNN, ifN_GT_Lmin_CutLongOnly1_Ignore0, QExtRowsNew, ERLNew, CoordsOld);
+            return CoordsOld;
+        }
+
+
 
         //--------------------------------------------------------------------------------------------------
 
 
 
-        void Array2DSize_Prototype::addIneRow_simplyAsDataGiven_HilfsFun(const Coords2DInt&CoordsNew, int L, int ifL_NE_QER_Ignore0_SetRectByStretchToMaxAndQER_New1Old2Max3Min4, int ifNonRect_AddToLast1StretchToMax2Ignore0, int&DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0, int&QExtRowsNew, int&InquiredExtRowNewL, int&InGivenRowPosN,Coords2DInt&CoordsOld){
+        void Array2DSize_Prototype::addIneRow_simplyAsDataGiven_HilfsFun(const Coords2DInt&CoordsNew, int givenL, int ifL_NE_QER_Ignore0_SetRectByStretchToMaxAndQER_New1Old2Max3Min4, int ifNonRect_AddToLast1StretchToMax2Ignore0, int&DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0, int&QExtRowsNew, int&ERLNew, int&InGivenRowPosN,Coords2DInt&CoordsOld){
             //Coords2DInt CoordsOld; int int
             DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=0;
             InGivenRowPosN=0;
-            int  InquiredExtRowOldL, Lmin=this->GetRowLengthMin(), Lmax=this->GetRowLengthMax();
-            int QExtRowsOld=this->GetQExtRows(), QExtRowsNew,  InquiredExtRowNewL, ERNN=CoordsNew.x, IRNN=CoordsNew.y, IRLLast;
+            int  ERLOld, Lmin=this->GetRowLengthMin(), Lmax=this->GetRowLengthMax();
+            int QExtRowsOld=this->GetQExtRows(),  ERNN=CoordsNew.x, IRNN=CoordsNew.y, IRLLast;
             //IRLLast=this->GetIneRowLength(Lmax, false);
-            if(L==0){
+            if(givenL==0){
                 if(Lmin==Lmax){
-                    L=QExtRowsOld;
+                    givenL=QExtRowsOld;
                 }
             }
-            if(ERNN<0){
-                ERNN+=(QExtRows+1);
-            }
             //
-            if(L==QExtRowsOld){
+            if(givenL==QExtRowsOld){
                 QExtRowsNew=QExtRowsOld;
+                if(ERNN<0){
+                    ERNN+=(QExtRowsNew+1);
+                }
                 if(ERNN>=1 && ERNN<=QExtRowsOld){
-                    InquiredExtRowOldL=this->GetRowLength(ERNN);
+                    ERLOld=this->GetRowLength(ERNN);
                     if(IRNN<0){
-                        IRNN+=(InquiredExtRowOldL+1);
+                        IRNN+=(ERLOld+1);
                     }
                     if(IRNN>=1){
                         if(Lmin==Lmax){
-                            if(IRNN<=InquiredExtRowOldL){
-                                InquiredExtRowNewL=Lmax+1;
+                            if(IRNN<=ERLOld){
+                                ERLNew=Lmax+1;
                                 DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=1;
                             }
                         }else{
@@ -1928,18 +990,18 @@ QString TDataShiftResults::ToString(){
                                     //DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=0;
                                 break;
                                 case 1:
-                                    newL=InquiredExtRowOldL+1;
-                                    if(IRNN<=InquiredExtRowOldL){
+                                    ERLNew=ERLOld+1;
+                                    if(IRNN<=ERLOld){
                                         DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=1;
-                                    }else if(IRNN<=InquiredExtRowNewL){//asmda sdi ==, no ato tgos
+                                    }else if(IRNN<=ERLNew){//asmda sdi ==, no ato tgos
                                         DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=2;
                                     }
                                 break;
                                 case 2:
-                                    newL=Lmax+1;
-                                    if(IRNN<=InquiredExtRowOldL){
+                                    ERLNew=Lmax+1;
+                                    if(IRNN<=ERLOld){
                                         DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=1;
-                                    }else if(IRNN<=InquiredExtRowNewL){
+                                    }else if(IRNN<=ERLNew){
                                         DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=2;
                                     }
                                 break;
@@ -1948,43 +1010,48 @@ QString TDataShiftResults::ToString(){
                     }//else DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=0; ob'IRNN
                 }//else DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=0; ob'ERNN
             }else{//L!=QExtRowsOld
-                if(L>0){
+                if(givenL>0){
+
                     //QER
                     switch(ifL_NE_QER_Ignore0_SetRectByStretchToMaxAndQER_New1Old2Max3Min4){
                         case 0:
                             QExtRowsNew=QExtRowsOld;//ob ignore
                         break;
                         case 1:
-                            QExtRowsNew=L;
+                            QExtRowsNew=givenL;
                         break;
                         case 2:
                             QExtRowsNew=QExtRowsOld;
                         break;
                         case 3:
-                            if(L>QExtRowsOld){
-                                QExtRowsNew=L;
+                            if(givenL>QExtRowsOld){
+                                QExtRowsNew=givenL;
                             }else{
                                 QExtRowsNew=QExtRowsOld;
                             }
                         break;
                         case 4:
-                            if(L>QExtRowsOld){
-                                QExtRowsNew=L;
+                            if(givenL>QExtRowsOld){
+                                QExtRowsNew=givenL;
                             }else{
                                 QExtRowsNew=QExtRowsOld;
                             }
 
                         break;
                     }
+                    //
+                    if(ERNN<0){
+                        ERNN+=(QExtRowsNew+1);
+                    }
                     //newL
                     if(ifL_NE_QER_Ignore0_SetRectByStretchToMaxAndQER_New1Old2Max3Min4>=1 && ifL_NE_QER_Ignore0_SetRectByStretchToMaxAndQER_New1Old2Max3Min4<=4){
-                        InquiredExtRowNewL=Lmax+1;
+                        ERLNew=Lmax+1;
                     }else if(ifL_NE_QER_Ignore0_SetRectByStretchToMaxAndQER_New1Old2Max3Min4==0){
-                        InquiredExtRowNewL=InquiredExtRowOldL;//ob ignore
+                        ERLNew=ERLOld;//ob ignore
                     }
                 }else{//ob ignore
-                    QExtRowsNew=L;
-                    InquiredExtRowNewL=InquiredExtRowOldL;
+                    QExtRowsNew=givenL;
+                    ERLNew=ERLOld;
                     if(ERNN>=1 && ERNN<=QExtRowsOld && IRNN>=1 && IRNN<=this->GetRowLength(ERNN)){
                         DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=1;
                         CoordsOld.x=ERNN;
@@ -1993,13 +1060,13 @@ QString TDataShiftResults::ToString(){
                 }
             }
             //nu gefa
-            if(L<=0 || (Lmin==Lmax && ifL_NE_QER_Ignore0_SetRectByStretchToMaxAndQER_New1Old2Max3Min4==0)){
+            if(givenL<=0 || (Lmin==Lmax && ifL_NE_QER_Ignore0_SetRectByStretchToMaxAndQER_New1Old2Max3Min4==0)){
                 //NOp;
                 QExtRowsNew=QExtRowsOld;
                 if(ERNN>=1 && ERNN<=QExtRowsOld){
-                    InquiredExtRowOldL=this->GetRowLength(ERNN);
-                    InquiredExtRowNewL=InquiredExtRowOldL;
-                    if(IRNN>=1 && IRNN<=InquiredExtRowOldL){
+                    ERLOld=this->GetRowLength(ERNN);
+                    ERLNew=ERLOld;
+                    if(IRNN>=1 && IRNN<=ERLOld){
                         DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=1;
                         CoordsOld.x=ERNN;
                         CoordsOld.y=IRNN;
@@ -2009,15 +1076,15 @@ QString TDataShiftResults::ToString(){
                 if(QExtRowsOld==QExtRowsNew){ //usual normal case
                     if(ERNN>=1 && ERNN<=QExtRowsNew){
                         if(ERNN<=QExtRowsOld){
-                            if(IRNN>=1 && IRNN<=InquiredExtRowNewL){
-                                if(IRNN<=oldL){
+                            if(IRNN>=1 && IRNN<=ERLNew){
+                                if(IRNN<=ERLOld){
                                     DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=1;
                                     CoordsOld.x=ERNN;
                                     CoordsOld.y=IRNN;
-                                }else if(IRNN<InquiredExtRowNewL)
+                                }else if(IRNN<ERLNew)
                                     DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=3;
                             }else{//IRNN==newL
-                                if(ERNN<=L){
+                                if(ERNN<=givenL){
                                     DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=2;
                                     InGivenRowPosN=ERNN;
                                 }else{
@@ -2031,15 +1098,15 @@ QString TDataShiftResults::ToString(){
                 }else{//QExtRowsOld<>QExtRowsNew, abnormal, not needed, case
                     if(ERNN>=1 && ERNN<=QExtRowsNew){
                         if(ERNN<=QExtRowsOld){
-                            if(IRNN>=1 && IRNN<=InquiredExtRowNewL){
-                                if(IRNN<=InquiredExtRowOldL){
+                            if(IRNN>=1 && IRNN<=ERLNew){
+                                if(IRNN<=ERLOld){
                                     DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=1;
                                     CoordsOld.x=ERNN;
                                     CoordsOld.y=IRNN;
-                                }else if(IRNN<=InquiredExtRowNewL-1){//
+                                }else if(IRNN<=ERLNew-1){//
                                     DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=3;
                                 }else{// if(IRNN=newL){
-                                    if(ERNN<=L){
+                                    if(ERNN<=givenL){
                                         DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=2;
                                         InGivenRowPosN=ERNN;
                                     }else{
@@ -2048,7 +1115,7 @@ QString TDataShiftResults::ToString(){
                                 }
                             }//else DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=0; ob'IRNN
                         }else{// if(ERNN>QExtRowsOld <QExtRowsNew){
-                            if(IRNN>=1 && IRNN<=InquiredExtRowNewL){
+                            if(IRNN>=1 && IRNN<=ERLNew){
                                 DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=3;
                             }
                         }//else DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=0; ob'IRNN
@@ -2059,233 +1126,233 @@ QString TDataShiftResults::ToString(){
             //return newL;
         }
 
-        int Array2DSize_Prototype::addIneRow_simplyAsDataGiven_NewExtRowLength(const Coords2DInt&CoordsNew, int L, int ifL_NE_QER_Ignore0_SetRectByStretchToMaxAndQER_New1Old2Max3Min4, int ifNonRect_AddToLast1StretchToMax2Ignore0){
-            int DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0;
-            int InquiredExtRowNewL;
-            int InGivenRowPosN;
-            int QExtRowsNew;
+        int Array2DSize_Prototype::addIneRow_simplyAsDataGiven_NewExtRowLength(const Coords2DInt&CoordsNew, int givenL, int ifL_NE_QER_Ignore0_SetRectByStretchToMaxAndQER_New1Old2Max3Min4, int ifNonRect_AddToLast1StretchToMax2Ignore0){
+            int DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=0;
+            int ERLNew=0;
+            int InGivenRowPosN=0;
+            int QExtRowsNew=0;
             Coords2DInt CoordsOld;
-            this->addIneRow_simplyAsDataGiven_HilfsFun(CoordsNew, L, ifL_NE_QER_Ignore0_SetRectByStretchToMaxAndQER_New1Old2Max3Min4, ifNonRect_AddToLast1StretchToMax2Ignore0, DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0, QExtRowsNew, InquiredExtRowNewL, InGivenRowPosN,Coords2DInt&CoordsOld);
-            return InquiredExtRowNewL;
+            this->addIneRow_simplyAsDataGiven_HilfsFun(CoordsNew, givenL, ifL_NE_QER_Ignore0_SetRectByStretchToMaxAndQER_New1Old2Max3Min4, ifNonRect_AddToLast1StretchToMax2Ignore0, DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0, QExtRowsNew, ERLNew, InGivenRowPosN, CoordsOld);
+            return ERLNew;
         }
 
-        int Array2DSize_Prototype::addIneRow_simplyAsDataGiven_QExtRowsNew(const Coords2DInt&CoordsNew, int L, int ifL_NE_QER_Ignore0_SetRectByStretchToMaxAndQER_New1Old2Max3Min4, int ifNonRect_AddToLast1StretchToMax2Ignore0){
-            int DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0;
-            int InquiredExtRowNewL;
-            int InGivenRowPosN;
-            int QExtRowsNew;
+        int Array2DSize_Prototype::addIneRow_simplyAsDataGiven_QExtRowsNew(const Coords2DInt&CoordsNew, int givenL, int ifL_NE_QER_Ignore0_SetRectByStretchToMaxAndQER_New1Old2Max3Min4, int ifNonRect_AddToLast1StretchToMax2Ignore0){
+            int DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=0;
+            int ERLNew=0;
+            int InGivenRowPosN=0;
+            int QExtRowsNew=0;
             Coords2DInt CoordsOld;
-            this->addIneRow_simplyAsDataGiven_HilfsFun(CoordsNew, L, ifL_NE_QER_Ignore0_SetRectByStretchToMaxAndQER_New1Old2Max3Min4, ifNonRect_AddToLast1StretchToMax2Ignore0, DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0, QExtRowsNew, InquiredExtRowNewL, InGivenRowPosN,Coords2DInt&CoordsOld);
+            this->addIneRow_simplyAsDataGiven_HilfsFun(CoordsNew, givenL, ifL_NE_QER_Ignore0_SetRectByStretchToMaxAndQER_New1Old2Max3Min4, ifNonRect_AddToLast1StretchToMax2Ignore0, DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0, QExtRowsNew, ERLNew, InGivenRowPosN,CoordsOld);
             return QExtRowsNew;
         }
 
-        int Array2DSize_Prototype::addIneRow_simplyAsDataGiven_DataTypeN(const Coords2DInt&CoordsNew, int L, int ifL_NE_QER_Ignore0_SetRectByStretchToMaxAndQER_New1Old2Max3Min4, int ifNonRect_AddToLast1StretchToMax2Ignore0){
-            int DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0;
-            int InquiredExtRowNewL;
-            int InGivenRowPosN;
-            int QExtRowsNew;
+        int Array2DSize_Prototype::addIneRow_simplyAsDataGiven_DataTypeN(const Coords2DInt&CoordsNew, int givenL, int ifL_NE_QER_Ignore0_SetRectByStretchToMaxAndQER_New1Old2Max3Min4, int ifNonRect_AddToLast1StretchToMax2Ignore0){
+            int DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=0;
+            int ERLNew=0;
+            int InGivenRowPosN=0;
+            int QExtRowsNew=0;
             Coords2DInt CoordsOld;
-            this->addIneRow_simplyAsDataGiven_HilfsFun(CoordsNew, L, ifL_NE_QER_Ignore0_SetRectByStretchToMaxAndQER_New1Old2Max3Min4, ifNonRect_AddToLast1StretchToMax2Ignore0, DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0, QExtRowsNew, InquiredExtRowNewL, InGivenRowPosN,Coords2DInt&CoordsOld);
+            this->addIneRow_simplyAsDataGiven_HilfsFun(CoordsNew, givenL, ifL_NE_QER_Ignore0_SetRectByStretchToMaxAndQER_New1Old2Max3Min4, ifNonRect_AddToLast1StretchToMax2Ignore0, DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0, QExtRowsNew, ERLNew, InGivenRowPosN,CoordsOld);
             return DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0;
         }
 
-        Coords2DInt Array2DSize_Prototype::addIneRow_simplyAsDataGiven_Arr2DCoordsNewToOld(const Coords2DInt&CoordsNew, int L, int ifL_NE_QER_Ignore0_SetRectByStretchToMaxAndQER_New1Old2Max3Min4, int ifNonRect_AddToLast1StretchToMax2Ignore0){
-            int DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0;
-            int InquiredExtRowNewL;
-            int InGivenRowPosN;
-            int QExtRowsNew;
+        Coords2DInt Array2DSize_Prototype::addIneRow_simplyAsDataGiven_Arr2DCoordsNewToOld(const Coords2DInt&CoordsNew, int givenL, int ifL_NE_QER_Ignore0_SetRectByStretchToMaxAndQER_New1Old2Max3Min4, int ifNonRect_AddToLast1StretchToMax2Ignore0){
+            int DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=0;
+            int ERLNew=0;
+            int InGivenRowPosN=0;
+            int QExtRowsNew=0;
             Coords2DInt CoordsOld;
-            this->addIneRow_simplyAsDataGiven_HilfsFun(CoordsNew, L, ifL_NE_QER_Ignore0_SetRectByStretchToMaxAndQER_New1Old2Max3Min4, ifNonRect_AddToLast1StretchToMax2Ignore0, DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0, QExtRowsNew, InquiredExtRowNewL, InGivenRowPosN,Coords2DInt&CoordsOld);
+            this->addIneRow_simplyAsDataGiven_HilfsFun(CoordsNew, givenL, ifL_NE_QER_Ignore0_SetRectByStretchToMaxAndQER_New1Old2Max3Min4, ifNonRect_AddToLast1StretchToMax2Ignore0, DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0, QExtRowsNew, ERLNew, InGivenRowPosN,CoordsOld);
             return CoordsOld;
         }
 
         //--------------------------------------------------------------------------------------------------
 
-        void Array2DSize_Prototype::insIneRow_simplyAsDataGiven_HilfsFun(const Coords2DInt&CoordsNew, int InsIneRowN, int L, int ifL_NE_QER_Ignore0_SetRectByStretchToMaxAndQER_New1Old2Max3Min4, int ifNonRect_AddToLast1StretchToMax2Ignore0, int&DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0, int&QExtRowsNew, int&InquiredExtRowNewL, int&InGivenRowPosN,Coords2DInt&CoordsOld){
-            //Coords2DInt CoordsOld;
-            DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=0;
-            InGivenRowPosN=0;
-            int QExtRows=this->GetQExtRows(), InquiredExtRowOldL, Lmin=this->GetRowLengthMin(), Lmax=this->GetRowLengthMax();
-            int QExtRowsOld=this->GetQExtRows(), QExtRowsNew, InquiredExtRowNewL, ERNN=CoordsNew.x, IRNN=CoordsNew.y, IRLLast;
-            //IRLLast=this->GetIneRowLength(Lmax, false);
-            if(L==0){
-                if(Lmin==Lmax){
-                    L=QExtRowsOld;
-                }
-            }
-            if(ERNN<0){
-                ERNN+=(QExtRows+1);
-            }
-            if(InsIneRowN<0){
-                  InsIneRowN+=(Lmax+1);
-            }
-            if(L==QExtRowsOld){
-                QExtRowsNew=QExtRowsOld;
-                if(ERNN>=1 && ERNN<=QExtRowsOld){
-                    InquiredExtRowOldL=this->GetRowLength(ERNN);
-                    if(IRNN<0){
-                        IRNN+=(InquiredExtRowOldL+1);
-                    }
-                    if(IRNN>=1){
-                        if(Lmin==Lmax){
-                            if(InsIneRowN>=1 && InsIneRowN<=Lmax){
-                                if(InsIneRowN<=Lmin){
-                                    if(IRNN<=InquiredExtRowOldL){
-                                        InquiredExtRowNewL=Lmax+1;
-                                        DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=1;
-                                    }else{//IRNN =[InsIneRowN...InquiredExtRowOldL]
+//        void Array2DSize_Prototype::insIneRow_simplyAsDataGiven_HilfsFun(const Coords2DInt&CoordsNew, int InsIneRowN, int L, int ifL_NE_QER_Ignore0_SetRectByStretchToMaxAndQER_New1Old2Max3Min4, int ifNonRect_AddToLast1StretchToMax2Ignore0, int&DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0, int&QExtRowsNew, int&InquiredExtRowNewL, int&InGivenRowPosN,Coords2DInt&CoordsOld){
+//            //Coords2DInt CoordsOld;
+//            DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=0;
+//            InGivenRowPosN=0;
+//            int QExtRows=this->GetQExtRows(), InquiredExtRowOldL, Lmin=this->GetRowLengthMin(), Lmax=this->GetRowLengthMax();
+//            int QExtRowsOld=this->GetQExtRows(), QExtRowsNew, InquiredExtRowNewL, ERNN=CoordsNew.x, IRNN=CoordsNew.y, IRLLast;
+//            //IRLLast=this->GetIneRowLength(Lmax, false);
+//            if(L==0){
+//                if(Lmin==Lmax){
+//                    L=QExtRowsOld;
+//                }
+//            }
+//            if(ERNN<0){
+//                ERNN+=(QExtRows+1);
+//            }
+//            if(InsIneRowN<0){
+//                  InsIneRowN+=(Lmax+1);
+//            }
+//            if(L==QExtRowsOld){
+//                QExtRowsNew=QExtRowsOld;
+//                if(ERNN>=1 && ERNN<=QExtRowsOld){
+//                    InquiredExtRowOldL=this->GetRowLength(ERNN);
+//                    if(IRNN<0){
+//                        IRNN+=(InquiredExtRowOldL+1);
+//                    }
+//                    if(IRNN>=1){
+//                        if(Lmin==Lmax){
+//                            if(InsIneRowN>=1 && InsIneRowN<=Lmax){
+//                                if(InsIneRowN<=Lmin){
+//                                    if(IRNN<=InquiredExtRowOldL){
+//                                        InquiredExtRowNewL=Lmax+1;
+//                                        DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=1;
+//                                    }else{//IRNN =[InsIneRowN...InquiredExtRowOldL]
 
-                                    }
-                                }else{//InsIneRowN=[InquiredExtRowOldL...Lmax]
-                                    if(IRNN<=InquiredExtRowOldL){
-                                        InquiredExtRowNewL=Lmax+1;
-                                        DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=1;
-                                    }else{//IRNN =[InsIneRowN...InquiredExtRowOldL]
+//                                    }
+//                                }else{//InsIneRowN=[InquiredExtRowOldL...Lmax]
+//                                    if(IRNN<=InquiredExtRowOldL){
+//                                        InquiredExtRowNewL=Lmax+1;
+//                                        DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=1;
+//                                    }else{//IRNN =[InsIneRowN...InquiredExtRowOldL]
 
-                                    }
-                                }
-                            }else{
-                                if(InsIneRowN<=Lmin){
-                                    if(IRNN<=InquiredExtRowOldL){
-                                        InquiredExtRowNewL=Lmax+1;
-                                        DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=1;
-                                    }else{//IRNN =[]
+//                                    }
+//                                }
+//                            }else{
+//                                if(InsIneRowN<=Lmin){
+//                                    if(IRNN<=InquiredExtRowOldL){
+//                                        InquiredExtRowNewL=Lmax+1;
+//                                        DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=1;
+//                                    }else{//IRNN =[]
 
-                                    }
-                                }
-                            }
-                        }else{//Lmin!=Lmax
-                            switch(ifNonRect_AddToLast1StretchToMax2Ignore0){
-                                case 0:
-                                    //ignore
-                                    //DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=0;
-                                break;
-                                case 1:
-                                    InquiredExtRowNewL=InquiredExtRowOldL+1;
-                                    if(IRNN<=InquiredExtRowOldL){
-                                        DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=1;
-                                    }else if(IRNN<=InquiredExtRowNewL){//asmda sdi ==, no ato tgos
-                                        DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=2;
-                                    }
-                                break;
-                                case 2:
-                                    InquiredExtRowNewL=Lmax+1;
-                                    if(IRNN<=InquiredExtRowOldL){
-                                        DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=1;
-                                    }else if(IRNN<=InquiredExtRowNewL){
-                                        DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=2;
-                                    }
-                                break;
-                            }
-                        }
-                    }//else DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=0; ob'IRNN
-                }//else DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=0; ob'ERNN
-            }else{//L!=QWExtRowsOld
-                if(L>0){
-                    //QER
-                    switch(ifL_NE_QER_Ignore0_SetRectByStretchToMaxAndQER_New1Old2Max3Min4){
-                        case 0:
-                            QExtRowsNew=QExtRowsOld;//ob ignore
-                        break;
-                        case 1:
-                            QExtRowsNew=L;
-                        break;
-                        case 2:
-                            QExtRowsNew=QExtRowsOld;
-                        break;
-                        case 3:
-                            if(L>QExtRowsOld){
-                                QExtRowsNew=L;
-                            }else{
-                                QExtRowsNew=QExtRowsOld;
-                            }
-                        break;
-                        case 4:
-                            if(L>QExtRowsOld){
-                                QExtRowsNew=L;
-                            }else{
-                                QExtRowsNew=QExtRowsOld;
-                            }
+//                                    }
+//                                }
+//                            }
+//                        }else{//Lmin!=Lmax
+//                            switch(ifNonRect_AddToLast1StretchToMax2Ignore0){
+//                                case 0:
+//                                    //ignore
+//                                    //DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=0;
+//                                break;
+//                                case 1:
+//                                    InquiredExtRowNewL=InquiredExtRowOldL+1;
+//                                    if(IRNN<=InquiredExtRowOldL){
+//                                        DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=1;
+//                                    }else if(IRNN<=InquiredExtRowNewL){//asmda sdi ==, no ato tgos
+//                                        DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=2;
+//                                    }
+//                                break;
+//                                case 2:
+//                                    InquiredExtRowNewL=Lmax+1;
+//                                    if(IRNN<=InquiredExtRowOldL){
+//                                        DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=1;
+//                                    }else if(IRNN<=InquiredExtRowNewL){
+//                                        DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=2;
+//                                    }
+//                                break;
+//                            }
+//                        }
+//                    }//else DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=0; ob'IRNN
+//                }//else DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=0; ob'ERNN
+//            }else{//L!=QWExtRowsOld
+//                if(L>0){
+//                    //QER
+//                    switch(ifL_NE_QER_Ignore0_SetRectByStretchToMaxAndQER_New1Old2Max3Min4){
+//                        case 0:
+//                            QExtRowsNew=QExtRowsOld;//ob ignore
+//                        break;
+//                        case 1:
+//                            QExtRowsNew=L;
+//                        break;
+//                        case 2:
+//                            QExtRowsNew=QExtRowsOld;
+//                        break;
+//                        case 3:
+//                            if(L>QExtRowsOld){
+//                                QExtRowsNew=L;
+//                            }else{
+//                                QExtRowsNew=QExtRowsOld;
+//                            }
+//                        break;
+//                        case 4:
+//                            if(L>QExtRowsOld){
+//                                QExtRowsNew=L;
+//                            }else{
+//                                QExtRowsNew=QExtRowsOld;
+//                            }
 
-                        break;
-                    }
-                    //newL
-                    if(ifL_NE_QER_Ignore0_SetRectByStretchToMaxAndQER_New1Old2Max3Min4>=1 && ifL_NE_QER_Ignore0_SetRectByStretchToMaxAndQER_New1Old2Max3Min4<=4){
-                        InquiredExtRowNewL=Lmax+1;
-                    }else if(ifL_NE_QER_Ignore0_SetRectByStretchToMaxAndQER_New1Old2Max3Min4==0){
-                        InquiredExtRowNewL=InquiredExtRowOldL;//ob ignore
-                    }
-                }else{//ob ignore
-                    QExtRowsNew=L;
-                    InquiredExtRowNewL=InquiredExtRowOldL;
-                }
-            }
-            //nu gefa
-            if(L<=0 || (Lmin==Lmax && ifL_NE_QER_Ignore0_SetRectByStretchToMaxAndQER_New1Old2Max3Min4==0)){
-                //NOp;
-                QExtRowsNew=QExtRowsOld;
-                if(ERNN>=1 && ERNN<=QExtRowsOld){
-                    InquiredExtRowOldL=this->GetRowLength(ERNN);
-                    InquiredExtRowNewL=InquiredExtRowOldL;
-                    if(IRNN>=1 && IRNN<=InquiredExtRowOldL){
-                        DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=1;
-                        CoordsOld.x=ERNN;
-                        CoordsOld.y=IRNN;
-                    }//else DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=0;
-                }//else DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=0;
-            }else{// action of adding Inner Row is provided
-                if(QExtRowsOld==QExtRowsNew){ //usual normal case
-                    if(ERNN>=1 && ERNN<=QExtRowsNew){
-                        if(ERNN<=QExtRowsOld){
-                            if(IRNN>=1 && IRNN<=InquiredExtRowNewL){
-                                if(IRNN<=InquiredExtRowOldL){
-                                    DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=1;
-                                    CoordsOld.x=ERNN;
-                                    CoordsOld.y=IRNN;
-                                }else if(IRNN<InquiredExtRowNewL)
-                                    DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=3;
-                            }else{//IRNN==newL
-                                if(ERNN<=L){
-                                    DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=2;
-                                    InGivenRowPosN=ERNN;
-                                }else{
-                                    DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=3;
-                                }
-                            }//else DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=0;
-                        }//else{// if(ERNN<=QExtRowsNew){
-                        //
-                        //}
-                    }//else DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=0;
-                }else{//QExtRowsOld<>QExtRowsNew, abnormal, not needed, case
-                    if(ERNN>=1 && ERNN<=QExtRowsNew){
-                        if(ERNN<=QExtRowsOld){
-                            if(IRNN>=1 && IRNN<=InquiredExtRowNewL){
-                                if(IRNN<=InquiredExtRowOldL){
-                                    DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=1;
-                                    CoordsOld.x=ERNN;
-                                    CoordsOld.y=IRNN;
-                                }else if(IRNN<=newL-1){//
-                                    DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=3;
-                                }else{// if(IRNN=newL){
-                                    if(ERNN<=L){
-                                        DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=2;
-                                        InGivenRowPosN=ERNN;
-                                    }else{
-                                        DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=3;
-                                    }
-                                }
-                            }//else DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=0; ob'IRNN
-                        }else{// if(ERNN>QExtRowsOld <QExtRowsNew){
-                            if(IRNN>=1 && IRNN<=InquiredExtRowNewL){
-                                DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=3;
-                            }
-                        }//else DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=0; ob'IRNN
-                    }//else DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=0;
-                }
-            }//else DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=0;
-        //}
-        //return newL;
-        }//fn
+//                        break;
+//                    }
+//                    //newL
+//                    if(ifL_NE_QER_Ignore0_SetRectByStretchToMaxAndQER_New1Old2Max3Min4>=1 && ifL_NE_QER_Ignore0_SetRectByStretchToMaxAndQER_New1Old2Max3Min4<=4){
+//                        InquiredExtRowNewL=Lmax+1;
+//                    }else if(ifL_NE_QER_Ignore0_SetRectByStretchToMaxAndQER_New1Old2Max3Min4==0){
+//                        InquiredExtRowNewL=InquiredExtRowOldL;//ob ignore
+//                    }
+//                }else{//ob ignore
+//                    QExtRowsNew=L;
+//                    InquiredExtRowNewL=InquiredExtRowOldL;
+//                }
+//            }
+//            //nu gefa
+//            if(L<=0 || (Lmin==Lmax && ifL_NE_QER_Ignore0_SetRectByStretchToMaxAndQER_New1Old2Max3Min4==0)){
+//                //NOp;
+//                QExtRowsNew=QExtRowsOld;
+//                if(ERNN>=1 && ERNN<=QExtRowsOld){
+//                    InquiredExtRowOldL=this->GetRowLength(ERNN);
+//                    InquiredExtRowNewL=InquiredExtRowOldL;
+//                    if(IRNN>=1 && IRNN<=InquiredExtRowOldL){
+//                        DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=1;
+//                        CoordsOld.x=ERNN;
+//                        CoordsOld.y=IRNN;
+//                    }//else DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=0;
+//                }//else DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=0;
+//            }else{// action of adding Inner Row is provided
+//                if(QExtRowsOld==QExtRowsNew){ //usual normal case
+//                    if(ERNN>=1 && ERNN<=QExtRowsNew){
+//                        if(ERNN<=QExtRowsOld){
+//                            if(IRNN>=1 && IRNN<=InquiredExtRowNewL){
+//                                if(IRNN<=InquiredExtRowOldL){
+//                                    DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=1;
+//                                    CoordsOld.x=ERNN;
+//                                    CoordsOld.y=IRNN;
+//                                }else if(IRNN<InquiredExtRowNewL)
+//                                    DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=3;
+//                            }else{//IRNN==newL
+//                                if(ERNN<=L){
+//                                    DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=2;
+//                                    InGivenRowPosN=ERNN;
+//                                }else{
+//                                    DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=3;
+//                                }
+//                            }//else DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=0;
+//                        }//else{// if(ERNN<=QExtRowsNew){
+//                        //
+//                        //}
+//                    }//else DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=0;
+//                }else{//QExtRowsOld<>QExtRowsNew, abnormal, not needed, case
+//                    if(ERNN>=1 && ERNN<=QExtRowsNew){
+//                        if(ERNN<=QExtRowsOld){
+//                            if(IRNN>=1 && IRNN<=InquiredExtRowNewL){
+//                                if(IRNN<=InquiredExtRowOldL){
+//                                    DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=1;
+//                                    CoordsOld.x=ERNN;
+//                                    CoordsOld.y=IRNN;
+//                                }else if(IRNN<=newL-1){//
+//                                    DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=3;
+//                                }else{// if(IRNN=newL){
+//                                    if(ERNN<=L){
+//                                        DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=2;
+//                                        InGivenRowPosN=ERNN;
+//                                    }else{
+//                                        DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=3;
+//                                    }
+//                                }
+//                            }//else DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=0; ob'IRNN
+//                        }else{// if(ERNN>QExtRowsOld <QExtRowsNew){
+//                            if(IRNN>=1 && IRNN<=InquiredExtRowNewL){
+//                                DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=3;
+//                            }
+//                        }//else DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=0; ob'IRNN
+//                    }//else DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=0;
+//                }
+//            }//else DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=0;
+//        //}
+//        //return newL;
+//        }//fn
 
         //--------------------------------------------------------------------------------------------------
 
@@ -4613,7 +3680,7 @@ QString TDataShiftResults::ToString(){
                                 }//else NOp;
                             }
 
-                            int Array2DSize::GetIneRowLength(int IRNN, bool countWhole=false) const{
+                            int Array2DSize::GetIneRowLength(int IRNN, bool countWhole) const{
                                 return this->data->GetIneRowLength(IRNN, countWhole);
                             }
 
