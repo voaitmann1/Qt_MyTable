@@ -14,11 +14,13 @@ SOURCES += main.cpp \
     tests1.cpp \
     fluttermodels.cpp \
     mymathlib.cpp \
-    array1d_size2d_elem2d_1.cpp
+    array1d_size2d_elem2d_1.cpp \
+    array2dlib.cpp
 
 HEADERS += \
     mylib.h \
     tests1.h \
     fluttermodels.h \
     mymathlib.h \
-    array1d_size2d_elem2d_1.h
+    array1d_size2d_elem2d_1.h \
+    array2dlib.h

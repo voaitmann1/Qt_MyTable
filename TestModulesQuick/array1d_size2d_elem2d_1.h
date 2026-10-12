@@ -928,7 +928,9 @@ class Array2DSize_Prototype{
     Coords2DInt ExtRow_SetAddInsDel_ThatCorrectedByNewData_CoordsFromArr2dNewToOld(int Action_Set1_Add2_Ins3_Del4_Dflt0, const Coords2DInt&coords, int givenRowL=0, int ExtRowNN_0ifAll=-1, TDataShiftParams*DataShiftParam=NULL, int ifWasRectAndNotEqual_NonRect0_SetRectBy_New1_Old2_Max3_Min4=0, bool suiValsInsteadOfDefaultValsWherePossible=true);
 
     //
-
+    //
+    //virtual void Set(int* extRowsLengthes, int QExtRows=1, int ifNotRect_NonRect0_MakeRectBy_Min1Max2MinOfMax3MaxOfMax4=0, bool IfNotValsOfGivenRow_DefaultNotOwn=true)=0;
+    void Set_HilfsFun(int&QExtRowsNew, int&ERLNew, int&DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0, Coords2DInt&CoordsOld, int* extRowsLengthes, int QExtRows=1, int ifNotRect_NonRect0_MakeRectBy_Min1Max2MinOfMax3MaxOfMax4=0, bool IfNotValsOfGivenRow_DefaultNotOwn=true);
     //int Set_GetExtNewRowLength(int* extRowsLengthes, int QExtRows, int ifNotRect_NonRect0_MakeRectBy_Min1Max2=0);//no need - 4 tgos: Lcur, Lold, Lmin, Lmax
     int Set_Arr2DNewCoordsToDataTypeN(const Coords2DInt&coords, int* extRowsLengthes, int QExtRows=1, int ifNotRect_NonRect0_MakeRectBy_Min1Max2=0, bool IfNotValsOfGivenRow_DefaultNotOwn=true);
     Coords2DInt Set_Arr2DNewToOldCoords(const Coords2DInt&coords, int* extRowsLengthes, int QExtRows=1, int ifNotRect_NonRect0_MakeRectBy_Min1Max2=0);
@@ -1024,6 +1026,9 @@ class Array2DSize_Rectangular: public Array2DSize_Prototype{
     //Coords2DInt Set_Arr2DNewToOldCoords(const Coords2DInt&coords, int* extRowsLengthes, int QExtRows=1, int ifNotRect_NonRect0_MakeRectBy_Min1Max2=0);
     //
     //
+    //void Set(int* extRowsLengthes, int QExtRows=1, int ifNotRect_NonRect0_MakeRectBy_Min1Max2MinOfMax3MaxOfMax4=0, bool IfNotValsOfGivenRow_DefaultNotOwn=true);
+    //
+    //
     QString GetAsString();
     //
     //
@@ -1115,6 +1120,9 @@ class Array2DSize_V1D_VariaLength:public Array2DSize_Prototype{
     //Coords2DInt Set_Arr2DNewToOldCoords(const Coords2DInt&coords, int* extRowsLengthes, int QExtRows=1, int ifNotRect_NonRect0_MakeRectBy_Min1Max2=0);;
     //
     //
+    //void Set(int* extRowsLengthes, int QExtRows=1, int ifNotRect_NonRect0_MakeRectBy_Min1Max2MinOfMax3MaxOfMax4=0, bool IfNotValsOfGivenRow_DefaultNotOwn=true);
+    //
+    //
     //virtual QString GetAsStdString();
     //
     //
@@ -1178,6 +1186,9 @@ class Array2DSize_P_QERInner_VariaLength:public Array2DSize_Prototype{
     virtual void set_or_ins_IneRow_simplyAsDataGiven(int Action_Set1_Ins2, int N=-1, int L=0, int ifL_NE_QER_Ignore0_MakeRactChangingBy_New1Old2Max3Min4=0, int ifLminLTN_ifAdd_N1_Lmax2_LmaxRest3_MakeRectAnyway_Lmax4_LmaxRest5=4);
     virtual void addIneRow_simplyAsDataGiven(int L=0, int ifL_NE_QER_Ignore0_MakeRactChangingBy_New1Old2Max3Min4=0, int ifNonRect_Ignore0AddToLast1StretchToMax2=0 );
     virtual void delIneRow_simplyAsDataGiven(int N=-1, int ifNGTLminIgnore0ShortenNurLongRows1=0);
+    //
+    //
+    //void Set(int* extRowsLengthes, int QExtRows=1, int ifNotRect_NonRect0_MakeRectBy_Min1Max2MinOfMax3MaxOfMax4=0, bool IfNotValsOfGivenRow_DefaultNotOwn=true);
     //
     //
     //virtual QString GetAsStdString();
@@ -1245,6 +1256,8 @@ class Array2DSize_P1D_NoQEIn_VariaLength:public Array2DSize_Prototype{
     virtual void addIneRow_simplyAsDataGiven(int L=0, int ifL_NE_QER_Ignore0_MakeRactChangingBy_New1Old2Max3Min4=0, int ifNonRect_Ignore0AddToLast1StretchToMax2=0 );
     virtual void delIneRow_simplyAsDataGiven(int N=-1, int ifNGTLminIgnore0ShortenNurLongRows1=0);
     //
+    //
+    void Set(int* extRowsLengthes, int QExtRows=1, int ifNotRect_NonRect0_MakeRectBy_Min1Max2MinOfMax3MaxOfMax4=0, bool IfNotValsOfGivenRow_DefaultNotOwn=true);
     //
     //
     //virtual QString GetAsStdString();
@@ -1332,6 +1345,9 @@ class Array2DSize{
     int ExtRow_SetAddInsDel_ThatCorrectedByNewData_FromArr2dNewToOldRowPosN(int Action_Set1_Add2_Ins3_Del4_Dflt0, int InRowNN, /*const Coords2DInt&coords,*/ int givenRowL=0, int ExtRowNN_0ifAll=-1, TDataShiftParams*DataShiftParam=NULL, int ifWasRectAndNotEqual_NonRect0_SetRectBy_New1_Old2_Max3_Min4=0, bool suiValsInsteadOfDefaultValsWherePossible=true);
 
     Coords2DInt ExtRow_SetAddInsDel_ThatCorrectedByNewData_CoordsFromArr2dNewToOld(int Action_Set1_Add2_Ins3_Del4_Dflt0, const Coords2DInt&coords, int givenRowL=0, int ExtRowNN_0ifAll=-1, TDataShiftParams*DataShiftParam=NULL, int ifWasRectAndNotEqual_NonRect0_SetRectBy_New1_Old2_Max3_Min4=0, bool suiValsInsteadOfDefaultValsWherePossible=true);
+    //
+    //
+    //void Set(int* extRowsLengthes, int QExtRows=1, int ifNotRect_NonRect0_MakeRectBy_Min1Max2MinOfMax3MaxOfMax4=0, bool IfNotValsOfGivenRow_DefaultNotOwn=true);
     //
     //
     QString GetAsString();

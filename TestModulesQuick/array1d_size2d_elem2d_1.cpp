@@ -1406,7 +1406,6 @@ QString TDataShiftResults::ToString(){
                             res1L=calcdL;
                         }
                     }
-
                 }
             }
             if(res1L==0){
@@ -1998,8 +1997,167 @@ QString TDataShiftResults::ToString(){
 
         //----------------------------------------------------------------------------------------------------
 
+        void Array2DSize_Prototype::Set_HilfsFun(int&QExtRowsNew, int&ERLNew, int&DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0, Coords2DInt&CoordsOld, int* extRowsLengthes, int QExtRowsGiven, int ifNotRect_NonRect0_MakeRectBy_Min1Max2MinOfMax3MaxOfMax4, bool IfNotValsOfGivenRow_DefaultNotOwn){
+            int QExtRowsOld=this->GetQExtRows(), Lmin=this->GetRowLengthMin(), Lmax=this->GetRowLengthMax(), ERLOld, ERNN, IRNN, LminGiven, LmaxGiven, curLexisting, curLgiven;
+            QExtRowsNew=0;
+            ERLNew=0;
+            DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0=0;
+            //Coords2DInt&CoordsOld
+            for(ERNN=1; ERNN<=QExtRowsGiven; ERNN++){
+                curLgiven=extRowsLengthes[ERNN-1];
+                if(ERNN==1 || (ERNN>1 && curLgiven<LminGiven)){
+                    LminGiven=curLgiven;
+                }
+                if(ERNN==1 || (ERNN>1 && curLgiven>LmaxGiven)){
+                    LmaxGiven=curLgiven;
+                }
+            }
+            if(LminGiven==LmaxGiven){
+                QExtRowsNew=QExtRowsGiven;
+                if(ERNN>=1 && ERNN<=QExtRowsNew){
+                    ERLNew=LmaxGiven;
+                }
+            }else{
+                if((this->IsRectangularByType() && ifNotRect_NonRect0_MakeRectBy_Min1Max2MinOfMax3MaxOfMax4==0)){
+                    //NOp; forbiden operation
+                    QExtRowsNew=QExtRowsOld;
+                    if(ERNN>=1 && ERNN<=QExtRowsNew){
+                        ERLNew=this->GetRowLength(ERNN);
+                    }
+               }else{
+                   QExtRowsNew=QExtRowsGiven;
+                   switch(ifNotRect_NonRect0_MakeRectBy_Min1Max2MinOfMax3MaxOfMax4){
+                       case 0:
+                           if(this->IsRectangularByType()){
+                               if(ERNN>=1 && ERNN<=QExtRowsGiven){
+                                   ERLOld=this->GetRowLength(ERNN);
+                                   ERLNew=ERLOld;
+                                   if(IRNN>=1 && IRNN<=ERLNew){
+                                       DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0=2;
+                                   }//else  DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0=0;
+                               }//else  DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0=0;
+                           }else{
+                               if(ERNN>=1 && ERNN<=QExtRowsGiven){
+                                   ERLOld=this->GetRowLength(ERNN);
+                                   ERLNew=extRowsLengthes[ERNN-1];
+                                   if(IRNN>=1 && IRNN<=ERLNew){
+                                       DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0=2;
+                                   }//else  DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0=0;
+                               }//else  DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0=0;
+                           }
+                       break;
+                       case 1:
+                           if(ERNN>=1 && ERNN<=QExtRowsGiven){
+                               ERLOld=this->GetRowLength(ERNN);
+                           }
+                           if(ERNN>=1 && ERNN<=QExtRowsNew){
+                               ERLNew=LmaxGiven;//=extRowsLengthes[ERNN-1];
+                           }
+                       break;
+                       case 2:
+                           if(ERNN>=1 && ERNN<=QExtRowsGiven){
+                               ERLOld=this->GetRowLength(ERNN);
+                           }
+                           if(ERNN>=1 && ERNN<=QExtRowsNew){
+                               ERLNew=LminGiven;//=extRowsLengthes[ERNN-1];
+                           }
+                       break;
+                       case 3:
+                           if(ERNN>=1 && ERNN<=QExtRowsGiven){
+                               ERLOld=this->GetRowLength(ERNN);
+                           }
+                           if(ERNN>=1 && ERNN<=QExtRowsNew){
+                               if(LmaxGiven>=Lmax){
+                                   ERLNew=LmaxGiven;//=extRowsLengthes[ERNN-1];
+                               }else if(LminGiven>=Lmax){
+                                   ERLNew=LminGiven;
+                               }else{
+                                   ERLNew=Lmax;
+                               }
+                           }
+                       break;
+                       case 4:
+                           if(ERNN>=1 && ERNN<=QExtRowsGiven){
+                               ERLOld=this->GetRowLength(ERNN);
+                           }
+                           if(ERNN>=1 && ERNN<=QExtRowsNew){
+                               if(LminGiven<=Lmin){
+                                   ERLNew=LminGiven;//=extRowsLengthes[ERNN-1];
+                               //}else if(Lmax<=LminGiven){
+                               //    ERLNew=Lmax;
+                               }else{
+                                   ERLNew=LminGiven;
+                               }
+                           }
+                       break;
+                   }//switch
+               }// else n'vikt'l
+            }//else vikt'l
+            //fin
+            if((this->IsRectangularByType() && ifNotRect_NonRect0_MakeRectBy_Min1Max2MinOfMax3MaxOfMax4==0)){
+                //forbiden operation
+                if(ERNN>=1 && ERNN<=QExtRowsNew){
+                    if(IRNN<0){
+                        IRNN+=(ERLNew+1);
+                    }
+                    if(IRNN>=1 && IRNN<=ERLOld){
+                        DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0=1;
+                        CoordsOld.x=ERNN;
+                        CoordsOld.y=IRNN;
+                    }//else  DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0=0; ob'IRNN
+                }//else  DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0=0; ob'ERNN
+            }else{//norm usual case
+                if(ERNN>=1 && ERNN<=QExtRowsNew){
+                    if(IRNN<0){
+                        IRNN+=(curLgiven+1);
+                    }
+                    if(ERNN<=QExtRowsGiven){
+                        curLgiven=extRowsLengthes[ERNN-1];
+                        if(IRNN>=1 && ERLNew){
+                            if(IRNN<=curLgiven){
+                                DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0=2;
+                                CoordsOld.x=ERNN;
+                                CoordsOld.y=IRNN;
+                            }else{
+                                if(ERNN<=QExtRowsOld){
+                                    curLexisting=this->GetRowLength(ERNN);
+                                    if(IRNN<=curLexisting && IRNN>=curLgiven){
+                                        if(IfNotValsOfGivenRow_DefaultNotOwn==false){
+                                            DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0=1;
+                                            CoordsOld.x=ERNN;
+                                            CoordsOld.y=IRNN;
+                                        }else{
+                                            DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0=3;
+                                        }
+                                    }else{
+                                        DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0=3;
+                                    }
+                                }else{
+                                    DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0=3;
+                                }
+                            }
+                        }
+                    }else{
+                        if(ERNN<=QExtRowsOld){
+                            curLexisting=this->GetRowLength(ERNN);
+                            if(IfNotValsOfGivenRow_DefaultNotOwn==false){
+                                DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0=1;
+                                CoordsOld.x=ERNN;
+                                CoordsOld.y=IRNN;
+                            }else{
+                                DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0=3;
+                            }
+                        }else{
+                            DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0=3;
+                        }
+                    }//
+                }else{
+                    DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0=0;
+                }
+            }//if, all tgos s'inda
+        }//fun
 
-
+        // ===========================================================================================================
 
         //class Array2DSize_Rectangular: public Array2DSize_Prototype{
         //    int QExtRows;
@@ -2325,6 +2483,45 @@ QString TDataShiftResults::ToString(){
 
             //
 
+            //void Array2DSize_Rectangular::Set(int* extRowsLengthes, int QExtRowsGiven, int ifNotRect_NonRect0_MakeRectBy_Min1Max2MinOfMax3MaxOfMax4, bool IfNotValsOfGivenRow_DefaultNotOwn){
+            //    int LminGiven, LmaxGiven, QExtRowsOld=this->GetQExtRows(), Lmin=this->GetRowLengthMin(), Lmax=this->GetRowLengthMax(), curLgiven, curLexisting;
+            //    for(int ERNN=1; ERNN<=QExtRowsGiven; ERNN++){
+            //        curLgiven=extRowsLengthes[ERNN-1];
+            //        if(ERNN==1 || (ERNN>=1 && curLgiven<LminGiven)){
+            //            LminGiven=curLgiven;
+            //        }
+            //        if(ERNN==1 || (ERNN>=1 && curLgiven>LmaxGiven)){
+            //            LmaxGiven=curLgiven;
+            //        }
+            //    }
+            //    if(LmaxGiven==LminGiven){
+            //        this->QExtRows=QExtRowsGiven;
+            //        this->ExtRowsLength=LmaxGiven;
+            //    }else{
+            //        switch(ifNotRect_NonRect0_MakeRectBy_Min1Max2MinOfMax3MaxOfMax4){
+            //            case 0:
+            //            case 2:
+            //                //NOp; ob IsRextangularByType()==true;
+            //            break;
+            //            case 1:
+            //                this->QExtRows=QExtRowsGiven;
+            //                this->ExtRowsLength=LmaxGiven;
+            //            break;
+            //            case 3:
+            //                this->QExtRows=QExtRowsGiven;
+            //                if(LmaxGiven>Lmax){
+            //                    this->ExtRowsLength=LmaxGiven;
+            //                }//else NOp;
+            //            break;
+            //            case 4:
+            //            this->QExtRows=QExtRowsGiven;
+            //                if(LminGiven<Lmin){
+            //                    this->ExtRowsLength=LmaxGiven;
+            //                }//else NOp;
+            //            break;
+            //        }
+            //    }
+            //}//fn
 
             //void Set(std::vector<int>Ls, int ifNotRect_NonRect0_MakeRectBy_Min1Max2=0);
             ////int Set_GetExtNewRowLength(int* extRowsLengthes, int QExtRows, int ifNotRect_NonRect0_MakeRectBy_Min1Max2=0);//no need - 4 tgos: Lcur, Lold, Lmin, Lmax
@@ -2881,7 +3078,78 @@ QString TDataShiftResults::ToString(){
                 //
 
 
-
+                //
+                //
+                //void Array2DSize_V1D_VariaLength::Set(int* extRowsLengthes, int QExtRowsGiven, int ifNotRect_NonRect0_MakeRectBy_Min1Max2MinOfMax3MaxOfMax4, bool IfNotValsOfGivenRow_DefaultNotOwn){
+                //    int LminGiven, LmaxGiven, QExtRowsOld=this->GetQExtRows(), Lmin=this->GetRowLengthMin(), Lmax=this->GetRowLengthMax(), curLgiven, curLexisting;
+                //    for(int ERNN=1; ERNN<=QExtRowsGiven; ERNN++){
+                //        curLgiven=extRowsLengthes[ERNN-1];
+                //        if(ERNN==1 || (ERNN>=1 && curLgiven<LminGiven)){
+                //            LminGiven=curLgiven;
+                //        }
+                //        if(ERNN==1 || (ERNN>=1 && curLgiven>LmaxGiven)){
+                //            LmaxGiven=curLgiven;
+                //        }
+                //    }
+                //    //if(LmaxGiven==LminGiven){
+                //    //    this->QExtRows=QExtRowsGiven;
+                //    //    this->ExtRowsLength=LmaxGiven;
+                //    //}else{
+                //        switch(ifNotRect_NonRect0_MakeRectBy_Min1Max2MinOfMax3MaxOfMax4){
+                //            case 0:
+                //                this->rowsLs.clear();
+                //                for(int ERNN=1; ERNN<=QExtRowsGiven; ERNN++){
+                //                    curLgiven=extRowsLengthes[ERNN-1];
+                //                    this->rowsLs.push_back(curLgiven);
+                //                }
+                //            break;
+                //            case 1:
+                //                this->rowsLs.clear();
+                //                for(int ERNN=1; ERNN<=QExtRowsGiven; ERNN++){
+                //                    //curLgiven=extRowsLengthes[ERNN-1];
+                //                    this->rowsLs.push_back(LmaxGiven);
+                //                }
+                //            break;
+                //            case 2:
+                //                this->rowsLs.clear();
+                //                for(int ERNN=1; ERNN<=QExtRowsGiven; ERNN++){
+                //                    //curLgiven=extRowsLengthes[ERNN-1];
+                //                    this->rowsLs.push_back(LminGiven);
+                //                }
+                //            break;
+                //            case 3:
+                //                this->rowsLs.clear();
+                //                if(LmaxGiven>=Lmax){
+                //                    for(int ERNN=1; ERNN<=QExtRowsGiven; ERNN++){
+                //                        //curLgiven=extRowsLengthes[ERNN-1];
+                //                        this->rowsLs.push_back(LmaxGiven);
+                //                    }
+                //                }else{
+                //                    for(int ERNN=1; ERNN<=QExtRowsGiven; ERNN++){
+                //                        //curLgiven=extRowsLengthes[ERNN-1];
+                //                        this->rowsLs.push_back(Lmax);
+                //                    }
+                //                }
+                //            break;
+                //            case 4:
+                //                this->rowsLs.clear();
+                //                if(LminGiven<=Lmin){
+                //                    for(int ERNN=1; ERNN<=QExtRowsGiven; ERNN++){
+                //                        //curLgiven=extRowsLengthes[ERNN-1];
+                //                        this->rowsLs.push_back(LminGiven);
+                //                    }
+                //                }else{
+                //                    for(int ERNN=1; ERNN<=QExtRowsGiven; ERNN++){
+                //                        //curLgiven=extRowsLengthes[ERNN-1];
+                //                        this->rowsLs.push_back(Lmin);
+                //                    }
+                //                }
+                //            break;
+                //        }
+                //    //}
+                //}//fn
+                //
+                //
 
                 //void Set(std::vector<int>Ls, int ifNotRect_NonRect0_MakeRectBy_Min1Max2=0);
                 ////int Set_GetExtNewRowLength(int* extRowsLengthes, int QExtRows, int ifNotRect_NonRect0_MakeRectBy_Min1Max2=0);//no need - 4 tgos: Lcur, Lold, Lmin, Lmax
@@ -3530,7 +3798,73 @@ QString TDataShiftResults::ToString(){
 
                         //
 
-
+                        //void Array2DSize_P_QERInner_VariaLength::Set(int* extRowsLengthes, int QExtRowsGiven, int ifNotRect_NonRect0_MakeRectBy_Min1Max2MinOfMax3MaxOfMax4, bool IfNotValsOfGivenRow_DefaultNotOwn){
+                        //    int LminGiven, LmaxGiven, QExtRowsOld=this->GetQExtRows(), Lmin=this->GetRowLengthMin(), Lmax=this->GetRowLengthMax(), curLgiven, curLexisting, count=0;
+                        //    for(int ERNN=1; ERNN<=QExtRowsGiven; ERNN++){
+                        //        curLgiven=extRowsLengthes[ERNN-1];
+                        //        if(ERNN==1 || (ERNN>=1 && curLgiven<LminGiven)){
+                        //            LminGiven=curLgiven;
+                        //        }
+                        //        if(ERNN==1 || (ERNN>=1 && curLgiven>LmaxGiven)){
+                        //            LmaxGiven=curLgiven;
+                        //        }
+                        //    }
+                        //    //if(LmaxGiven==LminGiven){
+                        //    //    this->QExtRows=QExtRowsGiven;
+                        //    //    this->ExtRowsLength=LmaxGiven;
+                        //    //}else{
+                        //        switch(ifNotRect_NonRect0_MakeRectBy_Min1Max2MinOfMax3MaxOfMax4){
+                        //            case 0:
+                        //                this->SetNull();
+                        //                for(int ERNN=1; ERNN<=QExtRowsGiven; ERNN++){
+                        //                    curLgiven=extRowsLengthes[ERNN-1];
+                        //                    Arr1D_Add(this->rowsLs, count, curLgiven);
+                        //                }
+                        //            case 1:
+                        //                this->SetNull();
+                        //                for(int ERNN=1; ERNN<=QExtRowsGiven; ERNN++){
+                        //                    //curLgiven=extRowsLengthes[ERNN-1];
+                        //                    Arr1D_Add(this->rowsLs, count, LminGiven);
+                        //                }
+                        //            break;
+                        //            case 2:
+                        //                this->SetNull();
+                        //                for(int ERNN=1; ERNN<=QExtRowsGiven; ERNN++){
+                        //                    //curLgiven=extRowsLengthes[ERNN-1];
+                        //                    Arr1D_Add(this->rowsLs, count, LminGiven);
+                        //                }
+                        //            break;
+                        //            case 3:
+                        //                this->SetNull();
+                        //                if(LmaxGiven>=Lmax){
+                        //                    for(int ERNN=1; ERNN<=QExtRowsGiven; ERNN++){
+                        //                        //curLgiven=extRowsLengthes[ERNN-1];
+                        //                         Arr1D_Add(this->rowsLs, count, LmaxGiven);
+                        //                    }
+                        //                }else{
+                        //                    for(int ERNN=1; ERNN<=QExtRowsGiven; ERNN++){
+                        //                        //curLgiven=extRowsLengthes[ERNN-1];
+                        //                         Arr1D_Add(this->rowsLs, count, Lmax);
+                        //                    }
+                        //                }
+                        //            break;
+                        //            case 4:
+                        //                this->SetNull();
+                        //                if(LminGiven<=Lmin){
+                        //                    for(int ERNN=1; ERNN<=QExtRowsGiven; ERNN++){
+                        //                        //curLgiven=extRowsLengthes[ERNN-1];
+                        //                        this->rowsLs.push_back(LminGiven);
+                        //                    }
+                        //                }else{
+                        //                    for(int ERNN=1; ERNN<=QExtRowsGiven; ERNN++){
+                        //                        //curLgiven=extRowsLengthes[ERNN-1];
+                        //                        this->rowsLs.push_back(Lmin);
+                        //                    }
+                        //                }
+                        //            break;
+                        //        }
+                        //    //}
+                        //}//fn
 
 
                         //void Set(std::vector<int>Ls, int ifNotRect_NonRect0_MakeRectBy_Min1Max2=0);
@@ -3583,7 +3917,7 @@ QString TDataShiftResults::ToString(){
                                 }
                             }
 
-                            void Array2DSize::Assign( Array2DSize_Prototype*obj){//QOB N'QONST
+                            void Array2DSize::Assign( Array2DSize_Prototype*obj){
                                 int Lmin=obj->GetRowLengthMin(), typeNOld=this->GetTypeN(), typeNNew=obj->GetTypeN();
                                 std::vector<int>Ls;
                                 if(obj->IsRectangularByType()){
@@ -3835,8 +4169,12 @@ QString TDataShiftResults::ToString(){
                                 coordsR=this->data->ExtRow_SetAddInsDel_ThatCorrectedByNewData_CoordsFromArr2dNewToOld(Action_Set1_Add2_Ins3_Del4_Dflt0, coords, givenRowL, ExtRowNN_0ifAll, DataShiftParam, ifWasRectAndNotEqual_NonRect0_SetRectBy_New1_Old2_Max3_Min4, suiValsInsteadOfDefaultValsWherePossible);
                                 return coordsR;
                             }
-
                             //
+                            //
+                            ////void Array2DSize::Set(int* extRowsLengthes, int QExtRows, int ifNotRect_NonRect0_MakeRectBy_Min1Max2MinOfMax3MaxOfMax4, bool IfNotValsOfGivenRow_DefaultNotOwn){
+                            ////    this->data->Set(extRowsLengthes, QExtRows, ifNotRect_NonRect0_MakeRectBy_Min1Max2MinOfMax3MaxOfMax4, IfNotValsOfGivenRow_DefaultNotOwn);
+                            ////}
+
                             //
                             //
                             QString Array2DSize::GetAsString(){
