@@ -664,6 +664,9 @@ QString MyFormatString(QString str, int Lin, QString DefaultRight=".", QString D
 //int NInArrIfNegative(int N, int Q);
 
 int Arr2DBy1D_PosNByCoords(int ExtRowN, int IneRowN, std::vector<int>Ls);
+int Arr2DBy1D_PosNByCoords(int ExtRowN, int IneRowN, int QExtRows, int*Ls);
+int Arr2DBy1D_PosNByCoords(int ExtRowN, int IneRowN, int QExtRows, int rowL);
+Int2DVectorOfSizeOrCoords Arr2DBy1D_CoordsByPosN(int PosN, int QExtRows, int*Ls);
 Int2DVectorOfSizeOrCoords Arr2DBy1D_CoordsByPosN(int PosN, std::vector<int>Ls);
 
 bool IsTransposable(int QRows, int*rowLs);

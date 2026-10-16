@@ -1874,8 +1874,8 @@ QString MyFormatString(QString str, int Lin, QString DefaultRight, QString Defau
 //    return Nr;
 //}
 
-int Arr2DBy1D_PosNByCoords(int ExtRowN, int IneRowN, std::vector<int>Ls){
-    int PosN=0, QElements=0, QExtRows=Ls.size(), curL, extRowL;
+int Arr2DBy1D_PosNByCoords(int ExtRowN, int IneRowN, int QExtRows, int*Ls){
+    int PosN=0, QElements=0, curL, extRowL;
     for(int i=0; i<QExtRows; i++){
         QElements+=Ls[i];
     }
@@ -1897,9 +1897,39 @@ int Arr2DBy1D_PosNByCoords(int ExtRowN, int IneRowN, std::vector<int>Ls){
     }
     return PosN;
 }
-Int2DVectorOfSizeOrCoords Arr2DBy1D_CoordsByPosN(int PosN, std::vector<int>Ls){//mav'd
+int Arr2DBy1D_PosNByCoords(int ExtRowN, int IneRowN, std::vector<int>Ls){
+    return Arr2DBy1D_PosNByCoords(ExtRowN, IneRowN, Ls.size(), Ls.data());
+}
+
+int Arr2DBy1D_PosNByCoords(int ExtRowN, int IneRowN, int QExtRows, int rowL){
+    int PosN=0, QElements=0, curL=rowL, extRowL=rowL;
+    //for(int i=0; i<QExtRows; i++){
+    //    QElements+=Ls[i];
+    //}
+    QElements=QExtRows*rowL;
+    if(ExtRowN<0){
+        ExtRowN+=(QExtRows+1);
+    }
+    if(ExtRowN>=1 && ExtRowN<=QExtRows){
+        //extRowL=Ls[ExtRowN-1];
+        if(IneRowN<0){
+            IneRowN+=(extRowL+1);
+        }
+        if(IneRowN>=1 && IneRowN<=extRowL){
+            for(int curERN=1; curERN<=ExtRowN-1; curERN++){
+                 //curL= Ls[curERN-1];
+                 PosN+=curL;
+            }
+            PosN+=IneRowN;
+        }
+    }
+    return PosN;
+}
+
+
+Int2DVectorOfSizeOrCoords Arr2DBy1D_CoordsByPosN(int PosN, int QExtRows, int *Ls){
     Int2DVectorOfSizeOrCoords coords;
-    int QElements=0, QExtRows=Ls.size(), curL, extRowL, count=0, curERN =0, ExtRowN, IneRowN;
+    int QElements=0, curL, extRowL, count=0, curERN =0, ExtRowN, IneRowN;
     for(int i=0; i<QExtRows; i++){
         QElements+=Ls[i];
     }
@@ -1920,6 +1950,9 @@ Int2DVectorOfSizeOrCoords Arr2DBy1D_CoordsByPosN(int PosN, std::vector<int>Ls){/
         coords.d2=IneRowN;
     }
     return coords;
+}
+Int2DVectorOfSizeOrCoords Arr2DBy1D_CoordsByPosN(int PosN, std::vector<int>Ls){
+    return  Arr2DBy1D_CoordsByPosN(PosN, Ls.size(), Ls.data());
 }
 
 
