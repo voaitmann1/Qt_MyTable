@@ -949,7 +949,7 @@ class Array2DSize_Prototype{
 
     void set_or_ins_ExtRow_simplyAsDataGiven_HilfsFun_v1(std::vector<int>&RowsLs, std::vector<Coords2DInt>&DataSources, int Action_Set1_Ins3, int ERNNGiven_0IfAll, int givenL, int ifNonRectForRect_NonRect0_MakeRactAddingAndMakingRest_L1Max2Minx3Last4MinOfLAndLmin5MaxOfLAndLmax6, bool IfNotValsOfGivenRow_DefaultNotOwn);
 
-    Arr2D_ResizeParams set_or_ins_ExtRow_simplyAsDataGiven_NewSize(int Action_Set1_Ins3, int ERNNGiven_0IfAll, int givenL, int ifNonRectForRect_NonRect0_MakeRactAddingAndMakingRest_L1Max2Minx3Last4MinOfLAndLmin5MaxOfLAndLmax6, bool IfNotValsOfGivenRow_DefaultNotOwn);
+    Arr2D_ResizeParams set_or_ins_ExtRow_simplyAsDataGiven_NewReSize(int Action_Set1_Ins3, int ERNNGiven_0IfAll, int givenL, int ifNonRectForRect_NonRect0_MakeRactAddingAndMakingRest_L1Max2Minx3Last4MinOfLAndLmin5MaxOfLAndLmax6, bool IfNotValsOfGivenRow_DefaultNotOwn);
 
     //--------------------------------------------------------------------------------------------------
 
@@ -963,7 +963,7 @@ class Array2DSize_Prototype{
 
     void addExtRow_simplyAsDataGiven_HilfsFun_v1(std::vector<int>Ls, std::vector<Coords2DInt>&DataSources, int givenL, int ifNonRectForRect_NonRect0_MakeRactAddingAndMakingRest_L1Max2Minx3Last4MinOfLAndLmin5MaxOfLAndLmax6, bool IfNotValsOfGivenRow_DefaultNotOwn);
 
-    Arr2D_ResizeParams addExtRow_simplyAsDataGiven_NewSize(std::vector<int>Ls, std::vector<Coords2DInt>&DataSources, int givenL, int ifNonRectForRect_NonRect0_MakeRactAddingAndMakingRest_L1Max2Minx3Last4MinOfLAndLmin5MaxOfLAndLmax6, bool IfNotValsOfGivenRow_DefaultNotOwn);
+    Arr2D_ResizeParams addExtRow_simplyAsDataGiven_NewReSize(int givenL, int ifNonRectForRect_NonRect0_MakeRactAddingAndMakingRest_L1Max2Minx3Last4MinOfLAndLmin5MaxOfLAndLmax6, bool IfNotValsOfGivenRow_DefaultNotOwn);
 
     //--------------------------------------------------------------------------------------------------
 
@@ -975,7 +975,7 @@ class Array2DSize_Prototype{
 
     void delExtRow_HilfsFun_v1(std::vector<int>Ls, std::vector<Coords2DInt>&DataSources, int ExtRowToDelNN);
 
-    Arr2D_ResizeParams delExtRow_NewSize(int ExtRowToDelNN);
+    Arr2D_ResizeParams delExtRow_NewReSize(int ExtRowToDelNN);
 
     //--------------------------------------------------------------------------------------------------
 
@@ -987,7 +987,7 @@ class Array2DSize_Prototype{
 
     void delIneRow_HilfsFun_v1(std::vector<int>Ls, std::vector<Coords2DInt>&DataSources, const Coords2DInt&CoordsNew, int IneRowToDelNN, int ifN_GT_Lmin_CutLongOnly1_Ignore0);
 
-    Arr2D_ResizeParams delIneRow_NewSize( int IneRowToDelNN, int ifN_GT_Lmin_CutLongOnly1_Ignore0);
+    Arr2D_ResizeParams delIneRow_NewReSize( int IneRowToDelNN, int ifN_GT_Lmin_CutLongOnly1_Ignore0);
 
     //--------------------------------------------------------------------------------------------------
 
@@ -1000,7 +1000,7 @@ class Array2DSize_Prototype{
 
     void addIneRow_simplyAsDataGiven_HilfsFun_v1(std::vector<int>Ls, std::vector<Coords2DInt>&DataSources, int givenL, int ifL_NE_QER_Ignore0_SetRectByStretchToMaxAndQER_New1Old2Max3Min4, int ifNonRect_AddToLast1StretchToMax2Ignore0);
 
-    Arr2D_ResizeParams addIneRow_simplyAsDataGiven_NewSize(int givenL, int ifL_NE_QER_Ignore0_SetRectByStretchToMaxAndQER_New1Old2Max3Min4, int ifNonRect_AddToLast1StretchToMax2Ignore0);
+    Arr2D_ResizeParams addIneRow_simplyAsDataGiven_NewReSize(int givenL, int ifL_NE_QER_Ignore0_SetRectByStretchToMaxAndQER_New1Old2Max3Min4, int ifNonRect_AddToLast1StretchToMax2Ignore0);
 
     //--------------------------------------------------------------------------------------------------
 
@@ -1013,7 +1013,7 @@ class Array2DSize_Prototype{
 
     void set_or_ins_IneRow_simplyAsDataGiven_HilfsFun_v1(std::vector<int>Ls, std::vector<Coords2DInt>&DataSources, int Action_Set1_Ins3, int ToOperateIneRowNN_0ifAll, int givenL, int ifL_NE_QER_Ignore0_SetRectByStretchToMaxAndQER_New1Old2Max3Min4, int if_Lmin_LT_N_Ignore0_ModifyLongOnly1_StretchTo_N2_Max3);
 
-    Arr2D_ResizeParams set_or_ins_IneRow_simplyAsDataGiven_HilfsFun_NewSize(int Action_Set1_Ins3, int ToOperateIneRowNN_0ifAll, int givenL, int ifL_NE_QER_Ignore0_SetRectByStretchToMaxAndQER_New1Old2Max3Min4, int if_Lmin_LT_N_Ignore0_ModifyLongOnly1_StretchTo_N2_Max3);
+    Arr2D_ResizeParams set_or_ins_IneRow_simplyAsDataGiven_NewReSize(int Action_Set1_Ins3, int ToOperateIneRowNN_0ifAll, int givenL, int ifL_NE_QER_Ignore0_SetRectByStretchToMaxAndQER_New1Old2Max3Min4, int if_Lmin_LT_N_Ignore0_ModifyLongOnly1_StretchTo_N2_Max3);
     //
     //------------------------------------------------------------------------------------------------------
     //----------------------------------------------------------------------------------------------------
@@ -1027,7 +1027,7 @@ class Array2DSize_Prototype{
 
     void Set_simplyAsDataGiven_HilfsFun_v1(std::vector<int>&RowsLs, std::vector<Coords2DInt>&DataSources, int* extRowsLengthes, int QExtRows, int ifNotRect_NonRect0_MakeRectBy_Min1Max2, bool IfNotValsOfGivenRow_DefaultNotOwn);
 
-    Arr2D_ResizeParams Set_simplyAsDataGiven_NewSize(int* extRowsLengthes, int QExtRows, int ifNotRect_NonRect0_MakeRectBy_Min1Max2, bool IfNotValsOfGivenRow_DefaultNotOwn);
+    Arr2D_ResizeParams Set_simplyAsDataGiven_NewReSize(int* extRowsLengthes, int QExtRows, int ifNotRect_NonRect0_MakeRectBy_Min1Max2, bool IfNotValsOfGivenRow_DefaultNotOwn);
 
     // ===========================================================================================================
     //
@@ -1462,7 +1462,9 @@ class Array2DSize{
 
     void set_or_ins_ExtRow_simplyAsDataGiven_HilfsFun_v1(std::vector<int>&RowsLs, std::vector<Coords2DInt>&DataSources, int Action_Set1_Ins3, int ERNNGiven_0IfAll, int givenL, int ifNonRectForRect_NonRect0_MakeRactAddingAndMakingRest_L1Max2Minx3Last4MinOfLAndLmin5MaxOfLAndLmax6, bool IfNotValsOfGivenRow_DefaultNotOwn);
 
-    Arr2D_ResizeParams set_or_ins_ExtRow_simplyAsDataGiven_NewSize(int Action_Set1_Ins3, int ERNNGiven_0IfAll, int givenL, int ifNonRectForRect_NonRect0_MakeRactAddingAndMakingRest_L1Max2Minx3Last4MinOfLAndLmin5MaxOfLAndLmax6, bool IfNotValsOfGivenRow_DefaultNotOwn);
+    Arr2D_ResizeParams set_or_ins_ExtRow_simplyAsDataGiven_NewReSize(int Action_Set1_Ins3, int ERNNGiven_0IfAll, int givenL, int ifNonRectForRect_NonRect0_MakeRactAddingAndMakingRest_L1Max2Minx3Last4MinOfLAndLmin5MaxOfLAndLmax6, bool IfNotValsOfGivenRow_DefaultNotOwn);
+
+    Array2DSize set_or_ins_ExtRow_simplyAsDataGiven_NewSize(int Action_Set1_Ins3, int ERNNGiven_0IfAll, int givenL, int ifNonRectForRect_NonRect0_MakeRactAddingAndMakingRest_L1Max2Minx3Last4MinOfLAndLmin5MaxOfLAndLmax6, bool IfNotValsOfGivenRow_DefaultNotOwn);
 
     //--------------------------------------------------------------------------------------------------
 
@@ -1476,7 +1478,9 @@ class Array2DSize{
 
     void addExtRow_simplyAsDataGiven_HilfsFun_v1(std::vector<int>Ls, std::vector<Coords2DInt>&DataSources, int givenL, int ifNonRectForRect_NonRect0_MakeRactAddingAndMakingRest_L1Max2Minx3Last4MinOfLAndLmin5MaxOfLAndLmax6, bool IfNotValsOfGivenRow_DefaultNotOwn);
 
-    Arr2D_ResizeParams addExtRow_simplyAsDataGiven_NewSize(std::vector<int>Ls, std::vector<Coords2DInt>&DataSources, int givenL, int ifNonRectForRect_NonRect0_MakeRactAddingAndMakingRest_L1Max2Minx3Last4MinOfLAndLmin5MaxOfLAndLmax6, bool IfNotValsOfGivenRow_DefaultNotOwn);
+    Arr2D_ResizeParams addExtRow_simplyAsDataGiven_NewReSize(int givenL, int ifNonRectForRect_NonRect0_MakeRactAddingAndMakingRest_L1Max2Minx3Last4MinOfLAndLmin5MaxOfLAndLmax6, bool IfNotValsOfGivenRow_DefaultNotOwn);
+
+    Array2DSize addExtRow_simplyAsDataGiven_NewSize(int givenL, int ifNonRectForRect_NonRect0_MakeRactAddingAndMakingRest_L1Max2Minx3Last4MinOfLAndLmin5MaxOfLAndLmax6, bool IfNotValsOfGivenRow_DefaultNotOwn);
 
     //--------------------------------------------------------------------------------------------------
 
@@ -1488,7 +1492,9 @@ class Array2DSize{
 
     void delExtRow_HilfsFun_v1(std::vector<int>Ls, std::vector<Coords2DInt>&DataSources, int ExtRowToDelNN);
 
-    Arr2D_ResizeParams delExtRow_NewSize(int ExtRowToDelNN);
+    Arr2D_ResizeParams delExtRow_NewReSize(int ExtRowToDelNN);
+
+    Array2DSize delExtRow_NewSize(int ExtRowToDelNN);
 
     //--------------------------------------------------------------------------------------------------
 
@@ -1500,7 +1506,9 @@ class Array2DSize{
 
     void delIneRow_HilfsFun_v1(std::vector<int>Ls, std::vector<Coords2DInt>&DataSources, const Coords2DInt&CoordsNew, int IneRowToDelNN, int ifN_GT_Lmin_CutLongOnly1_Ignore0);
 
-    Arr2D_ResizeParams delIneRow_NewSize( int IneRowToDelNN, int ifN_GT_Lmin_CutLongOnly1_Ignore0);
+    Arr2D_ResizeParams delIneRow_NewReSize( int IneRowToDelNN, int ifN_GT_Lmin_CutLongOnly1_Ignore0);
+
+    Array2DSize delIneRow_NewSize(int IneRowToDelNN, int ifN_GT_Lmin_CutLongOnly1_Ignore0);
 
     //--------------------------------------------------------------------------------------------------
 
@@ -1513,7 +1521,9 @@ class Array2DSize{
 
     void addIneRow_simplyAsDataGiven_HilfsFun_v1(std::vector<int>Ls, std::vector<Coords2DInt>&DataSources, int givenL, int ifL_NE_QER_Ignore0_SetRectByStretchToMaxAndQER_New1Old2Max3Min4, int ifNonRect_AddToLast1StretchToMax2Ignore0);
 
-    Arr2D_ResizeParams addIneRow_simplyAsDataGiven_NewSize(int givenL, int ifL_NE_QER_Ignore0_SetRectByStretchToMaxAndQER_New1Old2Max3Min4, int ifNonRect_AddToLast1StretchToMax2Ignore0);
+    Arr2D_ResizeParams addIneRow_simplyAsDataGiven_NewReSize(int givenL, int ifL_NE_QER_Ignore0_SetRectByStretchToMaxAndQER_New1Old2Max3Min4, int ifNonRect_AddToLast1StretchToMax2Ignore0);
+
+    Array2DSize addIneRow_simplyAsDataGiven_NewSize(int givenL, int ifL_NE_QER_Ignore0_SetRectByStretchToMaxAndQER_New1Old2Max3Min4, int ifNonRect_AddToLast1StretchToMax2Ignore0);
 
     //--------------------------------------------------------------------------------------------------
 
@@ -1526,7 +1536,9 @@ class Array2DSize{
 
     void set_or_ins_IneRow_simplyAsDataGiven_HilfsFun_v1(std::vector<int>Ls, std::vector<Coords2DInt>&DataSources, int Action_Set1_Ins3, int ToOperateIneRowNN_0ifAll, int givenL, int ifL_NE_QER_Ignore0_SetRectByStretchToMaxAndQER_New1Old2Max3Min4, int if_Lmin_LT_N_Ignore0_ModifyLongOnly1_StretchTo_N2_Max3);
 
-    Arr2D_ResizeParams set_or_ins_IneRow_simplyAsDataGiven_HilfsFun_NewSize(int Action_Set1_Ins3, int ToOperateIneRowNN_0ifAll, int givenL, int ifL_NE_QER_Ignore0_SetRectByStretchToMaxAndQER_New1Old2Max3Min4, int if_Lmin_LT_N_Ignore0_ModifyLongOnly1_StretchTo_N2_Max3);
+    Arr2D_ResizeParams set_or_ins_IneRow_simplyAsDataGiven_NewReSize(int Action_Set1_Ins3, int ToOperateIneRowNN_0ifAll, int givenL, int ifL_NE_QER_Ignore0_SetRectByStretchToMaxAndQER_New1Old2Max3Min4, int if_Lmin_LT_N_Ignore0_ModifyLongOnly1_StretchTo_N2_Max3);
+
+    Array2DSize set_or_ins_IneRow_simplyAsDataGiven_NewSize(int Action_Set1_Ins3, int ToOperateIneRowNN_0ifAll, int givenL, int ifL_NE_QER_Ignore0_SetRectByStretchToMaxAndQER_New1Old2Max3Min4, int if_Lmin_LT_N_Ignore0_ModifyLongOnly1_StretchTo_N2_Max3);
     //
     //------------------------------------------------------------------------------------------------------
     //
