@@ -3147,7 +3147,7 @@ QString TDataShiftResults::ToString(){
                 }//if to do
             }//fn
 
-        Arr2D_ResizeParams Array2DSize_Prototype::set_or_ins_IneRow_simplyAsDataGiven_NewReSize(int Action_Set1_Ins3, int ToOperateIneRowNN_0ifAll, int givenL, int ifL_NE_QER_Ignore0_SetRectByStretchToMaxAndQER_New1Old2Max3Min4, int if_Lmin_LT_N_Ignore0_ModifyLongOnly1_StretchTo_N2_Max3){
+          Arr2D_ResizeParams Array2DSize_Prototype::set_or_ins_IneRow_simplyAsDataGiven_NewReSize(int Action_Set1_Ins3, int ToOperateIneRowNN_0ifAll, int givenL, int ifL_NE_QER_Ignore0_SetRectByStretchToMaxAndQER_New1Old2Max3Min4, int if_Lmin_LT_N_Ignore0_ModifyLongOnly1_StretchTo_N2_Max3){
             //Coords2DInt CoordsOld; int int
             int DataType_Arr2DVals1_GivenRowVal2_DefaultVal3_Incorrect0=0;
             //InGivenRowPosN=0;
@@ -4038,6 +4038,7 @@ QString TDataShiftResults::ToString(){
 
 
             //----------------------------------------------------------------------------------------------------
+
             // virtual void  Set_GetExtNewRowLength(int* extRowsLengthes, int QExtRows=1, int ifNotRect_NonRect0_MakeRectBy_Min1Max2=0)=0;
             //int Set_GetExtNewRowLength(int* extRowsLengthes, int QExtRows=1, int ifNotRect_NonRect0_MakeRectBy_Min1Max2=0);//no need - 4 tgos: Lcur, Lold, Lmin, Lmax
             void Array2DSize_Prototype::Set(std::vector<int>Ls, int ifNotRect_NonRect0_MakeRectBy_Min1Max2){
@@ -4093,6 +4094,8 @@ QString TDataShiftResults::ToString(){
                 return CoordsOfGiven;
             }
 
+            //
+
             QString Array2DSize_Prototype::GetAsString(){
                 QString qs="Size: ", sn, ts;
                 int QER=this->GetQExtRows(), curL, Lmin=this->GetRowLengthMin(), Lmax=this->GetRowLengthMax();
@@ -4136,7 +4139,7 @@ QString TDataShiftResults::ToString(){
 
             //----------------------------------------------------------------------------------------------------
 
-            void Array2DSize_Prototype::Set_simplyAsDataGiven_HilfsFun(int&QExtRowsNew, int&ERLNew, int&DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0, Coords2DInt&CoordsOld, int* extRowsLengthes, int QExtRowsGiven, int ifNotRect_NonRect0_MakeRectBy_Min1Max2MinOfMax3MaxOfMax4, bool IfNotValsOfGivenRow_DefaultNotOwn){
+            void Array2DSize_Prototype::Set_simplyAsDataGiven_HilfsFun2(int&QExtRowsNew, int&ERLNew, int&DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0, Coords2DInt&CoordsOld, int* extRowsLengthes, int QExtRowsGiven, int ifNotRect_NonRect0_MakeRectBy_Min1Max2MinOfMax3MaxOfMax4, bool IfNotValsOfGivenRow_DefaultNotOwn){
                 int QExtRowsOld=this->GetQExtRows(), Lmin=this->GetRowLengthMin(), Lmax=this->GetRowLengthMax(), ERLOld, ERNN, IRNN, LminGiven, LmaxGiven, curLexisting, curLgiven;
                 QExtRowsNew=0;
                 ERLNew=0;
@@ -4296,42 +4299,198 @@ QString TDataShiftResults::ToString(){
                 }//if, all tgos s'inda
             }//fun
 
-            int Array2DSize_Prototype::Set_simplyAsDataGiven_QExtRows( int* extRowsLengthes, int QExtRowsGiven, int ifNotRect_NonRect0_MakeRectBy_Min1Max2MinOfMax3MaxOfMax4, bool IfNotValsOfGivenRow_DefaultNotOwn){
+            void Array2DSize_Prototype::Set_simplyAsDataGiven_HilfsFun(int&QExtRowsNew, int&ERLNew, int&DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0, Coords2DInt&CoordsOld, const Coords2DInt&CoordsNew, int* extRowsLengthes, int QExtRowsGiven, int ifNotRect_NonRect0_MakeRectBy_Min1Max2){
+                int QExtRowsOld=this->GetQExtRows();
+                int Lmin=this->GetRowLengthMin(), Lmax=this->GetRowLengthMax(), ERLOld, ERNN=CoordsNew.x, IRNN=CoordsNew.y, LminGiven, LmaxGiven, curLexisting, curLgiven;
+                bool forbiddenOperation;
+                QExtRowsNew=QExtRowsGiven;
+                ERLNew=0;
+                DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0=0;
+                //Coords2DInt&CoordsOld
+                for(ERNN=1; ERNN<=QExtRowsGiven; ERNN++){
+                    curLgiven=extRowsLengthes[ERNN-1];
+                    if(ERNN==1 || (ERNN>1 && curLgiven<LminGiven)){
+                        LminGiven=curLgiven;
+                    }
+                    if(ERNN==1 || (ERNN>1 && curLgiven>LmaxGiven)){
+                        LmaxGiven=curLgiven;
+                    }
+                }
+                forbiddenOperation=(LminGiven!=LmaxGiven && this->IsRectangularByType() && ifNotRect_NonRect0_MakeRectBy_Min1Max2==0);
+                if(forbiddenOperation){
+                    //NOp;
+                    QExtRowsNew=QExtRowsOld;
+                    if(ERNN>=1 && ERNN<=QExtRowsNew){
+                        ERLNew=this->GetRowLength(ERNN);
+                    }
+                }else if(LminGiven==LmaxGiven){
+                    QExtRowsNew=QExtRowsGiven;
+                    if(ERNN>=1 && ERNN<=QExtRowsNew){
+                        ERLNew=LmaxGiven;
+                    }
+                }else{
+                    QExtRowsNew=QExtRowsGiven;
+                    switch(ifNotRect_NonRect0_MakeRectBy_Min1Max2){
+                        case 0:
+                            //if(forbiddenOperation){
+                            //    cannot be, was above
+                            //}
+                            if(ERNN>=1 && ERNN<=QExtRowsGiven){
+                                ERLOld=this->GetRowLength(ERNN);
+                                ERLNew=extRowsLengthes[ERNN-1];
+                                if(IRNN>=1 && IRNN<=ERLNew){
+                                    DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0=2;
+                                }//else  DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0=0;
+                            }//else  DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0=0;
+                        break;
+                        case 1:
+                            if(ERNN>=1 && ERNN<=QExtRowsGiven){
+                                ERLOld=this->GetRowLength(ERNN);
+                            }
+                            if(ERNN>=1 && ERNN<=QExtRowsNew){
+                                ERLNew=LmaxGiven;//=extRowsLengthes[ERNN-1];
+                            }
+                        break;
+                        case 2:
+                            if(ERNN>=1 && ERNN<=QExtRowsGiven){
+                                ERLOld=this->GetRowLength(ERNN);
+                            }
+                            if(ERNN>=1 && ERNN<=QExtRowsNew){
+                                ERLNew=LminGiven;//=extRowsLengthes[ERNN-1];
+                            }
+                        break;
+                    }//switch
+                }// else n'vikt'l
+                //fin
+                if(IRNN<0){
+                    IRNN+=(ERLNew+1);
+                }
+                if(forbiddenOperation){
+                    if(ERNN>=1 && ERNN<=QExtRowsNew){
+                        if(IRNN>=1 && IRNN<=ERLOld){
+                            DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0=1;
+                            CoordsOld.x=ERNN;
+                            CoordsOld.y=IRNN;
+                        }//else  DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0=0; ob'IRNN
+                    }//else  DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0=0; ob'ERNN
+                }else{//norm usual case
+                    if(ERNN>=1 && ERNN<=QExtRowsNew){
+                        if(ERNN<=QExtRowsGiven){
+                            curLgiven=extRowsLengthes[ERNN-1];
+                            if(IRNN>=1 && IRNN<=ERLNew){
+                                if(IRNN<=curLgiven){
+                                    DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0=2;
+                                    CoordsOld.x=ERNN;
+                                    CoordsOld.y=IRNN;
+                                }else{
+                                    DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0=3;
+                                }
+                            }
+                        }else{
+                            DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0=3;
+                        }
+                    }//else DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0=0;
+                }//if, all tgos s'inda
+            }//fun
+
+            int Array2DSize_Prototype::Set_simplyAsDataGiven_QExtRows(int* extRowsLengthes, int QExtRowsGiven, int ifNotRect_NonRect0_MakeRectBy_Min1Max2){
                 int QExtRowsNew=0, ERLNew=0, DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0=0;
-                Coords2DInt CoordsOld;
-                this->Set_simplyAsDataGiven_HilfsFun(QExtRowsNew, ERLNew, DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0, CoordsOld, extRowsLengthes, QExtRowsGiven, ifNotRect_NonRect0_MakeRectBy_Min1Max2MinOfMax3MaxOfMax4, IfNotValsOfGivenRow_DefaultNotOwn);
+                Coords2DInt CoordsOld, CoordsNew;
+                this->Set_simplyAsDataGiven_HilfsFun(QExtRowsNew, ERLNew, DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0, CoordsOld, CoordsNew, extRowsLengthes, QExtRowsGiven, ifNotRect_NonRect0_MakeRectBy_Min1Max2);
                 return QExtRowsNew;
             }
-            int Array2DSize_Prototype::Set_simplyAsDataGiven_ExtRowNewLength(int ExtRowNewNN,  int* extRowsLengthes, int QExtRowsGiven, int ifNotRect_NonRect0_MakeRectBy_Min1Max2MinOfMax3MaxOfMax4, bool IfNotValsOfGivenRow_DefaultNotOwn){
+
+            int Array2DSize_Prototype::Set_simplyAsDataGiven_ExtRowNewLength(int ExtRowNewNN,  int* extRowsLengthes, int QExtRowsGiven, int ifNotRect_NonRect0_MakeRectBy_Min1Max2){
+                int QExtRowsNew=0, ERLNew=0, DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0=0;
+                int QMinAllowed=DEFAULT_SIZE;
+                Coords2DInt CoordsOld, CoordsNew;
+                CoordsNew.x=ExtRowNewNN;
+                CoordsNew.y=QMinAllowed;
+                this->Set_simplyAsDataGiven_HilfsFun(QExtRowsNew, ERLNew, DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0, CoordsOld, CoordsNew, extRowsLengthes, QExtRowsGiven, ifNotRect_NonRect0_MakeRectBy_Min1Max2);
+                return ERLNew;
+            }
+
+            int Array2DSize_Prototype::Set_simplyAsDataGiven_Arr2DCoordsNewToDataTypeN(const Coords2DInt&CoordsNew, int* extRowsLengthes, int QExtRowsGiven, int ifNotRect_NonRect0_MakeRectBy_Min1Max2){
+                int QExtRowsNew=0, ERLNew=0, DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0=0;
+                Coords2DInt CoordsOld;
+                this->Set_simplyAsDataGiven_HilfsFun(QExtRowsNew, ERLNew, DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0, CoordsOld, CoordsNew, extRowsLengthes, QExtRowsGiven, ifNotRect_NonRect0_MakeRectBy_Min1Max2);
+                return DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0;
+            }
+
+            Coords2DInt Array2DSize_Prototype::Set_simplyAsDataGiven_Arr2DCoordsNewToOld(const Coords2DInt&CoordsNew, int* extRowsLengthes, int QExtRowsGiven, int ifNotRect_NonRect0_MakeRectBy_Min1Max2){
+                int QExtRowsNew=0, ERLNew=0, DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0=0;
+                Coords2DInt CoordsOld;
+                this->Set_simplyAsDataGiven_HilfsFun(QExtRowsNew, ERLNew, DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0, CoordsOld, CoordsNew, extRowsLengthes, QExtRowsGiven, ifNotRect_NonRect0_MakeRectBy_Min1Max2);
+                return CoordsOld;
+            }
+
+            Arr2D_ResizeParams Array2DSize_Prototype::Set_simplyAsDataGiven_NewReSize(int* extRowsLengthes, int QExtRowsGiven, int ifNotRect_NonRect0_MakeRectBy_Min1Max2){
+                Arr2D_ResizeParams sizeNew;
+                int ERLNew=0, DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0=0;
+                int QExtRowsNew=this->Set_simplyAsDataGiven_QExtRows(extRowsLengthes, QExtRowsGiven, ifNotRect_NonRect0_MakeRectBy_Min1Max2);
+                int ERNN, IRNN, LmaxGiven, LminGiven, curL;
+                std::vector<int>Ls;
+                Coords2DInt CoordsOld;
+                for(ERNN=1; ERNN<=QExtRowsNew; ERNN++){
+                    ERLNew=0;
+                    DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0=0;
+                    CoordsOld.set(0, 0);
+                    curL=this->Set_simplyAsDataGiven_ExtRowNewLength(ERNN, extRowsLengthes, QExtRowsGiven, ifNotRect_NonRect0_MakeRectBy_Min1Max2);
+                    if(this->IsRectangularByType()==false){
+                        Ls.push_back(curL);
+                        if(ERNN==1 || (ERNN>1 && curL<LminGiven)){
+                            LminGiven=curL;
+                        }
+                        if(ERNN==1 || (ERNN>1 && curL>LmaxGiven)){
+                            LmaxGiven=curL;
+                        }
+                    }
+                }
+                if(this->IsRectangularByType() || LmaxGiven==LminGiven){
+                    sizeNew.Set(QExtRowsNew, LmaxGiven);
+                }else{
+                    sizeNew.Set(QExtRowsNew, LmaxGiven, LminGiven, Ls.data());
+                }
+                return sizeNew;
+            }
+
+
+            int Array2DSize_Prototype::Set_simplyAsDataGiven_QExtRows2( int* extRowsLengthes, int QExtRowsGiven, int ifNotRect_NonRect0_MakeRectBy_Min1Max2MinOfMax3MaxOfMax4, bool IfNotValsOfGivenRow_DefaultNotOwn){
+                int QExtRowsNew=0, ERLNew=0, DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0=0;
+                Coords2DInt CoordsOld;
+                this->Set_simplyAsDataGiven_HilfsFun2(QExtRowsNew, ERLNew, DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0, CoordsOld, extRowsLengthes, QExtRowsGiven, ifNotRect_NonRect0_MakeRectBy_Min1Max2MinOfMax3MaxOfMax4, IfNotValsOfGivenRow_DefaultNotOwn);
+                return QExtRowsNew;
+            }
+            int Array2DSize_Prototype::Set_simplyAsDataGiven_ExtRowNewLength2(int ExtRowNewNN,  int* extRowsLengthes, int QExtRowsGiven, int ifNotRect_NonRect0_MakeRectBy_Min1Max2MinOfMax3MaxOfMax4, bool IfNotValsOfGivenRow_DefaultNotOwn){
                 int QExtRowsNew=0, ERLNew=0, DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0=0;
                 int MinQAllowed=DEFAULT_SIZE;
                 Coords2DInt CoordsOld;
                 CoordsOld.x=ExtRowNewNN;
                 CoordsOld.y=MinQAllowed;
-                this->Set_simplyAsDataGiven_HilfsFun(QExtRowsNew, ERLNew, DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0, CoordsOld, extRowsLengthes, QExtRowsGiven, ifNotRect_NonRect0_MakeRectBy_Min1Max2MinOfMax3MaxOfMax4, IfNotValsOfGivenRow_DefaultNotOwn);
+                this->Set_simplyAsDataGiven_HilfsFun2(QExtRowsNew, ERLNew, DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0, CoordsOld, extRowsLengthes, QExtRowsGiven, ifNotRect_NonRect0_MakeRectBy_Min1Max2MinOfMax3MaxOfMax4, IfNotValsOfGivenRow_DefaultNotOwn);
                 return ERLNew;
             }
-            int Array2DSize_Prototype::Set_simplyAsDataGiven_Arr2DCoordsNewToDataTypeN(const Coords2DInt&CoordsNew, int* extRowsLengthes, int QExtRowsGiven, int ifNotRect_NonRect0_MakeRectBy_Min1Max2MinOfMax3MaxOfMax4, bool IfNotValsOfGivenRow_DefaultNotOwn){
+            int Array2DSize_Prototype::Set_simplyAsDataGiven_Arr2DCoordsNewToDataTypeN2(const Coords2DInt&CoordsNew, int* extRowsLengthes, int QExtRowsGiven, int ifNotRect_NonRect0_MakeRectBy_Min1Max2MinOfMax3MaxOfMax4, bool IfNotValsOfGivenRow_DefaultNotOwn){
                 int QExtRowsNew=0, ERLNew=0, DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0=0;
                 int MinQAllowed=DEFAULT_SIZE;
                 Coords2DInt CoordsOld;
                 //CoordsOld.x=ExtRowNewNN;
                 //CoordsOld.y=MinQAllowed;
-                this->Set_simplyAsDataGiven_HilfsFun(QExtRowsNew, ERLNew, DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0, CoordsOld, extRowsLengthes, QExtRowsGiven, ifNotRect_NonRect0_MakeRectBy_Min1Max2MinOfMax3MaxOfMax4, IfNotValsOfGivenRow_DefaultNotOwn);
+                this->Set_simplyAsDataGiven_HilfsFun2(QExtRowsNew, ERLNew, DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0, CoordsOld, extRowsLengthes, QExtRowsGiven, ifNotRect_NonRect0_MakeRectBy_Min1Max2MinOfMax3MaxOfMax4, IfNotValsOfGivenRow_DefaultNotOwn);
                 return ERLNew;
             }
-            Coords2DInt Array2DSize_Prototype::Set_simplyAsDataGiven_Arr2DCoordsNewToOld(const Coords2DInt&CoordsNew, int* extRowsLengthes, int QExtRowsGiven, int ifNotRect_NonRect0_MakeRectBy_Min1Max2MinOfMax3MaxOfMax4, bool IfNotValsOfGivenRow_DefaultNotOwn){
+            Coords2DInt Array2DSize_Prototype::Set_simplyAsDataGiven_Arr2DCoordsNewToOld2(const Coords2DInt&CoordsNew, int* extRowsLengthes, int QExtRowsGiven, int ifNotRect_NonRect0_MakeRectBy_Min1Max2MinOfMax3MaxOfMax4, bool IfNotValsOfGivenRow_DefaultNotOwn){
                 int QExtRowsNew=0, ERLNew=0, DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0=0;
                 int MinQAllowed=DEFAULT_SIZE;
                 Coords2DInt CoordsOld;
                 //CoordsOld.x=ExtRowNewNN;
                 //CoordsOld.y=MinQAllowed;
-                this->Set_simplyAsDataGiven_HilfsFun(QExtRowsNew, ERLNew, DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0, CoordsOld, extRowsLengthes, QExtRowsGiven, ifNotRect_NonRect0_MakeRectBy_Min1Max2MinOfMax3MaxOfMax4, IfNotValsOfGivenRow_DefaultNotOwn);
+                this->Set_simplyAsDataGiven_HilfsFun2(QExtRowsNew, ERLNew, DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0, CoordsOld, extRowsLengthes, QExtRowsGiven, ifNotRect_NonRect0_MakeRectBy_Min1Max2MinOfMax3MaxOfMax4, IfNotValsOfGivenRow_DefaultNotOwn);
                 return CoordsOld;
             }
 
 
-            void Array2DSize_Prototype::Set_simplyAsDataGiven_HilfsFun_v1(std::vector<int>&RowsLs, std::vector<Coords2DInt>&DataSources, int* extRowsLengthes, int QExtRows, int ifNotRect_NonRect0_MakeRectBy_Min1Max2, bool IfNotValsOfGivenRow_DefaultNotOwn){
+            void Array2DSize_Prototype::Set_simplyAsDataGiven_HilfsFun_v12(std::vector<int>&RowsLs, std::vector<Coords2DInt>&DataSources, int* extRowsLengthes, int QExtRows, int ifNotRect_NonRect0_MakeRectBy_Min1Max2, bool IfNotValsOfGivenRow_DefaultNotOwn){
                 int ERNN, IRNN, LmaxGiven, LminGiven, curLgiven, ERLNew, QExtRowsOld=this->GetQExtRows(), QExtRowsNew;
                 Coords2DInt data;
                 for(ERNN=1; ERNN<=QExtRows; ERNN++){
@@ -4426,7 +4585,7 @@ QString TDataShiftResults::ToString(){
             }//fn
 
 
-            Arr2D_ResizeParams Array2DSize_Prototype::Set_simplyAsDataGiven_NewReSize(int* extRowsLengthes, int QExtRows, int ifNotRect_NonRect0_MakeRectBy_Min1Max2, bool IfNotValsOfGivenRow_DefaultNotOwn){
+            Arr2D_ResizeParams Array2DSize_Prototype::Set_simplyAsDataGiven_NewReSize2(int* extRowsLengthes, int QExtRows, int ifNotRect_NonRect0_MakeRectBy_Min1Max2, bool IfNotValsOfGivenRow_DefaultNotOwn){
                 int ERNN, IRNN, LmaxGiven, LminGiven, curLgiven, ERLNew, QExtRowsOld=this->GetQExtRows(), QExtRowsNew;
                 Arr2D_ResizeParams size;
                 std::vector<int>RowsLs;
@@ -6814,6 +6973,105 @@ QString TDataShiftResults::ToString(){
 
                                 //------------------------------------------------------------------------------------------------------
                                 //
+                                void Array2DSize::Set_simplyAsDataGiven_HilfsFun2(int&QExtRowsNew, int&ERLNew, int&DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0, Coords2DInt&CoordsOld, int* extRowsLengthes, int QExtRowsGiven, int ifNotRect_NonRect0_MakeRectBy_Min1Max2MinOfMax3MaxOfMax4, bool IfNotValsOfGivenRow_DefaultNotOwn){
+                                    this->data->Set_simplyAsDataGiven_HilfsFun2(QExtRowsNew, ERLNew, DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0, CoordsOld, extRowsLengthes, QExtRowsGiven, ifNotRect_NonRect0_MakeRectBy_Min1Max2MinOfMax3MaxOfMax4, IfNotValsOfGivenRow_DefaultNotOwn);
+                                }
+
+                                int Array2DSize::Set_simplyAsDataGiven_QExtRows2( int* extRowsLengthes, int QExtRowsGiven, int ifNotRect_NonRect0_MakeRectBy_Min1Max2MinOfMax3MaxOfMax4, bool IfNotValsOfGivenRow_DefaultNotOwn){
+                                    int y;
+                                    y=this->data->Set_simplyAsDataGiven_QExtRows2(extRowsLengthes, QExtRowsGiven, ifNotRect_NonRect0_MakeRectBy_Min1Max2MinOfMax3MaxOfMax4, IfNotValsOfGivenRow_DefaultNotOwn);
+                                    return y;
+                                }
+
+                                int Array2DSize::Set_simplyAsDataGiven_ExtRowNewLength2(int ExtRowNewNN,  int* extRowsLengthes, int QExtRowsGiven, int ifNotRect_NonRect0_MakeRectBy_Min1Max2MinOfMax3MaxOfMax4, bool IfNotValsOfGivenRow_DefaultNotOwn){
+                                    int y;
+                                    y=this->data->Set_simplyAsDataGiven_ExtRowNewLength2(ExtRowNewNN, extRowsLengthes, QExtRowsGiven, ifNotRect_NonRect0_MakeRectBy_Min1Max2MinOfMax3MaxOfMax4, IfNotValsOfGivenRow_DefaultNotOwn);
+                                    return y;
+                                }
+
+                                int Array2DSize::Set_simplyAsDataGiven_Arr2DCoordsNewToDataTypeN2(const Coords2DInt&CoordsNew, int* extRowsLengthes, int QExtRowsGiven, int ifNotRect_NonRect0_MakeRectBy_Min1Max2MinOfMax3MaxOfMax4, bool IfNotValsOfGivenRow_DefaultNotOwn){
+                                    int y;
+                                    y=this->data->Set_simplyAsDataGiven_Arr2DCoordsNewToDataTypeN2(CoordsNew, extRowsLengthes, QExtRowsGiven, ifNotRect_NonRect0_MakeRectBy_Min1Max2MinOfMax3MaxOfMax4, IfNotValsOfGivenRow_DefaultNotOwn);
+                                    return y;
+                                }
+
+                                Coords2DInt Array2DSize::Set_simplyAsDataGiven_Arr2DCoordsNewToOld2(const Coords2DInt&CoordsNew, int* extRowsLengthes, int QExtRowsGiven, int ifNotRect_NonRect0_MakeRectBy_Min1Max2MinOfMax3MaxOfMax4, bool IfNotValsOfGivenRow_DefaultNotOwn){
+                                    Coords2DInt coordsR;
+                                    coordsR=this->data->Set_simplyAsDataGiven_Arr2DCoordsNewToOld2(CoordsNew, extRowsLengthes, QExtRowsGiven, ifNotRect_NonRect0_MakeRectBy_Min1Max2MinOfMax3MaxOfMax4, IfNotValsOfGivenRow_DefaultNotOwn);
+                                    return coordsR;
+                                }
+
+                                void Array2DSize::Set_simplyAsDataGiven_HilfsFun_v12(std::vector<int>&RowsLs, std::vector<Coords2DInt>&DataSources, int* extRowsLengthes, int QExtRows, int ifNotRect_NonRect0_MakeRectBy_Min1Max2, bool IfNotValsOfGivenRow_DefaultNotOwn){
+                                    this->data->Set_simplyAsDataGiven_HilfsFun_v12(RowsLs, DataSources, extRowsLengthes, QExtRows, ifNotRect_NonRect0_MakeRectBy_Min1Max2, IfNotValsOfGivenRow_DefaultNotOwn);
+                                }
+
+                                Arr2D_ResizeParams Array2DSize::Set_simplyAsDataGiven_NewReSize2(int* extRowsLengthes, int QExtRows, int ifNotRect_NonRect0_MakeRectBy_Min1Max2, bool IfNotValsOfGivenRow_DefaultNotOwn){
+                                    Arr2D_ResizeParams resizeParams;
+                                    resizeParams=this->data->Set_simplyAsDataGiven_NewReSize2(extRowsLengthes, QExtRows, ifNotRect_NonRect0_MakeRectBy_Min1Max2, IfNotValsOfGivenRow_DefaultNotOwn);
+                                    return resizeParams;
+                                }
+
+                                Array2DSize Array2DSize::Set_simplyAsDataGiven_NewSize2(int* extRowsLengthes, int QExtRows, int ifNotRect_NonRect0_MakeRectBy_Min1Max2, bool IfNotValsOfGivenRow_DefaultNotOwn){
+                                    Array2DSize sizeNew;
+                                    Arr2D_ResizeParams resizeParams;
+                                    resizeParams=this->data->Set_simplyAsDataGiven_NewReSize2(extRowsLengthes, QExtRows, ifNotRect_NonRect0_MakeRectBy_Min1Max2, IfNotValsOfGivenRow_DefaultNotOwn);
+                                    if(resizeParams.GetLmin()==0 && resizeParams.GetLs()==NULL){
+                                        sizeNew.Set(resizeParams.GetQExtRows(), resizeParams.GetLmax(), Arr2DSize_Rect_TypeN);
+                                    }else{
+                                        sizeNew.Set(resizeParams.GetLs(), resizeParams.GetQExtRows(), Arr2DSize_VarLens_V_TypeN);
+                                    }
+                                    return sizeNew;
+                                }
+                                //--------------------------------------------------------------------------------------------------------
+                                //
+                                void Array2DSize::Set_simplyAsDataGiven_HilfsFun(int&QExtRowsNew, int&ERLNew, int&DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0, Coords2DInt&CoordsOld, const Coords2DInt&CoordsNew, int* extRowsLengthes, int QExtRowsGiven, int ifNotRect_NonRect0_MakeRectBy_Min1Max2){
+                                    this->data->Set_simplyAsDataGiven_HilfsFun(QExtRowsNew, ERLNew, DataTypeN_Arr2DVals1_GivenVals2_Default3_Incorrect0, CoordsOld, CoordsNew, extRowsLengthes, QExtRowsGiven, ifNotRect_NonRect0_MakeRectBy_Min1Max2);
+                                }
+
+                                int Array2DSize::Set_simplyAsDataGiven_QExtRows(int* extRowsLengthes, int QExtRowsGiven, int ifNotRect_NonRect0_MakeRectBy_Min1Max2MinOfMax3MaxOfMax4){
+                                    int y;
+                                    y=this->data->Set_simplyAsDataGiven_QExtRows(extRowsLengthes, QExtRowsGiven, ifNotRect_NonRect0_MakeRectBy_Min1Max2MinOfMax3MaxOfMax4);
+                                    return y;
+                                }
+
+                                int Array2DSize::Set_simplyAsDataGiven_ExtRowNewLength(int ExtRowNewNN,  int* extRowsLengthes, int QExtRowsGiven, int ifNotRect_NonRect0_MakeRectBy_Min1Max2MinOfMax3MaxOfMax4){
+                                    int y;
+                                    y=this->data->Set_simplyAsDataGiven_ExtRowNewLength(ExtRowNewNN, extRowsLengthes, QExtRowsGiven, ifNotRect_NonRect0_MakeRectBy_Min1Max2MinOfMax3MaxOfMax4);
+                                    return y;
+                                }
+
+                                int Array2DSize::Set_simplyAsDataGiven_Arr2DCoordsNewToDataTypeN(const Coords2DInt&CoordsNew, int* extRowsLengthes, int QExtRowsGiven, int ifNotRect_NonRect0_MakeRectBy_Min1Max2MinOfMax3MaxOfMax4){
+                                    int y;
+                                    y=this->data->Set_simplyAsDataGiven_Arr2DCoordsNewToDataTypeN(CoordsNew, extRowsLengthes, QExtRowsGiven, ifNotRect_NonRect0_MakeRectBy_Min1Max2MinOfMax3MaxOfMax4);
+                                    return y;
+                                }
+
+                                Coords2DInt Array2DSize::Set_simplyAsDataGiven_Arr2DCoordsNewToOld(const Coords2DInt&CoordsNew, int* extRowsLengthes, int QExtRowsGiven, int ifNotRect_NonRect0_MakeRectBy_Min1Max2MinOfMax3MaxOfMax4){
+                                    Coords2DInt coordsR;
+                                    coordsR=this->data->Set_simplyAsDataGiven_Arr2DCoordsNewToOld(CoordsNew, extRowsLengthes, QExtRowsGiven, ifNotRect_NonRect0_MakeRectBy_Min1Max2MinOfMax3MaxOfMax4);
+                                    return coordsR;
+                                }
+
+                                Arr2D_ResizeParams Array2DSize::Set_simplyAsDataGiven_NewReSize(int* extRowsLengthes, int QExtRows, int ifNotRect_NonRect0_MakeRectBy_Min1Max2){
+                                    Arr2D_ResizeParams newSize;
+                                    newSize=this->data->Set_simplyAsDataGiven_NewReSize(extRowsLengthes, QExtRows, ifNotRect_NonRect0_MakeRectBy_Min1Max2);
+                                    return newSize;
+                                }
+
+                                Array2DSize Array2DSize::Set_simplyAsDataGiven_NewSize(int* extRowsLengthes, int QExtRows, int ifNotRect_NonRect0_MakeRectBy_Min1Max2){
+                                    Arr2D_ResizeParams newReSizeParams;
+                                    Array2DSize newSize;
+                                    newReSizeParams=this->data->Set_simplyAsDataGiven_NewReSize(extRowsLengthes, QExtRows, ifNotRect_NonRect0_MakeRectBy_Min1Max2);
+                                    if(newReSizeParams.GetLmin()==0 && newReSizeParams.GetLs()==NULL){
+                                        newSize.Set(newReSizeParams.GetQExtRows(), newReSizeParams.GetLmax());
+                                    }else{
+                                        newSize.Set(newReSizeParams.GetLs(), newReSizeParams.GetQExtRows());
+                                    }
+                                    return newSize;
+                                }
+
+                                //
+                                //---------------------------------------------------------------------------------------------------------
                                 //
                                 TDataShiftResults Array2DSize::ExtRow_SetAddInsDel_dataNs(int Action_Set1_Add2_Ins3_Del4_Dflt0, int givenRowL, /*int inquiredRowNN,*/ int ChangedRowNN_0ifAll, TDataShiftParams*DataShiftParam, int ifWasRectAndNotEqual_NonRect0_SetRectBy_New1_Old2_Max3_Min4, bool suiValsInsteadOfDefaultValsWherePossible){
                                     return this->ExtRow_SetAddInsDel_dataNs(Action_Set1_Add2_Ins3_Del4_Dflt0, givenRowL, /*inquiredRowNN,*/ ChangedRowNN_0ifAll, DataShiftParam, ifWasRectAndNotEqual_NonRect0_SetRectBy_New1_Old2_Max3_Min4, suiValsInsteadOfDefaultValsWherePossible);
