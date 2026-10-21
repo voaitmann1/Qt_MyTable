@@ -1903,10 +1903,10 @@ int Arr2DBy1D_PosNByCoords(int ExtRowN, int IneRowN, std::vector<int>Ls){
 
 int Arr2DBy1D_PosNByCoords(int ExtRowN, int IneRowN, int QExtRows, int rowL){
     int PosN=0, QElements=0, curL=rowL, extRowL=rowL;
-    //for(int i=0; i<QExtRows; i++){
-    //    QElements+=Ls[i];
-    //}
-    QElements=QExtRows*rowL;
+    for(int i=0; i<QExtRows; i++){
+        //QElements+=Ls[i];
+        QElements+=rowL;
+    }
     if(ExtRowN<0){
         ExtRowN+=(QExtRows+1);
     }
