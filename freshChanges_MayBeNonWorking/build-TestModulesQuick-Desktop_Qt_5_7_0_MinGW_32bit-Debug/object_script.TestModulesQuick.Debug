@@ -1,0 +1,12 @@
+INPUT(
+./debug\main.o
+./debug\mylib.o
+./debug\mymathlib.o
+./debug\kynemparam.o
+./debug\tests1.o
+./debug\myarraylib.o
+./debug\matrices3.o
+./debug\matrica.o
+./debug\fluttermodels.o
+./debug\filereadinglib.o
+);
