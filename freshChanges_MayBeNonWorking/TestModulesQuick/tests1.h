@@ -4,7 +4,8 @@
 #include"mylib.h"
 #include"mymathlib.h"
 #include"fluttermodels.h"
-#include"array1d_size2D_elem2d_1.h"
+//#include"array1d_size2D_elem2d_1.h"//es in afn
+#include "array2dlib.h"
 //#include"arraylib3.h"
 
 //class tests1
@@ -36,6 +37,6 @@ void TestReadingTextFileByKeyWordsSearch();
 void Test1DArrPtr_SubArrayByLs();
 void Test1DArraysPtr_1();
 
-void TestArr2DExtRow();
+void TestArr2DInitio();
 
 #endif // TESTS1_H

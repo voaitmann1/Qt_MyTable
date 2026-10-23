@@ -1871,6 +1871,12 @@ bool CheckIfRowsAreLinearDependent(double *x1, double *x2, int Q, double eps){
         return *this;
     }
 
+    ComplexNum& ComplexNum::operator /= (double k){
+        this->re/=k;
+        this->im/=k;
+        return *this;
+    }
+
     ComplexNum& ComplexNum::operator /= (const ComplexNum&obj){
         double re2=obj.GetRe(), im2=obj.GetIm(), im2cjg=-im2, denom=re2*re2-im2*im2cjg, reR;
         if(denom!=0){

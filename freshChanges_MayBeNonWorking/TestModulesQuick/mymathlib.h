@@ -236,6 +236,7 @@ public:
     ComplexNum& operator *= (const ComplexNum&obj);
     ComplexNum& operator /= (const ComplexNum&obj);
     ComplexNum& operator *= (double val);
+    ComplexNum& operator /= (double val);
     bool operator ==(const ComplexNum&obj);
     bool operator !=(const ComplexNum&obj);
     bool IsConjugated(const ComplexNum&obj);
