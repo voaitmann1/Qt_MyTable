@@ -65,8 +65,8 @@ template <class T> class Array2D_Prototype{
     void SetOne(T*val=NULL);
     virtual void SetOne(const T&val)=0;
     //
-    std::vector<std::vector<T>>GetData_AsStdVector2D();
-    std::vector<T>GetData_AsStdVector1D();
+    std::vector<std::vector<T>>GetData_AsStdVector2D()const;
+    std::vector<T>GetData_AsStdVector1D() const;
     //
     void Assign(const Array2D_Prototype<T>*obj);//=0;
     //
@@ -298,6 +298,31 @@ template<typename T> std::vector<int> Array2D_Prototype<T>::GetNsOfL(int L)const
         }
     }
     return NsL;
+}
+//
+template<typename T> std::vector<T> Array2D_Prototype<T>::GetData_AsStdVector1D()const{
+    std::vector<T> R;
+    T val;
+    int QExtRows=this->GetQExtRows(), Lmax=this->GetRowLengthMax(), curL;
+    std::vector<int>Ls;
+    if(this->IsRectangularByType()){
+        for(int ERNN=1; ERNN<=QExtRows; ERNN++){
+            for(int IRNN=1; IRNN<=Lmax; IRNN++){
+                val=this->GetElement(ERNN, IRNN);
+                R.push_back(val);
+            }
+        }
+    }else{
+        Ls=this->GetSizeAsStdVector();
+        for(int ERNN=1; ERNN<=QExtRows; ERNN++){
+            curL=Ls[ERNN-1];
+            for(int IRNN=1; IRNN<=Lmax; IRNN++){
+                val=this->GetElement(ERNN, IRNN);
+                R.push_back(val);
+            }
+        }
+    }
+    return R;
 }
 //
 template<typename T> void Array2D_Prototype<T>::Assign(const Array2D_Prototype<T>*obj){
@@ -1136,7 +1161,6 @@ template<typename T> int  Array2D_V1<T>::GetRowLengthMax()const{
     return this->size.GetRowLengthMax();
 }
 //
-//virtual void SetSize(int*ExtRowlengthes, int QExtRows=1, int ifNotRect_NonRect0_MakeRectBy_Max1Min2=0);//=0;
 template<typename T> void  Array2D_V1<T>::SetSize(const T& defaultVal, int QExtRows, int ExtRowlength){
     T val;
     int QElementsOld=this->GetQExtRows(), QElementsNew=QExtRows*ExtRowlength;
@@ -1204,12 +1228,13 @@ template<typename T> void Array2D_V1<T>::Set_simplyAsDataGiven(const T& defaultV
     if(ifNotRect_NonRect0_MakeRectBy_Max1Min2!=2 && ifNotRect_NonRect0_MakeRectBy_Max1Min2!=0){
         ifNotRect_NonRect0_MakeRectBy_Max1Min2=1;
     }
-    this->SetSize(defaultVal, sizeNew);
+    //
+    this->Array2D_Prototype<T>::SetSize(defaultVal, sizeNew, ifNotRect_NonRect0_MakeRectBy_Max1Min2);
     for(int ERNN=1; ERNN<=QExtRowsNew; ERNN++){
         curLNew=sizeNew.GetRowLength(ERNN);
         for(int IRNN=1; IRNN<=curLNew; IRNN++){
             CoordsNew.set(ERNN, IRNN);
-            CoordsOld=this->size.size.Set_simplyAsDataGiven_Arr2DCoordsNewToOld(CoordsNew, ExtRowsLs, QExtRowsGiven, ifNotRect_NonRect0_MakeRectBy_Max1Min2, IfNotValsOfGivenRow_DefaultNotOwn);
+            CoordsOld=this->size.Set_simplyAsDataGiven_Arr2DCoordsNewToOld(CoordsNew, ExtRowsLs, QExtRowsGiven, ifNotRect_NonRect0_MakeRectBy_Max1Min2, IfNotValsOfGivenRow_DefaultNotOwn);
             if(CoordsOld.x>=1 && CoordsOld.x<=QExtRowsGiven){
                 if(sizeNew.IsRectangularByType()==false){
                     PosNN=Arr2DBy1D_PosNByCoords(CoordsOld.x, CoordsOld.y, sizeNew.GetAsArrayOfExtRowsLengthes());
@@ -1234,12 +1259,12 @@ template<typename T> void Array2D_V1<T>::Set_simplyAsDataGiven(const T& defaultV
     if(ifNotRect_NonRect0_MakeRectBy_Max1Min2!=2 && ifNotRect_NonRect0_MakeRectBy_Max1Min2!=0){
         ifNotRect_NonRect0_MakeRectBy_Max1Min2=1;
     }
-    this->SetSize(defaultVal, sizeNew);
+    this->Array2D_Prototype<T>::SetSize(defaultVal, sizeNew, ifNotRect_NonRect0_MakeRectBy_Max1Min2);
     for(int ERNN=1; ERNN<=QExtRowsNew; ERNN++){
         curLNew=sizeNew.GetRowLength(ERNN);
         for(int IRNN=1; IRNN<=curLNew; IRNN++){
             CoordsNew.set(ERNN, IRNN);
-            CoordsOld=this->size.size.Set_simplyAsDataGiven_Arr2DCoordsNewToOld(CoordsNew, ExtRowsLs, QExtRowsGiven, ifNotRect_NonRect0_MakeRectBy_Max1Min2, IfNotValsOfGivenRow_DefaultNotOwn);
+            CoordsOld=this->size.Set_simplyAsDataGiven_Arr2DCoordsNewToOld(CoordsNew, ExtRowsLs, QExtRowsGiven, ifNotRect_NonRect0_MakeRectBy_Max1Min2, IfNotValsOfGivenRow_DefaultNotOwn);
             if(CoordsOld.x>=1 && CoordsOld.x<=QExtRowsGiven){
                 if(sizeNew.IsRectangularByType()==false){
                     PosNNNew=Arr2DBy1D_PosNByCoords(CoordsOld.x, CoordsOld.y, sizeNew.GetAsArrayOfExtRowsLengthes());
@@ -1265,12 +1290,12 @@ template<typename T> void Array2D_V1<T>::Set_simplyAsDataGiven(const T& defaultV
     if(ifNotRect_NonRect0_MakeRectBy_Max1Min2!=2 && ifNotRect_NonRect0_MakeRectBy_Max1Min2!=0){
         ifNotRect_NonRect0_MakeRectBy_Max1Min2=1;
     }
-    this->SetSize(defaultVal, sizeNew);
+    this->Array2D_Prototype<T>::SetSize(defaultVal, sizeNew, ifNotRect_NonRect0_MakeRectBy_Max1Min2);
     for(int ERNN=1; ERNN<=QExtRowsNew; ERNN++){
         curLNew=sizeNew.GetRowLength(ERNN);
         for(int IRNN=1; IRNN<=curLNew; IRNN++){
             CoordsNew.set(ERNN, IRNN);
-            CoordsOld=this->size.size.Set_simplyAsDataGiven_Arr2DCoordsNewToOld(CoordsNew, ExtRowsLs, QExtRowsGiven, ifNotRect_NonRect0_MakeRectBy_Max1Min2, IfNotValsOfGivenRow_DefaultNotOwn);
+            CoordsOld=this->size.Set_simplyAsDataGiven_Arr2DCoordsNewToOld(CoordsNew, ExtRowsLs, QExtRowsGiven, ifNotRect_NonRect0_MakeRectBy_Max1Min2, IfNotValsOfGivenRow_DefaultNotOwn);
             if(CoordsOld.x>=1 && CoordsOld.x<=QExtRowsGiven){
                 if(sizeNew.IsRectangularByType()==false){
                     PosNNNew=Arr2DBy1D_PosNByCoords(CoordsOld.x, CoordsOld.y, sizeNew.GetAsArrayOfExtRowsLengthes());
@@ -1294,8 +1319,13 @@ template<typename T> void Array2D_V1<T>::Set_simplyAsDataGiven(const T& defaultV
     bool IfNotValsOfGivenRow_DefaultNotOwn=false;
     int QExtRowsGiven=data.size(), curL;
     std::vector<int>ExtRowsLs;
+    for(int i=0; i<QExtRowsGiven; i++){
+        curL=data[i].size();
+        ExtRowsLs.push_back(curL);
+    }
     T val;
-    Array2DSize sizeNew=this->size.Set_simplyAsDataGiven_NewSize(ExtRowsLs, QExtRowsGiven, ifNotRect_NonRect0_MakeRectBy_Max1Min2, IfNotValsOfGivenRow_DefaultNotOwn);
+    //Array2DSize                  Set_simplyAsDataGiven_NewSize(int* extRowsLengthes, int QExtRows, int ifNotRect_NonRect0_MakeRectBy_Min1Max2, bool IfNotValsOfGivenRow_DefaultNotOwn);
+    Array2DSize sizeNew=this->size.Set_simplyAsDataGiven_NewSize(ExtRowsLs.data(),           ExtRowsLs.size(),     ifNotRect_NonRect0_MakeRectBy_Max1Min2,      IfNotValsOfGivenRow_DefaultNotOwn);
     Coords2DInt CoordsNew, CoordsOld;
     int curLNew, curLOld, QExtRowsNew=sizeNew.GetQExtRows(), QExtRowsOld=this->GetQExtRows(), PosNN;
     if(ifNotRect_NonRect0_MakeRectBy_Max1Min2!=2 && ifNotRect_NonRect0_MakeRectBy_Max1Min2!=0){
@@ -1305,13 +1335,13 @@ template<typename T> void Array2D_V1<T>::Set_simplyAsDataGiven(const T& defaultV
         curL=data[i-1].size();
         ExtRowsLs.push_back(curL);
     }
-    this->SetSize(defaultVal, sizeNew);
+    this->Array2D_Prototype<T>::SetSize(defaultVal, sizeNew, ifNotRect_NonRect0_MakeRectBy_Max1Min2);
     for(int ERNN=1; ERNN<=QExtRowsNew; ERNN++){
         curLNew=sizeNew.GetRowLength(ERNN);
         curL=ExtRowsLs[ERNN-1];
         for(int IRNN=1; IRNN<=curLNew; IRNN++){
             CoordsNew.set(ERNN, IRNN);
-            CoordsOld=this->size.size.Set_simplyAsDataGiven_Arr2DCoordsNewToOld(CoordsNew, ExtRowsLs, QExtRowsGiven, ifNotRect_NonRect0_MakeRectBy_Max1Min2, IfNotValsOfGivenRow_DefaultNotOwn);
+            CoordsOld=this->size.Set_simplyAsDataGiven_Arr2DCoordsNewToOld(CoordsNew, ExtRowsLs.data(), ExtRowsLs.size(), ifNotRect_NonRect0_MakeRectBy_Max1Min2, IfNotValsOfGivenRow_DefaultNotOwn);
             if(CoordsOld.x>=1 && CoordsOld.x<=QExtRowsGiven){
                 if(sizeNew.IsRectangularByType()==false){
                     PosNN=Arr2DBy1D_PosNByCoords(CoordsOld.x, CoordsOld.y, sizeNew.GetAsArrayOfExtRowsLengthes());
@@ -1340,12 +1370,12 @@ template<typename T> void Array2D_V1<T>::Set_simplyAsDataGiven(const T& defaultV
     if(ifNotRect_NonRect0_MakeRectBy_Max1Min2!=2 && ifNotRect_NonRect0_MakeRectBy_Max1Min2!=0){
         ifNotRect_NonRect0_MakeRectBy_Max1Min2=1;
     }
-    this->SetSize(defaultVal, sizeNew);
+    this->Array2D_Prototype<T>::SetSize(defaultVal, sizeNew, ifNotRect_NonRect0_MakeRectBy_Max1Min2);
     for(int ERNN=1; ERNN<=QExtRowsNew; ERNN++){
         curLNew=sizeNew.GetRowLength(ERNN);
         for(int IRNN=1; IRNN<=curLNew; IRNN++){
             CoordsNew.set(ERNN, IRNN);
-            CoordsOld=this->size.size.Set_simplyAsDataGiven_Arr2DCoordsNewToOld(CoordsNew, ExtRowsLs, QExtRowsGiven, ifNotRect_NonRect0_MakeRectBy_Max1Min2, IfNotValsOfGivenRow_DefaultNotOwn);
+            CoordsOld=this->size.Set_simplyAsDataGiven_Arr2DCoordsNewToOld(CoordsNew, ExtRowsLs, QExtRowsGiven, ifNotRect_NonRect0_MakeRectBy_Max1Min2, IfNotValsOfGivenRow_DefaultNotOwn);
             if(CoordsOld.x>=1 && CoordsOld.x<=QExtRowsGiven){
                 //if(sizeNew.IsRectangularByType()==false){
                 //    PosNN=Arr2DBy1D_PosNByCoords(CoordsOld.x, CoordsOld.y, sizeNew.GetAsArrayOfExtRowsLengthes());
@@ -1942,11 +1972,11 @@ template <class T> class Array2D_EIR{
     Array2D_Prototype<T>*GetData();
     //
     //
-    void SetSize(T& defaultVal, int QExtRows=1, int ExtRowlength=1);
-    void SetSize(T& defaultVal, int*ExtRowlengthes, int QExtRows=1, int ifNotRect_NonRect0_MakeRectBy_Max1Min2=0);
-    void SetSize(T& defaultVal, std::vector<int>Ls, int ifNotRect_NonRect0_MakeRectBy_Max1Min2=0);
-    void SetSize(T& defaultVal, const Array2DSize&size, int ifNotRect_NonRect0_MakeRectBy_Max1Min2=0);
-    void SetSize(T& defaultVal, const Array2DSize_Prototype*size, int ifNotRect_NonRect0_MakeRectBy_Max1Min2=0);
+    void SetSize(const T& defaultVal, int QExtRows=1, int ExtRowlength=1);
+    void SetSize(const T& defaultVal, int*ExtRowlengthes, int QExtRows=1, int ifNotRect_NonRect0_MakeRectBy_Max1Min2=0);
+    void SetSize(const T& defaultVal, std::vector<int>Ls, int ifNotRect_NonRect0_MakeRectBy_Max1Min2=0);
+    void SetSize(const T& defaultVal, const Array2DSize&size, int ifNotRect_NonRect0_MakeRectBy_Max1Min2=0);
+    void SetSize(const T& defaultVal, const Array2DSize_Prototype*size, int ifNotRect_NonRect0_MakeRectBy_Max1Min2=0);
     //
     void SetSize(int QExtRows=1, int ExtRowlength=1, T*dfltVal=NULL);
     void SetSize(int*ExtRowlengthes, int QExtRows=1, int ifNotRect_NonRect0_MakeRectBy_Max1Min2=0, T*dfltVal=NULL);
@@ -2327,19 +2357,19 @@ template<typename T> std::vector<std::vector<T>> Array2D_EIR<T>::GetData_AsStdVe
     return this->data->GetData_AsStdVector2D();
 }
 //
-template<typename T> void Array2D_EIR<T>::SetSize(T& defaultVal, int QExtRows, int ExtRowlength){
+template<typename T> void Array2D_EIR<T>::SetSize(const T& defaultVal, int QExtRows, int ExtRowlength){
     this->data->SetSize(defaultVal, QExtRows,  ExtRowlength);
 }
-template<typename T> void Array2D_EIR<T>::SetSize(T& defaultVal, int*ExtRowlengthes, int QExtRows, int ifNotRect_NonRect0_MakeRectBy_Max1Min2){
+template<typename T> void Array2D_EIR<T>::SetSize(const T& defaultVal, int*ExtRowlengthes, int QExtRows, int ifNotRect_NonRect0_MakeRectBy_Max1Min2){
     this->data->SetSize(defaultVal, ExtRowlengthes, QExtRows, ifNotRect_NonRect0_MakeRectBy_Max1Min2);
 }
-template<typename T> void Array2D_EIR<T>::SetSize(T& defaultVal, std::vector<int>Ls, int ifNotRect_NonRect0_MakeRectBy_Max1Min2){
+template<typename T> void Array2D_EIR<T>::SetSize(const T& defaultVal, std::vector<int>Ls, int ifNotRect_NonRect0_MakeRectBy_Max1Min2){
     this->data->SetSize(defaultVal, Ls, ifNotRect_NonRect0_MakeRectBy_Max1Min2);
 }
-template<typename T> void Array2D_EIR<T>::SetSize(T& defaultVal, const Array2DSize&size, int ifNotRect_NonRect0_MakeRectBy_Max1Min2){
+template<typename T> void Array2D_EIR<T>::SetSize(const T& defaultVal, const Array2DSize&size, int ifNotRect_NonRect0_MakeRectBy_Max1Min2){
     this->data->SetSize(defaultVal, size, ifNotRect_NonRect0_MakeRectBy_Max1Min2);
 }
-template<typename T> void Array2D_EIR<T>::SetSize(T& defaultVal, const Array2DSize_Prototype*size, int ifNotRect_NonRect0_MakeRectBy_Max1Min2){
+template<typename T> void Array2D_EIR<T>::SetSize(const T& defaultVal, const Array2DSize_Prototype*size, int ifNotRect_NonRect0_MakeRectBy_Max1Min2){
     this->data->SetSize(defaultVal, size, ifNotRect_NonRect0_MakeRectBy_Max1Min2);
 }
 //
