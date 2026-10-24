@@ -1349,7 +1349,16 @@ void Test1DArraysPtr_1(){
     delete[]arrp;
 }
 
-//void TestArr2DExtRow(){
-//    Array2D_Shell_1<int> arr2D;
-//
-//}
+void TestArr2DInitio(){
+    printf("\n\nTesting 2D array initio\n\n");
+    Array2D_EIR<int> arr2D;
+    arr2D.SetTypeN(ARR2D_TYPE_V1D_RECTANGULAR);
+    arr2D.SetSize(0, 3, 4);
+    for(int ERNN=1; ERNN<=3; ERNN++){
+        for(int IRNN=1; IRNN<=4; IRNN++){
+            arr2D.SetElement(ERNN*10+IRNN, ERNN, IRNN);
+        }
+    }
+    arr2D.ShowToConsole();
+    printf("\nTestArr2DInitio finishes working\n\n");
+}

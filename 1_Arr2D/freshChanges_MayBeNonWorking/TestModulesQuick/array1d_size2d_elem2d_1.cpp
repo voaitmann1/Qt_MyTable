@@ -4661,7 +4661,7 @@ QString TDataShiftResults::ToString(){
                     return this->ExtRowsLength;
                 }
                 int Array2DSize_Rectangular::GetRowLengthMax() const{
-                     this->ExtRowsLength;
+                     return this->ExtRowsLength;
                 }
                 //std::vector<int>GetLengthes() const;
                 //std::vector<int>GetMinLengthRowNs() const;
@@ -6438,7 +6438,7 @@ QString TDataShiftResults::ToString(){
                                     return this->data->GetQExtRows();
                                 }
                                 int Array2DSize::GetRowLength(int N) const {
-                                    return this->data->GetQExtRows();
+                                    return this->data->GetRowLength(N);
                                 }
                                 int Array2DSize::GetRowLengthMin() const {
                                     return this->data->GetRowLengthMin();

@@ -24,6 +24,7 @@ int main(int argc, char *argv[])
     TestReadingTextFileByKeyWordsSearch();
     Test1DArrPtr_SubArrayByLs();
     Test1DArraysPtr_1();
+    TestArr2DInitio();
     //
     std::cout<<"\nMain.cpp: All functions are tested successfully"<<std::endl;
     //

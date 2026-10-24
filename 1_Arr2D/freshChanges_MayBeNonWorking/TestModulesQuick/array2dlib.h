@@ -9,7 +9,7 @@
 //    Array2DLib();
 //};
 
-const int ARR2D_TYPE_V1D_RECTANGULAR=1;
+const int ARR2D_TYPE_V1D_RECTANGULAR=1;//ARR2D_TYPE_V1D_RECTANGULAR
 const int ARR2D_TYPE_P1D_RECTANGULAR=2;
 const int ARR2D_TYPE_V2D_RECTANGULAR=3;
 const int ARR2D_TYPE_P2D_RECTANGULAR=4;
@@ -198,7 +198,8 @@ template<typename T> void Array2D_Prototype<T>::SetOne(const T&val){
 
 template<typename T> bool Array2D_Prototype<T>::IsRectangularInFact()const{
     bool verdict;
-    int Lmax=this->GetRowLengthMax(), Lmin=this->GetRowLengthMin();
+    int Lmax=this->GetRowLengthMax(),
+        Lmin=this->GetRowLengthMin();
     verdict=(Lmin==Lmax);
     return verdict;
 }
@@ -1115,7 +1116,7 @@ template<typename T> Array2D_V1<T>::~Array2D_V1(){
 }
 //
 template<typename T> int Array2D_V1<T>::GetTypeN() const{
-    return Arr2DSize_VarLens_V_TypeN;
+    return ARR2D_TYPE_V1D_VAR_LEN;
 }
 template<typename T> int Array2D_V1<T>::GetQExtRows() const{
     return this->size.GetQExtRows();
@@ -1135,7 +1136,14 @@ template<typename T> const T* Array2D_V1<T>::GetPointerToElement(int ExtRowN, in
     return ptr;
 }
 template<typename T> void Array2D_V1<T>::SetElement(const T& val, int ExtRowN, int inRowPosN){
-    int PosNN=Arr2DBy1D_PosNByCoords(ExtRowN, inRowPosN, this->GetQExtRows(), this->GetRowLengthMax());
+    int QExtRows=this->GetQExtRows(), Lmax=this->GetRowLengthMax(), PosNN=0;
+    std::vector<int>Ls;
+    if(this->IsRectangularInFact()){
+        PosNN=Arr2DBy1D_PosNByCoords(ExtRowN, inRowPosN, QExtRows, Lmax);
+    }else{
+        Ls=this->GetSizeAsStdVector();
+        PosNN=Arr2DBy1D_PosNByCoords(ExtRowN, inRowPosN, QExtRows, Ls.data());
+    }
     this->data[PosNN-1]=val;
 }
 template<typename T> bool Array2D_V1<T>::IsRectangularInFact()const{
@@ -1162,11 +1170,11 @@ template<typename T> int  Array2D_V1<T>::GetRowLengthMax()const{
 }
 //
 template<typename T> void  Array2D_V1<T>::SetSize(const T& defaultVal, int QExtRows, int ExtRowlength){
-    T val;
+    //T val;
     int QElementsOld=this->GetQExtRows(), QElementsNew=QExtRows*ExtRowlength;
     if(QElementsOld<QElementsNew){
         for(int i=0; i<(QElementsNew-QElementsOld); i++){
-            this->data.push_back(val);
+            this->data.push_back(defaultVal);
         }
     }else if(QElementsOld>QElementsNew){
         for(int i=0; i<(QElementsOld-QElementsNew); i++){
@@ -1387,6 +1395,47 @@ template<typename T> void Array2D_V1<T>::Set_simplyAsDataGiven(const T& defaultV
                 val=defaultVal;
             }
             this->SetElement(val, ERNN, IRNN);
+        }
+    }
+}//fn
+template<typename T> void Array2D_V1<T>::Set_simplyAsDataGiven(const T& defaultVal, T** data, int QExtRowsGiven, int ExtRowsL){
+    std::vector<T>dataOld=this->GetData_AsStdVector1D();
+    bool IfNotValsOfGivenRow_DefaultNotOwn=false;
+    T val;
+    Array2DSize sizeNew;
+    //=this->size.Set_simplyAsDataGiven_NewSize(QExtRowsGiven, ExtRowsL);//, ifNotRect_NonRect0_MakeRectBy_Max1Min2, IfNotValsOfGivenRow_DefaultNotOwn);
+    sizeNew.Set(QExtRowsGiven, ExtRowsL);
+    Coords2DInt CoordsNew, CoordsOld;
+    int curLNew, curLOld, QExtRowsNew=sizeNew.GetQExtRows(), QExtRowsOld=this->GetQExtRows(), PosNN;
+    //
+    this->Array2D_Prototype<T>::SetSize(defaultVal, sizeNew);
+    for(int ERNN=1; ERNN<=QExtRowsNew; ERNN++){
+        for(int IRNN=1; IRNN<=ExtRowsL; IRNN++){
+            val=data[ERNN-1][IRNN-1];
+            this->SetElement(val, ERNN, IRNN);
+        }
+    }
+}//fn
+template<typename T> void Array2D_V1<T>::Set_simplyAsDataGiven(const T& defaultVal, T* data, int QExtRowsGiven, int ExtRowsL){
+    T val;
+    int posNN=0;
+    this->Array2D_Prototype<T>::SetSize(defaultVal, QExtRowsGiven, ExtRowsL);
+    for(int ERNN=1; ERNN<=QExtRowsGiven; ERNN++){
+        for(int IRNN=1; IRNN<=ExtRowsL; IRNN++){
+            posNN=Arr2DBy1D_PosNByCoords(ERNN, IRNN, QExtRowsGiven, ExtRowsL);
+            val=data[posNN-1];
+            this->SetElement(val, ERNN, IRNN);
+        }
+    }
+}//fn
+template<typename T> void Array2D_V1<T>::Set_simplyAsDataGiven(const T& defaultVal, std::vector<T>data, int QExtRowsGiven, int ExtRowsL){
+    this->Set_simplyAsDataGiven(defaultVal, data.data(), QExtRowsGiven, ExtRowsL);
+}//fn
+template<typename T> void Array2D_V1<T>::Set_simplyAsDataGiven(const T& defaultVal, const T& data, int QExtRowsGiven, int ExtRowsL){
+    this->Array2D_Prototype<T>::SetSize(defaultVal, QExtRowsGiven, ExtRowsL);
+    for(int ERNN=1; ERNN<=QExtRowsGiven; ERNN++){
+        for(int IRNN=1; IRNN<=ExtRowsL; IRNN++){
+            this->SetElement(data, ERNN, IRNN);
         }
     }
 }//fn
@@ -1695,8 +1744,8 @@ template<typename T> Array2D_V1_Rect<T>::~Array2D_V1_Rect(){
 //////std::vector<int>GetNsOfLmin()const;
 //////std::vector<int>GetNsOfL(int L) const ;
 //
-template<typename T> int  Array2D_V1_Rect<T>::GetTypeN()const{
-    return  Array2D_V1<T>::GetTypeN();//tam es: if RectByType
+template<typename T> int  Array2D_V1_Rect<T>::GetTypeN() const{
+    return ARR2D_TYPE_V1D_RECTANGULAR;
 }
 template<typename T> int  Array2D_V1_Rect<T>::GetQExtRows()const{
    return this->Array2D_V1<T>::GetQExtRows();
@@ -1952,7 +2001,7 @@ template <class T> class Array2D_EIR{
     std::vector<int>GetNsOfLmin()const;
     std::vector<int>GetNsOfL(int L) const ;
     //
-    void construct(int TypeN=Arr2DSize_Rect_TypeN);
+    void construct(int TypeN=ARR2D_TYPE_V1D_RECTANGULAR);
     void SetNullIni();//=0;
     void SetNull();
     void SetOne(T*val=NULL);//=0;
@@ -2312,8 +2361,8 @@ template<typename T> void Array2D_EIR<T>::construct(int TypeN) {
     switch(TypeN){
         case ARR2D_TYPE_V1D_VAR_LEN:
             this->data=new Array2D_V1< T>();
-        break;
-        case ARR2D_TYPE_V1D_RECTANGULAR:
+        break;//ARR2D_TYPE_V1D_RECTANGULAR
+        case ARR2D_TYPE_V1D_RECTANGULAR: //
             this->data=new Array2D_V1_Rect<T>();
         break;
     }
@@ -2341,7 +2390,7 @@ template<typename T> void Array2D_EIR<T>::SetTypeN(int TypeN) {
             case ARR2D_TYPE_V1D_VAR_LEN:
                 this->data=new Array2D_V1<T>();
             break;
-            case ARR2D_TYPE_V1D_RECTANGULAR:
+            case ARR2D_TYPE_V1D_RECTANGULAR: // ARR2D_TYPE_V1D_RECTANGULAR
                 this->data=new Array2D_V1_Rect<T>();
             break;
         }
@@ -2635,7 +2684,7 @@ template<typename T> void Array2D_EIR<T>::ShowExtRowToConsole(int RowNN, QString
     if(RowNN<0){
         RowNN=(QExtRows+1);
     }
-    int rowL=-this->GetExtRowLength(RowNN);
+    int rowL=this->GetExtRowLength(RowNN);
     if(ShowBrackets){
         std::cout<<"[";
     }
@@ -2679,6 +2728,9 @@ template<typename T> void Array2D_EIR<T>::ShowToConsole(QString rowDelim, QStrin
     }
     this->ShowExtRowToConsole(1, ElementDelim, ShowBrackets);
     std::cout<<rowDelim.toStdString().c_str();
+    if(Show2Not1D){
+        std::cout<<std::endl;
+    }
     for(int ERNN=2; ERNN<=QExtRows-1; ERNN++){
         if(ShowBrackets){
             std::cout<<" ";
