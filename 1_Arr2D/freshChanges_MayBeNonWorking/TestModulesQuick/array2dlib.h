@@ -764,7 +764,8 @@ template<typename T> void Array2D_Prototype<T>::Set_simplyAsDataGiven(const T&de
     for(int i=0; i<QExtRows; i++){
         Ls.push_back(ExtRowsL);
     }
-    this->SetSize(defaultVal, data, QExtRows, ExtRowsL);
+    //this->SetSize(defaultVal, data, QExtRows, ExtRowsL);
+    this->SetSize(defaultVal, QExtRows, ExtRowsL);
 }
 template<typename T> void Array2D_Prototype<T>::Set_simplyAsDataGiven(T* data, int QExtRows, int ExtRowsLs, T*dfltVal){
     T defaultVal;

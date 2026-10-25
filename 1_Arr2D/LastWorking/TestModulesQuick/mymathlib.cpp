@@ -307,7 +307,6 @@ double Integr_Trapez_SimpleByElementsArray(double*X, double*Y, int Q){
     return ys;
 }
 
-
 void CalcDigits(int num, int digits[], int&order, int SysBase){//, TValsShowHide*vsh){//, bool AsInNum){
     int digit, z;
     z=num>=0?num:-num;

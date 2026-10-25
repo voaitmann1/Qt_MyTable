@@ -15,7 +15,8 @@ SOURCES += main.cpp \
     fluttermodels.cpp \
     mymathlib.cpp \
     array1d_size2d_elem2d_1.cpp \
-    array2dlib.cpp
+    array2dlib.cpp \
+    matrixcomplex.cpp
 
 HEADERS += \
     mylib.h \
@@ -23,4 +24,5 @@ HEADERS += \
     fluttermodels.h \
     mymathlib.h \
     array1d_size2d_elem2d_1.h \
-    array2dlib.h
+    array2dlib.h \
+    matrixcomplex.h
